@@ -73,7 +73,7 @@ public class ArduinoClassExampleTest {
 				"Error, Expected 0 bars and you entered 1",
 				"Error, Expected 4 bars and you entered 5",
 				"Error, Expected 0 bars and you entered 1",
-				"Error, Expected 9 bars and you entered 10"};
+				"Error, Expected 12 bars and you entered 13"};
 		assertEquals(AssertMethods.arrEquals(generatedMessages,correctMessages),true);
 		
 	}

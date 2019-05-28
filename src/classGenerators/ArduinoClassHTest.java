@@ -104,5 +104,34 @@ public class ArduinoClassHTest {
 		assertEquals(correctClass,generatedClass);
 	}
 
+	@Test
+	/**Tests that a header file can still be generated with fewer fields
+	 * to allow for generation from a sketch
+	 * This also tests behavior that would be the same for the body file because
+	 * of inheritance
+	 * */
+	public void testHOutputFewerFields() {
 
+		// This example generates a class represented as a string
+		// The user can decide how these string will be inputted
+		// These fields are the minimum required to generate an arudino class
+
+		ArduinoClassH template = new ArduinoClassH(ArduinoClassExample.CLASSNAME.toString(),
+				null,
+				null, 
+				true,
+				ArduinoClassExample.HEADERCOMMENTS.toString(), 
+				"ALL",
+				ArduinoClassExample.VARIABLES.toString(),
+				ArduinoClassExample.PRIVATEMETHODS.toString(),
+				ArduinoClassExample.PUBLICMETHODS.toString());
+		//get the String representation of the H file
+		String generatedClass = template.getHeader();
+		String correctClass=ArduinoClassHardCoded.HEADER_FILE_FEWERKEYWORDS.toString();
+		//print out a comparison message useful in finding potential error
+		System.out.print("H File Test Fewer Fields:");
+		System.out.println(AssertMethods.assertEqualsFeedback(correctClass, generatedClass));
+		//use an enum with the correct h file to test this output
+		assertEquals(correctClass,generatedClass);
+	}
 }

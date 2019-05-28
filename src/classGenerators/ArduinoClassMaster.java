@@ -24,7 +24,6 @@ public abstract class ArduinoClassMaster{
 	//with example file made on may 15 2019
 	boolean hardCodeDate;
 	
-
 	/**
 	* Loads an example class into memory given date for testing purposes
 	* and parses it into header comment, methods, header file
@@ -59,13 +58,20 @@ public abstract class ArduinoClassMaster{
 	/** Generates the header comment of an arduino class given
 	necessary strings*/
 	protected String generateHeaderComment(String author,String organization, String headerComments,String supportedBoards){
-		String date=genDate();
-		String headerComment="/* Written by "+author+" for "+organization+" "+date+"\n";
-		headerComment+=headerComments+"\n";
-		headerComment+="Boards supported: "+supportedBoards+"*/\n\n";
+		String headerComment="";
+		//if author or organization is null, just add the header comment
+		//this ensures flexibility in creating libraries
+		if(author==null |organization==null) {
+			headerComment="/*"+headerComments+"*/\n\n";
+		}else {
+			String date=genDate();
+			headerComment="/* Written by "+author+" for "+organization+" "+date+"\n";
+			headerComment+=headerComments+"\n";
+			headerComment+="Boards supported: "+supportedBoards+"*/\n\n";
+		}
 		return headerComment;	
 	}
-
+	
 	/**
 	 * Helper method to get the current date and return it as a string
 	 * for the header comment
@@ -143,15 +149,12 @@ public abstract class ArduinoClassMaster{
 	protected String [] parseMethod(String methodInfo){
 		MiniScanner methodReader=new MiniScanner();
 		methodReader.prime(methodInfo, "|");
-		String[] methodParts=new String[4];
-		methodReader.hasNext();
-		methodParts[0]=methodReader.next();//dataType
-		methodReader.hasNext();
-		methodParts[1]=methodReader.next();//name
-		methodReader.hasNext();
-		methodParts[2]=methodReader.next();//comment
-		methodReader.hasNext();
-		methodParts[3]=methodReader.next();//body
+		String[] methodParts=new String[5];
+		methodParts[0]=methodReader.next("dataType");//dataType
+		methodParts[1]=methodReader.next("name");//name
+		methodParts[2]=methodReader.next("parameters");//parameters
+		methodParts[3]=methodReader.next("comment");//comment
+		methodParts[4]=methodReader.next("body");//body
 		return methodParts;
 	}
 	

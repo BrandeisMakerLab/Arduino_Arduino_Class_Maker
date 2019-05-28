@@ -122,8 +122,120 @@ public class MiniScannerTest {
 		reader.prime("This:is:a:test", ":");
 		assertReader(reader,correct);
 		
+	
+		
+	}
+	
+	@Test
+	/**
+	 * asserts that the miniScanner can parse a method header
+	 * useful in creating arduino class from method body
+	 */
+	public void testReaderMethod() {
+		MiniScanner methodReader=new MiniScanner();
+		
+		//create array of correct strings
+		String []correct= {"void","loop(){"};
+		//set scanner to iterate over test string
+		methodReader.prime("void loop(){"," ");
+		//assert that the scanner will return the correct tokens
+		assertReader(methodReader,correct);
+		
+		//repeat for alternate method header
+		String[]correct2= {"void","loop","()","{"};
+		methodReader.prime("void loop () {", " ");
+		assertReader(methodReader,correct2);
+		
+		//repeat for alternate method header
+		String[]correct3= {"void","loop","(){"};
+		methodReader.prime("void loop (){", " ");
+		assertReader(methodReader,correct3);
 	}
 
+	@Test
+	/**
+	 * asserts that the next error checking method
+	 * throws an IllegalArgument exception when called and
+	 * there is no next String
+	 * useful in creating arduino class from method body
+	 */
+	public void testNextCheckError() {
+		MiniScanner reader=new MiniScanner();
+		reader.prime("noNextString", " ");
+		reader.next();
+		try {
+			reader.next("word");
+			//if an exception is not thrown, control flow will go to next line
+			fail("An Exception should have been thrown");
+		}catch(IllegalArgumentException e) {
+			assertEquals("Error, Expected word but not found",e.getMessage());
+		}
+	}
+
+	@Test
+	/**
+	 * Asserts that the getRets method returns the rest of base string
+	 */
+	public void testGetRest() {
+		MiniScanner reader=new MiniScanner();
+		reader.prime("This is a test"," ");
+		//consume the first word
+		reader.next("\"This\"");
+		//get the rest
+		String rest=reader.getRest();
+		assertEquals("is a test",rest);
+		
+	}
+	
+	@Test
+	/**
+	 * Asserts that the getUntil method returns the string up to but not including
+	 * the end token
+	 */
+	public void testGetUntil() {
+		MiniScanner reader=new MiniScanner();
+		reader.prime("( This is a test ) ;"," ");
+		//make sure first token is open paren
+		if(!reader.next().equals("(")) {
+			fail("First token should be open paren");
+		}
+		//get the rest
+		String rest=reader.getUntil(")");
+		assertEquals("This is a test",rest);
+		
+	}
+	
+	@Test
+	/**
+	 * asserts that the MiniScanner can ignore multiple tokens in a roq
+	 */
+	public void testMultitokens() {
+		//prime the MiniScanner with multi token input
+		MiniScanner reader=new MiniScanner();
+		reader.prime("a  b   c"," ");
+		//make sure MiniScanner can skip over multiple spaces
+		assertEquals("a",reader.next());
+		assertEquals("b",reader.next());
+		assertEquals("c",reader.next());
+	}
+	
+	@Test
+	/**
+	 * asserts that the MiniScanner will return a blank string if token is in a row
+	 * This is a special behavior because the token isn't a space, see Multitokens test
+	 */
+	public void testBlankInput() {
+		//prime the MiniScanner with multi token input
+		MiniScanner reader=new MiniScanner();
+		reader.prime("|a||b|c","|");
+		//make sure MiniScanner can return blank string
+		assertEquals("",reader.next());
+		assertEquals("a",reader.next());
+		assertEquals("",reader.next());
+		assertEquals("b",reader.next());
+		assertEquals("c",reader.next());
+	}
+	
 	/**
 	 * asserts that a given reader that has been primed matches
 	 * the array of expected results

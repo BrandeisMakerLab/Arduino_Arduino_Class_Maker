@@ -2,7 +2,6 @@ package client;
 import java.util.Scanner;
 
 import enums.ArduinoClassExample;
-import enums.ArduinoClassExample;
 import enums.SpecialChar;
 
 /**Name: Jacob Smith 
@@ -18,8 +17,8 @@ public class ArduinoClassClient implements Prompter {
 				//These fields are the minimum required to generate an arduino class
 				ArduinoClassClient client=new ArduinoClassClient();
 				//use any of examples
-				//client.simplestExample();
-				client.prompt();
+				client.simplestExample();
+				//client.prompt();
 				
 	}
 	
@@ -114,13 +113,13 @@ public class ArduinoClassClient implements Prompter {
 			//call helper method to display the generated files, array positions hardcoded
 			cont=new ArduinoClassContainer(userAnswers[0], userAnswers[1], userAnswers[2], true,userAnswers[3],userAnswers[4], userAnswers[5], userAnswers[6], userAnswers[7]);
 			System.out.println("loading...");
-			sleepNoError(7000);
+			sleepNoError(1000);
 			System.out.println(cont.getHeader()+"\n");
-			sleepNoError(7000);
+			sleepNoError(1000);
 			System.out.println(cont.getBody()+"\n");
-			sleepNoError(7000);
+			sleepNoError(1000);
 			System.out.println(cont.getKeywords()+"\n");
-			sleepNoError(7000);
+			sleepNoError(1000);
 			
 		}catch (Exception e){
 			System.out.println("Sorry, there was a formatting error in your input, couldn't make class");

@@ -17,12 +17,12 @@ public enum ExampleLineByLine implements PromptResponces{
 	    VARIABLES  		("type:-name:-description:","Does your class have a variable to enter? Y/N:",
 	    		"y\nlong\ninitTime\nThe beginning of the time interval\n"+
 	    		"y\nApple\ntest\na test variable for the parser\nn\n"),
-	    PRIVATEMETHODS  ("return type-name-description-body","do you have a private method to enter? Y/N","n\n"),
-	    PUBLICMETHODS 	("return type-name-description-body","do you have a public method to enter? Y/N",
+	    PRIVATEMETHODS  ("return type-name-parameters/null-description-body","do you have a private method to enter? Y/N","n\n"),
+	    PUBLICMETHODS 	("return type-name-parameters/null-description-body","do you have a public method to enter? Y/N",
 	    		"initTime=millis();\ndone\n"+
-	    		"y\nlong\nresetTime\nresets the Initial Time\ninitTime=millis();\nreturn getTime();\ndone\n"
-	    		+"y\nlong\ngetTime\nreturns the current time\nreturn millis()-initTime;\ndone\n"
-	    		+"y\nlong\ngetAndResetTime\nreturns the current time and the initial time\nlong curTime=getTime();\nresetTime();\nreturn curTime;\ndone\nn\n");
+	    		"y\nlong\nresetTime\nnull\nresets the Initial Time\ninitTime=millis();\nreturn getTime();\ndone\n"
+	    		+"y\nlong\ngetTime\nnull\nreturns the current time\nreturn millis()-initTime;\ndone\n"
+	    		+"y\nlong\ngetAndResetTime\nnull\nreturns the current time and the initial time\nlong curTime=getTime();\nresetTime();\nreturn curTime;\ndone\nn\n");
 	
 		private String prompt;
 		private String alternatePrompt;

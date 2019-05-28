@@ -14,18 +14,6 @@ import parsing.ArduinoParser;
  *  and if a field is null,and ask for variables,privateMethods,and public methods one
  *  at a time
  */
-/*CLASSNAME("Please enter the class name:", '0', false, null, false), AUTHOR("Please enter your name:", '0', false,
-			null, true), ORGANIZATION("Please enter your organization:", '0', false, null, true), HEADERCOMMENTS(
-					"Please enter a description of the class:", '0', true, null,
-					true), SUPPORTEDBOARDS("Please enter supported Boards/All", ' ', false, "all", false), VARIABLES(
-							"Please enter a variable\n...type or DONE\t   :-name\t   :-description:", '|', true, "null",
-							true), PRIVATEMETHODS(
-									"Please enter null or a private method...-\t\t\treturn type:-\t\t\tname:-\t\t\tdescription-body:",
-									'|', true, "NULL", true), PUBLICMETHODS(
-											"Please enter a public method...-\t\t\treturn type:-\t\t\tname:-\t\t\tdescription-body:",
-											'|', true, null, true);
- * 
- * */
 
 public enum ArduinoClassExample implements PromptResponces{
 	
@@ -40,11 +28,11 @@ public enum ArduinoClassExample implements PromptResponces{
     PRIVATEMETHODS  ("Please enter private methods or type|method name|comment|\nbody or null",null,false,true,true,true,"null"),
     PUBLICMETHODS 	("Please enter public methods or type|method name|comment|\nbody",
     		"initTime=millis();\n\n"+
-    		"long|resetTime|resets the Initial Time|\n"+
+    		"long|resetTime||resets the Initial Time|\n"+
     		"initTime=millis();\nreturn getTime();\n\n"+
-    		"long|getTime|returns the current time|\n"+
+    		"long|getTime||returns the current time|\n"+
     		"return millis()-initTime;\n\n"+
-    		"long|getAndResetTime|returns the current time and the initial time|\n"+
+    		"long|getAndResetTime||returns the current time and the initial time|\n"+
     		"long curTime=getTime();\nresetTime();\nreturn curTime;\n",false,true,true,true,null);
     
     //the hardcoded example of the field

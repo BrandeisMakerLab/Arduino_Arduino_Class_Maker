@@ -166,7 +166,37 @@ public enum ArduinoClassHardCoded {
     		"Timer	KEYWORD1\n"+
     		"resetTime	KEYWORD2\n"+
     		"getTime	KEYWORD2\n"+
-    		"getAndResetTime	KEYWORD2\n");//this newline would be hard to not generate
+    		"getAndResetTime	KEYWORD2\n"),
+    	HEADER_FILE_FEWERKEYWORDS(
+    			"/*A timer class to allow the user to create loops and maintain program control*/\n\n"
+    			
+    			+"//sets up the Timer Header file\n"
+    			+"#ifndef Timer_h\n"
+    			+"#define Timer_h\n\n"
+
+				+"//this should work on all boards, so there is no preprocessor directive here\n\n"
+
+				+"//includes the libraries of code necessary to make this one work\n"
+				+"#include <Timer.h>\n"
+				+"#include <Apple.h>\n\n"
+
+				+"class Timer{\n"
+				+"  private:\n"
+				+"    //the beginning time of the interval\n"
+				+"    long initTime;\n"
+				+"    //a test variable for the parser\n"
+				+"    Apple test;\n"
+				+"  public:\n"
+				+"    //Creates a new Timer object\n"
+				+"    Timer();\n"
+				+"    //resets the Initial Time\n"
+				+"    long resetTime();\n"
+				+"    //returns the current time\n"
+				+"    long getTime();\n"
+				+"    //returns the current time and the initial time\n"
+				+"    long getAndResetTime();\n"
+				+"};\n"
+				+"#endif");
     
     //a string to store the representation of the class
     private String hardCode;

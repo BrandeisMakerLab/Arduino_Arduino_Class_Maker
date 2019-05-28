@@ -38,24 +38,24 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 		arduinoClass+=super.generateBoardDefInitial(supportedBoards);
 		arduinoClass+=super.startLibraryIncludes(variables, className)+"\n";
 		//add an automatic comment for the constructor
-		publicMethods="|"+className+"|Creates a new "+className+" object|\n"+publicMethods;
+		publicMethods="|"+className+"||Creates a new "+className+" object|\n"+publicMethods;
 		arduinoClass+=generateMethods(className,publicMethods,true);
 		arduinoClass+=generateMethods(className,privateMethods,false);	
 		arduinoClass+=generateBoardDefFinal();
 	}
 		
 
-	/*Generates a method given the dataType, methodName, comment, and body*/
+	/*Generates a method given the dataType, methodName, parameters (which can be blank) comment, and body*/
 	protected String genMethod(String className,String []methodParts,boolean isPublic){
 		String methodString="";
-		methodString+="//"+methodParts[2]+"\n";//comment
+		methodString+="//"+methodParts[3]+"\n";//comment
 		methodString+=methodParts[0];//data type
 		//remove extra space for constructor
 		if(!methodParts[0].equals("")) {
 			methodString+=" ";
 		}
-		methodString+=className+"::"+methodParts[1]+"() {";//name
-		methodString+=ArduinoParser.insertTabs(methodParts[3],1,false);//body
+		methodString+=className+"::"+methodParts[1]+"("+methodParts[2]+") {";//name
+		methodString+=ArduinoParser.insertTabs(methodParts[4],1,false);//body
 		methodString+="\n}\n\n";
 		return methodString;
 		

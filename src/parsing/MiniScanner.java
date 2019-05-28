@@ -23,7 +23,6 @@ public class MiniScanner {
 	private String base;
 	private String token;
 	private int curIndex;
-
 	private String nextString;
 
 	/** instantiates a MiniScanner object */
@@ -72,7 +71,6 @@ public class MiniScanner {
 		this.token = token;
 		curIndex = 0;
 		primed = true;
-
 	}
 
 	/**
@@ -106,19 +104,31 @@ public class MiniScanner {
 			nextString = null;
 			return false;
 		}
-
-		// return whether there is a next instance of the token
-		int nextIndex = base.indexOf(token, curIndex);
-		boolean hasNextToken = nextIndex != -1;
-
+		//if the first token is a space
+		int offset=1;
+		if(curIndex==0 | !token.equals(" ")) {
+			offset=0;
+		}
+		int nextIndex=base.indexOf(token,curIndex+offset);
+		boolean hasNextToken=nextIndex!=-1;
+		
 		// if there is a next token, update nextString field return true
 		if (hasNextToken) {
+			//advance current index until the first 
 			nextString = base.substring(curIndex, nextIndex);
-			curIndex = nextIndex + token.length();
+			curIndex=nextIndex+1;
+			//if the token is a space, ignore multiple of them
+			//because spaces are more likely to be direct user input while
+			//bars are processed input
+			if(!token.equals(" ")) {return true;}
+			while(base.indexOf(token,nextIndex+1)==nextIndex+1) {
+				curIndex++;
+				nextIndex++;
+			}
 			return true;
 		}
 		// otherwise, see if you are at the last index
-		// and if you are update nextString with the rets of the string
+		// and if you are update nextString with the rest of the string
 		if (curIndex < base.length()) {
 			nextString = base.substring(curIndex, base.length());
 			curIndex = base.length();
@@ -150,13 +160,91 @@ public class MiniScanner {
 		return temp;
 
 	}
+	
+	/**
+	 * returns the next string, which will be null if there is no next string
+	 * @param tokenExpected the name of what the user is looking for to print in an error message
+	 * */
+	public String next(String tokenExpected) {
+		//call has next and report an error if not found
+		checkMissingToken(tokenExpected);
+		//if an exception was not thrown, call the next method as normal
+		return this.next();
 
+	}
+	/**
+	 * returns all of the rest of a string for when another method of parsing will be used
+	 * @return all the tokens left in the base string
+	 * */
+	public String getRest() {
+		//calls private helper method with parameters
+		//saying there is no end token, so return everything
+		return getRest(false,"");
+	}
+	
+	
+	
+	/**
+	 * iterates through the bas estring until end token is found, useful 
+	 * for parsing user input with known end token
+	 * @param endToken the token marking end of input stream
+	 * @return the tokens until and excluding the endToken
+	 */
+	public String getUntil(String endToken) {
+		return getRest(true,endToken);
+	}
+
+	/**
+	 * Hidden method to iterate through tokens
+	 * @param hasEndToken wheether an end token is specified
+	 * @param endToken, the endToken, ignored if hasNedToken is false
+	 * @return the rest of the tokens or the rest until end token
+	 */
+	private String getRest(boolean hasEndToken,String endToken) {
+		//whether the end token was found, always false if hasEndToken is false
+		boolean foundEndToken=false;
+		//temp, rest and prev will hold various parts of the string
+		String temp=this.next();
+		String rest=temp;
+		//add all of the next string with the token, fencepost
+		//and exit the loop if end token was found and there is one
+		while(this.hasNext() && !foundEndToken) {
+			//get the next word
+			temp=this.next();
+			//update whether the end token was found if there is an end token
+			if(hasEndToken && temp.equals(endToken)) {
+				foundEndToken=true;
+			}else {
+				//if end token not found, add the next word to the main string with a connecter
+				rest+=token+temp;
+			}
+		}
+		return rest;
+	}
+	
 	/** throws an exception if the user hasn't primed the MiniScanner */
 	private void checkPrimed() {
 		if (!primed) {
 			throw new IllegalArgumentException(
 					"Error, Scanner not primed. Maybe you called next an extra time?");
 		}
+	}
+	
+	/**
+	 * Used to throw an error message if a token is expected but not found
+	 * @param tokenName the name of the token to put in an error message
+	 */
+	private void checkMissingToken(String tokenName) {
+		if(!this.hasNext()) {
+			throw new IllegalArgumentException("Error, Expected "+tokenName+" but not found");
+		}
+	}
+	
+	/**
+	 *@return a String representation of the object
+	 */
+	public String toString() {
+		return this.base+"\tNext String:"+this.nextString;
 	}
 
 }

@@ -1,0 +1,216 @@
+/**Name: Jacob Smith
+  *Email:jsmith2021@brandeis.edu 
+  *Date: May 21, 2019
+  *Assignment:	Personal Study, Loads an Arduino Sketch to convert it to an arduino class
+  *This would support recommended workflow
+  *Bugs:
+  *Sources:https://stackoverflow.com/questions/15633228/how-to-remove-all-white-spaces-in-java/36444332
+  */
+package files;
+
+import parsing.ArduinoParser;
+import parsing.MiniScanner;
+import parsing.ParsedMethod;
+import parsing.VariableParser;
+
+public class SketchParser {
+	private String setupMethod;
+	private String loopMethod;
+	private String headerComment;
+	private String libraries;
+	private String variables;
+	private String publicMethods;
+	private String privateMethods;
+	
+	/**
+	 * creates a new sketchParser object
+	 * @param contents a string representing the sketch file to convert
+	 */
+	public SketchParser(String contents) {
+		
+		MiniScanner scanner=new MiniScanner();
+		scanner.prime(contents,"\n");
+		libraries="";
+		variables="";
+		String temp;
+		String comment;
+		String methods="";
+		headerComment="";
+		while(scanner.hasNext()) {
+			//get next line, and make sure it doens't have a newline character
+			temp=scanner.next().replaceAll("\n+", "");
+			//look for comment
+			if(temp.contains("//")) {
+				//remove comment characters and add to comment
+				comment=temp.substring(2, temp.length());
+				//update the temp with the next input
+				temp=scanner.next().replaceAll("\n", "");
+			//otherwise reset the comment string
+			}else {
+				comment="";
+			}
+			
+			//look for start of header comment
+			if(temp.contains("/*")) {
+				parseHeaderComment(temp,scanner);
+			//look for library	
+			} else if(temp.contains("#include")) {
+				libraries+=comment.trim()+"|"+temp.trim();
+			//check for setup method 
+			}else if (temp.contains("void setup()")) {
+				setupMethod=consumeAndFormatMethod(comment+temp,scanner);
+			//check for loop method
+			}else if (temp.contains("void loop()")) {
+				loopMethod=consumeAndFormatMethod(comment+temp,scanner);
+			//look for method, second clause is to rule out array declaration
+			}else if (temp.contains("{") && !temp.contains(";")) {
+				methods+=consumeAndFormatMethod(comment+temp,scanner);
+			//do nothing if character is a newline
+			}else if (temp.equals("\r")) {
+			//assume whatever is left is a variable because there are hard to stop
+			}else {
+				//use variableParser class to reformat the variable
+				VariableParser p=new VariableParser(comment,temp);
+				variables+=p.toString();
+			}	
+		}
+		
+		variables=variables.replaceAll("\r","");
+		variables=variables.replaceAll(";", "");
+		variables=variables.replaceAll("\r\r\r", "");
+		libraries=libraries.replaceAll("\r", "");
+		
+		//divide methods into public and private based on whether reffered to in setup and loop
+		//this has to be done after circular evaluation because the setup and loop methods need to be parsed first
+		MiniScanner methodReader=new MiniScanner();
+		MiniScanner nameReader=new MiniScanner();
+		String method;
+		publicMethods="";
+		privateMethods="";
+		String name;
+		methodReader.prime(methods,"\n\n");
+		while(methodReader.hasNext()) {
+			method=methodReader.next();
+			nameReader.prime(method,"|");
+			//ignore the data type
+			nameReader.next("Data Type");
+			name=nameReader.next("methodName");
+			if(setupMethod.contains(name)||loopMethod.contains(name)) {
+				publicMethods+=method+"\n\n";
+			}else {
+				privateMethods+=method+"\n\n";
+			}
+			
+		}
+		//create a constructor body for the constructor
+		publicMethods="\n\n"+publicMethods;
+	}
+	
+	/**
+	 * Parses the header comment
+	 * @param temp the string containing the first 
+	 * @param scanner the Scanner object that iterates over the class
+	 */
+	private void parseHeaderComment(String temp,MiniScanner scanner) {
+		headerComment="";
+		temp=ArduinoParser.removeSpecialChars(temp);
+		//keep adding the comment until the temp file is contained
+		while(!temp.contains("*/")) {
+			headerComment+=temp;
+			temp=scanner.next().replaceAll("\n", "");
+		}
+		//add the last comment
+		temp=ArduinoParser.removeSpecialChars(temp);
+		headerComment+=temp;
+		//remove formatting characters from header comment
+		headerComment=ArduinoParser.removeWhiteSpace(headerComment);
+	}
+	
+	/**
+	 * Parses a method from sketch String and returns formatted method string
+	 * @param temp the first line of the method
+	 * @param scanner the MiniScanner object that iterates over the sketch
+	 * @return a String representation of the method formatted for Arduino Class
+	 * Generator
+	 */
+	private static String consumeAndFormatMethod(String temp, MiniScanner scanner) {
+		//get the method into a string
+		String methodBody=consumeMethod(temp,scanner);
+		//format the method to be easily parsable
+		return formatMethod(methodBody);
+	}
+	
+	/**
+	 * Returns the method iterated over
+	 * @param temp the string containing the line
+	 * @param scanner the scanner which iterates over the sketch
+	 * @return the method represented as a string
+	 */
+	private static String consumeMethod(String temp,MiniScanner scanner) {
+		//a string of methods, used here as return and also to search for brackets
+		String method=temp;
+		//loop as long as the closing index isn't found yet
+		while(ArduinoParser.getClosingIndex(method, 0)==-1) {
+			//get a new string to search
+			temp=scanner.next();
+			//add the temp string to the method string
+			method+=temp;
+		}
+		//add last line
+		temp=temp.replaceAll("\r","");
+		//duck tape fix for extra bracket
+		temp=temp.replaceAll("}", "");
+		method+=temp;
+		return method;
+	}
+	
+	/**
+	 * 
+	 * @param methodString a string representation of the method
+	 * @return a formatted version of the method suitable for Arduino class generator
+	 */
+	private static String formatMethod(String methodString) {
+		//create a parsed method object to format the method string
+		ParsedMethod p=new ParsedMethod(methodString);
+		//retunr the tostring of parsedMethod object
+		return p.toString();
+	}
+	
+	
+	/**
+	 * Reads a sketch from computer memory, and parses it into
+	 * the necessary fields to generate an arduino class 
+	 * @param args not used
+	 */
+	public static void main(String[] args) {
+	
+		System.out.println("Example of ScriptEditor Class");
+		System.out.println("This program will load a file from memory, add a line, and save the file");
+
+		System.out.println("Reading to file");
+		ScriptEditor helper = new ScriptEditor("WifiExample.txt");
+		
+		System.out.println("Getting Contents");
+		String contents = helper.getContents();
+		//System.out.print(contents);
+
+		SketchParser parser=new SketchParser(contents);
+		System.out.println(parser);
+		
+		System.out.println("Now writing to file");
+		//helper.writeFile(contents + "This was added to the file\r\n");
+	}
+	
+	/**
+	 * @return a string representation of the class
+	 */
+	public String toString() {
+		return "HEADER<"+headerComment+">\n"
+				+"LIBRARIES<"+libraries+">\n"
+				+"SETUPMETHOD<"+setupMethod+">\n"
+				+"LOOPMETHOD<"+loopMethod+">\n"
+				+"PUBLICMETHODS <"+publicMethods+">\n"
+				+"PRIVATEMETHODS<"+privateMethods+">\n"
+				+"Variables<"+variables+">\n";
+	}
+}

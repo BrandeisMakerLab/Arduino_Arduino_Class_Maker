@@ -57,7 +57,9 @@ public class ArduinoClassPrompter implements Prompter {
 		//remove trailing whitespace
 		responces[4]=responces[4].trim();
 		responces[5]=getVariables(reader);
+		//read private method information from console
 		responces[6]=getMethod(reader,ExampleLineByLine.PRIVATEMETHODS);
+		//read public method information from console
 		//add constructor to public methods
 		System.out.println("Please enter constructor body");
 		responces[7]="";
@@ -94,7 +96,7 @@ public class ArduinoClassPrompter implements Prompter {
 	}
 	
 	/**
-	 * 
+	 * Prompts the user to enter information to create a method
 	 * @param reader the scanner used to read keyboard input
 	 * @param example the enum which holds the prompts to display
 	 * @return the user's input formatted to make an Arduino Class
@@ -203,9 +205,23 @@ public class ArduinoClassPrompter implements Prompter {
         	stop=2;
         }
 		String input = "";
+		//create null string to test if input is null with and avoid nullpointer exception
+		String nullString="null";
+		//store input so it can be checked for null
+		String temp;
+		//iterate through prompts and get user input
 		for (int i = 0; i < prompts.length - stop; i++) {
+			//display prompt for field
 			System.out.print(prompts[i]);
-			input += readField(reader, false) + internalToken;
+			//read the field into temp variable
+			temp=readField(reader,false);
+			//allow input to be null if it is the parameters
+			if(i==2 && nullString.equals(temp)) {
+				input+=internalToken;
+			//otherwise, put user input into input
+			}else {
+				input+=temp+internalToken;
+			}
 		}
 		// allow spaces for the last input because it is comment
 		System.out.print(prompts[prompts.length - stop]);

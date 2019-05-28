@@ -1,0 +1,418 @@
+ package enums;
+
+import java.util.Scanner;
+
+import parsing.Validator;
+
+/**
+ * Name: Jacob Smith Email:jsmith2021@brandeis.edu Assignment: Personal Study,
+ * an enum of class fields with user prompts and error messages. This enum
+ * allows all of the field information to be in one place, encapsulation Date:
+ * May 15, 2019 Sources:
+ * https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html Bugs: notes:
+ * enum has nice automatic toString, name field
+ */
+
+public enum ArduinoClassPrompts {
+	// the user prompt, along with the internal parsing character and whether the
+	// field is many lines
+	CLASSNAME("Please enter the class name:", '0', false, null, false), AUTHOR("Please enter your name:", '0', false,
+			null, true), ORGANIZATION("Please enter your organization:", '0', false, null, true), HEADERCOMMENTS(
+					"Please enter a description of the class:", '0', true, null,
+					true), SUPPORTEDBOARDS("Please enter supported Boards/All", ' ', false, "all", false), VARIABLES(
+							"Please enter a variable\n...type or DONE\t   :-name\t   :-description:", '|', true, "null",
+							true), PRIVATEMETHODS(
+									"Please enter null or a private method...-\t\t\treturn type:-\t\t\tname:-\t\t\tdescription-body:",
+									'|', true, "NULL", true), PUBLICMETHODS(
+											"Please enter a public method...-\t\t\treturn type:-\t\t\tname:-\t\t\tdescription-body:",
+											'|', true, null, true);
+
+	public final String prompt;// the prompt for the user
+	private final char internalToken;
+	private final boolean multiLine;
+	private final String alternateResponce;
+	public static final String[] alternateResponces = { "all", "null" };
+	private final boolean allowSpaces;
+
+	/*
+	 * A private constructor to create an enum with prompt
+	 */
+	ArduinoClassPrompts(String prompt, char internalToken, boolean multiLine, String alternateResponce,
+			boolean allowSpaces) {
+		this.prompt = prompt;
+		this.internalToken = internalToken;
+		this.multiLine = multiLine;
+		this.alternateResponce = alternateResponce;
+		this.allowSpaces = allowSpaces;
+	}
+
+	/**
+	 * reads user input, looping until valid input
+	 * 
+	 * @param reader
+	 *            the scanner which will read user input
+	 * @param allowSpaces
+	 *            whether spaces are allowed, as in a comment
+	 * @param allowAlternateInput
+	 *            whether alternateInput should be allowed
+	 * @return valid user input or null if user entered a valid exit condition
+	 */
+	private String readField(Scanner reader, boolean allowAlternateInput, boolean allowSpaces, boolean allowDone) {
+		String input = "";
+		String message = "dummy";
+		boolean enteredDone;
+		// keep asking for user input until correct
+		while (message != null) {
+			input = reader.nextLine();
+			enteredDone = input.toLowerCase().contains("done");
+			if (allowDone && enteredDone) {
+				return null;
+			} else if (!allowDone && enteredDone) {
+				message = "not allowed to enter done";
+				// check if alternate input is allowed, if so update forbidden words
+			} else if (allowAlternateInput) {
+				// get an error message with updated forbidden words, because somtimes the user
+				// is allowed to enter an alternateInput
+				message = Validator.getErrorMessage(input, allowSpaces, updateAlternateResponces());
+			} else {
+				message = Validator.getErrorMessage(input, allowSpaces, alternateResponces);
+			}
+
+			if (message != null) {
+				System.out.print(message + ":");
+			}
+		}
+		return input;
+	}
+
+	private String[] updateAlternateResponces() {
+		// if there is no alternate responce, there is no need to update the alternate
+		// responces
+		if (alternateResponce == null) {
+			return alternateResponces;
+		}
+		// create a new array of forbidden words
+		String[] updatedForbiddenWords = new String[alternateResponces.length];
+		for (int i = 0; i < alternateResponces.length; i++) {
+			updatedForbiddenWords[i] = alternateResponces[i];
+		}
+
+		// iterate through alternate responces array, removing the allowed alternate
+		// responce
+		for (int i = 0; i < updatedForbiddenWords.length; i++) {
+			// calling in this order avoids null pointer exception
+			if (updatedForbiddenWords[i].equals(alternateResponce)) {
+				updatedForbiddenWords[i] = null;
+			}
+		}
+
+		// recopy the forbidden words array to remove null value
+		String[] temp = new String[alternateResponces.length - 1];
+		int tempSize = 0;
+		for (int i = 0; i < updatedForbiddenWords.length; i++) {
+			if (updatedForbiddenWords[i] != null) {
+				temp[tempSize] = updatedForbiddenWords[i];
+				tempSize++;
+			}
+		}
+		// return the forbidden words array
+		return temp;
+	}
+
+	/**
+	 * Prompts the user to enter line by line input for the specific field
+	 */
+	public String prompt(Scanner reader) {
+		String responce = "";
+		// simplest input, no internal structure and only one line
+		if (internalToken == '0' && !multiLine) {
+			System.out.print(prompt);
+			return readField(reader, false, this.allowSpaces, false);
+			// nect simplest input, if there is multiple lines but
+			// no internal structure required
+		} else if (internalToken == '0' && multiLine) {
+			System.out.print(prompt + "\n\t\t\t");
+			return readMultiInput(reader, '\n', true, null);
+			// next most complicated, if there is one line input and internal parsing
+			// this is just like a multi line input where the individual
+			// responces are separated by spaces instead of newLines
+		} else if (internalToken != '0' && !multiLine) {
+			System.out.print(prompt + "\n\t\t\t");
+			return readMultiInput(reader, internalToken, true, null);
+			// most complicated case, if there are multiple lines of input and they need to
+			// be strung together
+		} else if (internalToken != '0' && multiLine) {
+			String[] prompts = prompt.split("-");
+			System.out.print(prompts[0]);
+			return readMultiInput(reader, '\n', false, prompts);
+		}
+		return responce;
+	}
+
+	/**
+	 * helper method to read and put together many lines of user input this is for
+	 * when you don't know how many lines of user input will be entred
+	 * 
+	 * @param prompts
+	 *            an array of prompts for the user to enter
+	 * @return the compiled user responce for that field
+	 */
+	private String readMultiInput(Scanner reader, char connecter, boolean singleField, String[] prompts) {
+		String responce = "";
+		String temp = readField(reader, true, this.allowSpaces, true);
+		// if there is an alternate responce and the user entered it, return that
+		// responce
+		if (alternateResponce != null && temp.toLowerCase().equals(alternateResponce)) {
+			return temp;
+		}
+
+		// loop exit variable
+		boolean done = false;
+		// keeps track of initalization of loop, so the previous next line can be
+		// readonce
+		int numLoops = 0;
+		while (!done) {
+			// if past first loop, read new user responce
+			if (numLoops > 0) {
+
+				// if there are no predifned prompts, read each field individually
+				if (prompts == null) {
+					System.out.print("\tEnter next field or DONE");
+					temp = readField(reader, false, this.allowSpaces, true);
+					// if there are prompts, go to read prompts predefined
+				} else {
+					temp = readMultiInputPredefined(reader, prompts, numLoops);
+				}
+			}
+			// see if user entered exit condition by checking if message is null
+			if (temp == null) {
+				done = true;
+			} else {
+				responce += temp + connecter;
+			}
+			numLoops++;
+		}
+		return responce;
+
+	}
+
+	/**
+	 * Prompts the user for input of predifned length
+	 * 
+	 * @param prompts
+	 *            a string of pro
+	 * @param reader
+	 *            the scanner used for user input
+	 * @param firstPass
+	 *            whether the function should displlay and read the first prompt
+	 * @return user input
+	 */
+	private String readMultiInputPredefined(Scanner reader, String[] prompts, int loopCounts) {
+		String input = "";
+		if (loopCounts > 1) {
+			System.out.print(prompts[0]);
+			input = readField(reader, false, false, true);
+		}
+		for (int i = 1; i < prompts.length - 1; i++) {
+			System.out.print(prompts[i]);
+			input += readField(reader, false, false, false) + internalToken;
+		}
+		// allow spaces for the last input because it is comment
+		System.out.print(prompts[prompts.length - 1]);
+		input += readField(reader, false, true, false);
+		return input;
+	}
+
+	/**
+	 * ` Displays capabilities of the enum
+	 */
+	public static void main(String[] args) {
+		Scanner reader = new Scanner(System.in);
+		System.out.println(ArduinoClassPrompts.VARIABLES.prompt(reader));
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Prints out the different enums, prompts, and formatting contained in this class");
+		for (ArduinoClassPrompts a : ArduinoClassPrompts.values()) {
+			System.out.println(a);
+		}
+		System.out.println("Displays the classes ability to prompt the user\n\n\n");
+
+		String responce;
+
+		for (ArduinoClassPrompts a : ArduinoClassPrompts.values()) {
+
+			responce = a.prompt(reader);
+			System.out.println("RESPONCE RECIEVED:\n" + responce);
+		}
+
+		// responce=ArduinoClassPrompts.VARIABLES.prompt(reader);
+		// System.out.println("I KNOW HAVE\n"+responce);
+
+	}
+
+	/**
+	 * returns a string representation of the enum, with name, prompt, and format
+	 */
+	public String toString() {
+		String enumString = "";
+		enumString += this.name();
+		enumString += "\n\t" + prompt + "\n";
+		return enumString;
+	}
+
+}
+ 
+ 
+ CLASSNAME 		("Please enter the class name:",null,"Submarine"),
+	    AUTHOR   		("Please enter your name:",null,"John Cena"),
+	    ORGANIZATION   	("Please enter your organization:",null,"Brandeis Robotics Club"),
+	    HEADERCOMMENTS 	("Please enter a description of the class\n\t\t\t",null,"A submarine class to allow the user to drive an underwater robot\nPlease see documentation online\ndone"),
+	    SUPPORTEDBOARDS	("Please enter supported boards\n\t\t",null,"ARDUINO_AVR_UNO\nESP8266_WEMOSD1R1\ndone"),
+	    VARIABLES  		("type:-name:-description:","Does your class have a variable to enter? Y/N:",
+	    		"y\nint\nswimTime\nHow long the submarine has been swimming for\n"+
+	    		"y\nString\ndirection\nThe direction the submarine is swimming\nn"),
+	    PRIVATEMETHODS  ("return type-name-description-body","do you have a private method to enter? Y/N","y\nvoid\naddTime\nincrements the swim time\nswimTime+=10;\ndone\nn"),
+	    PUBLICMETHODS 	("return type-name-description-body","do you have a public method to enter? Y/N",
+	    		"direction=null;\nswimTime=0;\ndone\n"+
+	    		"y\nvoid\nswimForward\nsets the submarine to swim forward\naddTime();\nSetPin(SWIM,FORWARD);\ndirection=\"FORWARD\";\ndone\n"
+	    		+"y\nvoid\nswimBackward\nsets the submarine to swim backward\naddTime();\nSetPin(SWIM,BACKWARD);\ndirection=\"BACKWARD\";\ndone\n"
+	    		+"y\nString\ngetDirection\nreturns the direction the robot is driving\nreturn direction;\ndone\nn");
+
+
+/**Name: Jacob Smith
+  *Email:jsmith2021@brandeis.edu 
+  *Date: May 17, 2019
+  *Assignment:	
+  *Bugs:
+  *Sources:
+  */
+package enums;
+
+import java.util.Scanner;
+
+public class test {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		String s=String.valueOf(true);
+		System.out.println(s);
+		if(s.equals("true")) {
+			System.out.println("this is how this works");
+		}
+	}
+	
+	/**
+	 * prompts the user for input, necessary because some prompts can be many lines
+	 * returns the string the user entered
+	 */
+	public String prompt(Scanner reader) {
+		System.out.print(prompt + ":");
+		// if the responce isn't over multiple lines and internal parsing is required,
+		// call readMultiInput method to ask line by line and string together with the
+		// token
+		if (!multiLine && internalToken != '0') {
+			return readMultiInput(reader, internalToken, 0)[0];
+			// if the responce is over multiple lines and does not require internal parsing,
+			// call multi input method to ask user input line by line and string results
+			// together
+		} else if (multiLine && internalToken == '0'){
+			return readMultiInput(reader, '\n', 0)[0];
+			// if the input is over multiple lines and requires internal parsing,
+			// call recursive read multiinput method
+		} else if (multiLine && internalToken != '0') {
+			System.out.println();
+			return readMultiInput(reader, '\n', 1)[0];
+		} else {
+			return reader.nextLine();
+		}
+	}
+	/**
+	 * reads multi input from the user and strings answers together with special
+	 * character
+	 * @return an array of strings with messsage in first element and escape sequence in second element
+	 */
+	private String[] readMultiInput(Scanner reader, char connecter, int recursions) {
+		String newLinePrompt = "next line/DONE/DONE*:";
+		boolean done = false;
+		boolean escape=false;
+		boolean firstTime=true;
+		String input = "";
+		String line = "";
+		if(recursions==0) {
+			
+		}
+		
+		while (!done &&!escape) {
+			//if the loop has gone around already, add it with a connector
+			if(!firstTime) {
+				input += line+connecter;
+			}
+			//if at base case, reas scanner input and check for flags
+			if (recursions == 0) {
+				System.out.print(newLinePrompt);
+				line = reader.nextLine();
+				done=line.toUpperCase().contains("DONE");
+				escape=line.contains("*");
+			//if returnee from base case, check for flags
+			} else {
+				//load line and escape from vector returned by readMultiInput
+				String []vector= readMultiInput(reader, internalToken, recursions - 1);
+				line=vector[0];
+				escape=vector[1].equals("true");
+			}
+			firstTime=false;
+		}
+		//add input to last iteration of the loop if it isn't done
+		if((!done && !escape) |recursions>0) {
+			input += connecter + line;
+		}
+		//load vector into an array so the string and escape can be returned
+		String[]vector=new String[2];
+		vector[0]=input;
+		vector[1]=String.valueOf(escape);
+		return vector;
+
+	}
+
+	/** Prompts the user to enter line by line input for the specific field
+	 */
+	public String prompt(Scanner reader) {
+		String responce="";
+		//simplest input, no internal structure and only one line
+		if(internalToken=='0' && !multiLine) {
+			System.out.print(prompt);
+			responce=reader.nextLine();
+		//nect simplest input, if there is multiple lines but
+		//no internal structure required
+		}else if (internalToken=='0'&& multiLine) {
+			boolean done=false;
+			boolean allowExit=false;
+			String temp="dummy";
+			System.out.print(prompt+"\n\t\t\t");
+			while(!done) {
+				temp=reader.nextLine();
+				if(temp.toLowerCase().equals("done") && allowExit) {
+					done=true;
+				}else {
+					responce+=temp+"\n";
+					//only allow the user to escape after one pass of the loop,
+					//so they can't type done immediately
+					allowExit=true;
+					System.out.print("\tnext line or done:");
+				}
+			}
+		//next most complicated, if there is one line input and internal parsing
+		}else if (internalToken!='0' && !multiLine) {
+			
+		}else {
+			System.out.println("Not programmed yet");
+		}
+		return responce;
+	}
+}

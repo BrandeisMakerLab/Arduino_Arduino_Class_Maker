@@ -69,7 +69,7 @@ public class ArduinoClassH extends ArduinoClassMaster {
 		arduinoClass += generateVariables(variables);
 		arduinoClass += generateMethods(className, privateMethods, false);
 		// add an automatic comment for the constructor
-		publicMethods = "|" + className + "|Creates a new " + className
+		publicMethods = "|" + className + "||Creates a new " + className
 				+ " object|\n" + publicMethods;
 		arduinoClass += "  public:\n";
 		arduinoClass += generateMethods(className, publicMethods, true);
@@ -144,12 +144,9 @@ public class ArduinoClassH extends ArduinoClassMaster {
 		String varLine = "";
 		MiniScanner readerB = new MiniScanner();
 		readerB.prime(line, "|");
-		readerB.hasNext();
-		varLine += "    " + readerB.next() + " ";// data type
-		readerB.hasNext();
-		varLine += readerB.next() + ";\n";// var Name
-		readerB.hasNext();
-		varLine = "    //" + readerB.next() + "\n" + varLine;// comment
+		varLine += "    " + readerB.next("data type") + " ";// data type
+		varLine += readerB.next("var name") + ";\n";// var Name
+		varLine = "    //" + readerB.next("comment") + "\n" + varLine;// comment
 		return varLine;
 
 	}
@@ -158,7 +155,8 @@ public class ArduinoClassH extends ArduinoClassMaster {
 	protected String genMethod(String className, String[] methodParts,
 			boolean isPublic) {
 		String methodString = "";
-		methodString += "    //" + methodParts[2] + "\n";// comment
+		//add comment
+		methodString += "    //" + methodParts[3] + "\n";// comment
 		if (!methodParts[0].equals("")) {
 			methodString += " ";
 		}
@@ -170,7 +168,7 @@ public class ArduinoClassH extends ArduinoClassMaster {
 															// a constructor
 			keywords += methodParts[1] + "\tKEYWORD2\n";
 		}
-		methodString += "   " + methodParts[0] + " " + methodParts[1] + "();\n";// data
+		methodString += "   " + methodParts[0] + " " + methodParts[1] + "("+methodParts[2]+");\n";// data
 																				// type,name
 		return methodString;
 
