@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import enums.ArduinoClassExample;
 import testBackgroundCode.AssertMethods;
 
 
@@ -214,9 +215,8 @@ public class MiniScannerTest {
 		MiniScanner reader=new MiniScanner();
 		reader.prime("a  b   c"," ");
 		//make sure MiniScanner can skip over multiple spaces
-		assertEquals("a",reader.next());
-		assertEquals("b",reader.next());
-		assertEquals("c",reader.next());
+		String [] correctTokens={"a","b","c"};
+		assertReader(reader,correctTokens);
 	}
 	
 	@Test
@@ -229,13 +229,25 @@ public class MiniScannerTest {
 		MiniScanner reader=new MiniScanner();
 		reader.prime("|a||b|c","|");
 		//make sure MiniScanner can return blank string
-		assertEquals("",reader.next());
-		assertEquals("a",reader.next());
-		assertEquals("",reader.next());
-		assertEquals("b",reader.next());
-		assertEquals("c",reader.next());
+		String[]correctTokens={"","a","","b","c"};
+		assertReader(reader,correctTokens);
 	}
 	
+	@Test
+	/**
+	 * asserts that the MiniScanner will be able to parse methods
+	 * in the format of the Arudino Class Generator
+	 */
+	public void testMethodParsing() {
+		//prime the MiniScanner with multi token input
+		MiniScanner reader=new MiniScanner();
+		reader.prime(ArduinoClassExample.PUBLICMETHODS.toString(),"\n\n");
+		//make sure MiniScanner can return blank string
+		String [] correctTokens= {"initTime=millis();","long|resetTime||resets the Initial Time|\n",
+		"initTime=millis();\nreturn getTime();","long|getTime||returns the current time|\n","return millis()-initTime;"
+		,"long|getAndResetTime||returns the current time and the initial time|\n","long curTime=getTime();\nresetTime();\nreturn curTime;\n"};
+		assertReader(reader,correctTokens);
+	}
 	/**
 	 * asserts that a given reader that has been primed matches
 	 * the array of expected results
@@ -252,7 +264,7 @@ public class MiniScannerTest {
 			//if there is a next token, return false
 			boolean result;
 			if(reader.hasNext()){
-				assertEquals(false,true);//there shouldn't be a next token
+				fail("there shouldn't be a next token");
 			}else{
 				result=AssertMethods.arrEquals(parsed,correct);
 				assertEquals(result,true);

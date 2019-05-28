@@ -85,3 +85,4 @@ is forcing me to add some features like adding constructor and adding method par
 		1:13 PM: [Android App for Physip] Arduino Auto format inserts spaces but doesn't remove them, I'll have todo that on my own, which should be using the MiniScanner class internally
 		
 		3:07 PM May 28 2019: I got the MiniScanner to allow it to ignore multiple tokesn in input, but now a lot of other unit tests fail
+		6:58 PM: I spent a lot of time today trying to get rid of scanner errors, put the project on github so I wouldn't have to redo my work again

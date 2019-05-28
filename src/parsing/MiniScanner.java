@@ -105,9 +105,9 @@ public class MiniScanner {
 			return false;
 		}
 		//if the first token is a space
-		int offset=1;
+		int offset=0;
 		if(curIndex==0 | !token.equals(" ")) {
-			offset=0;
+			offset=token.length()-1;
 		}
 		int nextIndex=base.indexOf(token,curIndex+offset);
 		boolean hasNextToken=nextIndex!=-1;
@@ -116,7 +116,7 @@ public class MiniScanner {
 		if (hasNextToken) {
 			//advance current index until the first 
 			nextString = base.substring(curIndex, nextIndex);
-			curIndex=nextIndex+1;
+			curIndex=nextIndex+token.length();
 			//if the token is a space, ignore multiple of them
 			//because spaces are more likely to be direct user input while
 			//bars are processed input
