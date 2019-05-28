@@ -243,9 +243,9 @@ public class MiniScannerTest {
 		MiniScanner reader=new MiniScanner();
 		reader.prime(ArduinoClassExample.PUBLICMETHODS.toString(),"\n\n");
 		//make sure MiniScanner can return blank string
-		String [] correctTokens= {"initTime=millis();","long|resetTime||resets the Initial Time|\n",
-		"initTime=millis();\nreturn getTime();","long|getTime||returns the current time|\n","return millis()-initTime;"
-		,"long|getAndResetTime||returns the current time and the initial time|\n","long curTime=getTime();\nresetTime();\nreturn curTime;\n"};
+		String [] correctTokens= {"initTime=millis();","long|resetTime||resets the Initial Time|\n"
+		+"initTime=millis();\nreturn getTime();","long|getTime||returns the current time|\n"+"return millis()-initTime;"
+		,"long|getAndResetTime||returns the current time and the initial time|\n"+"long curTime=getTime();\nresetTime();\nreturn curTime;\n"};
 		assertReader(reader,correctTokens);
 	}
 	/**
