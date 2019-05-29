@@ -1,6 +1,20 @@
 # ArduinoClassMaker
 
-# Rationale
+## Quick Description
+
+A set of java programs to automatically generate arduino library header, body, keywords, and example sketch from a working Arduino .ino sketch.
+
+## Instructions For Use
+
+Click on Runme.jar, which will allow the user to enter the name of the class to generate and the file path it is in.
+
+![RunMe dialogue](C:\Users\jsmit\Documents\ArduinoClassMaker\documentation\RunMeDialogue.PNG | width=100)
+
+When you click on the body, these editable files are displayed:
+
+​	![Generated Classes](C:\Users\jsmit\Documents\ArduinoClassMaker\documentation\GeneratedClasses.PNG | width=100)
+
+## Rationale
 
 **BACKGROUND:** I have been researching this question, and I haven't found any tool that generates Arduino Libraries. [Sloeber](http://eclipse.baeyens.it/installAdvice.shtml)  is a great IDE, providing autocomplete, automatic library includes, and other professional features.
 
@@ -18,5 +32,5 @@ Then, my Java program generates a cpp (Morse.cpp), .h (Morse.h), keywords (Morse
 
 **FUTURE WORK:** If continuing with the project, I would create new files in the correct file structure and format to be shared on [the Arduino class manager](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ). This would allow the user to share their code even more easily.
 
-# Instructions For Use
+
 
