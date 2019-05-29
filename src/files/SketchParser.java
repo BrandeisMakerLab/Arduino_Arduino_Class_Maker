@@ -207,7 +207,8 @@ public class SketchParser {
 	
 		SketchParser parser=new SketchParser(contents);
 		//System.out.println(parser);
-		
+		ScriptEditor writer=new ScriptEditor("MorseParsedExample.txt");
+		writer.writeFile(parser.toString());
 		//temp
 		ArduinoClassContainer cont=parser.getContainer(false);
 		System.out.println("BODY FILE\n"+cont.getBody());

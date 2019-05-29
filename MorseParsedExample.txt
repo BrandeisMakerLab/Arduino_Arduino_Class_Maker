@@ -1,0 +1,31 @@
+
+HEADER: 
+LIBRARIES: 
+SETUPMETHOD: void|setup|||
+pinMode(pin, OUTPUT);
+
+
+LOOPMETHOD: void|loop|||
+dot(); dot(); dot();
+dash(); dash(); dash();
+dot(); dot(); dot();
+delay(3000);
+
+
+PUBLICMETHODS: 
+
+void|dot|||
+digitalWrite(pin, HIGH);
+delay(250);
+digitalWrite(pin, LOW);
+delay(250);
+
+void|dash|||
+digitalWrite(pin, HIGH);
+delay(1000);
+digitalWrite(pin, LOW);
+delay(250);
+
+
+PRIVATEMETHODS: 
+VARIABLES: int|pin||13|

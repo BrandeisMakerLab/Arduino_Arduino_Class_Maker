@@ -17,26 +17,44 @@ public class SketchParserTest {
 
 	@Test
 	/**
-	 * Reads a sketch from computer memory, and parses it into
-	 * the necessary fields to generate an arduino class 
+	 * asserts behavior for Wifi example sketch
+	 * which is very long, and contains different kinds of fields
 	 * @param args not used
 	 */
-	public void testSketchConversion() {
+	public void testSketchConversionWifi() {
+		compareSketch("WifiExample.txt","SketchParserExample.txt");
+	}
+	
+	@Test
+	/**
+	 * asserts behavior for Morse exmaple sketch, which has missing comments
+	 * and the newline coding style
+	 * @param args not used
+	 */
+	public void testSketchConversionMorse() {
+		compareSketch("Morse.txt","MorseParsedExample.txt");
+	}
+	
+	/**
+	 * Helper test method to sue a file to check sketch parsing
+	 * @param exampleSketch the file containing the sketch to be parsed
+	 * @param parsedExampleSketch the file containing the correctly parsed fields
+	 */
+	private void compareSketch(String exampleSketch,String parsedExampleSketch) {
 		//load the Example Sketch from file
-		ScriptEditor helper = new ScriptEditor("WifiExample.txt");
+		ScriptEditor helper = new ScriptEditor(exampleSketch);
 		String contents = helper.toString();
 		//create SketchParser object to get fields from sketch
 		SketchParser parser=new SketchParser(contents);
 		String generatedFields=parser.toString();
 		//load correct fields from memory
-		ScriptEditor correctFile=new ScriptEditor("SketchParserExample.txt");
+		ScriptEditor correctFile=new ScriptEditor(parsedExampleSketch);
 		String correctFields=correctFile.toString();
 		//replace special characters necessary for file comparisons
 		correctFields=correctFields.replaceAll("\r", "");
 		generatedFields=generatedFields.replaceAll("\r", "\n");
 		//assert the the correct fields equal the generated fields
 		assertEquals(correctFields,generatedFields);
-			
 	}
 
 }
