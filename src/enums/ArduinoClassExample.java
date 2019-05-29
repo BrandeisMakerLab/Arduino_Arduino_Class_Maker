@@ -34,6 +34,7 @@ public enum ArduinoClassExample implements PromptResponces{
     		"return millis()-initTime;\n\n"+
     		"long|getAndResetTime||returns the current time and the initial time|\n"+
     		"long curTime=getTime();\nresetTime();\nreturn curTime;\n",false,true,true,true,null);
+	//String prompt,String example,boolean enforceSpaces,boolean enforceBars,boolean enforceNewLines,boolean multiplePrompt,String alternateForm
     
     //the hardcoded example of the field
 	private String prompt;

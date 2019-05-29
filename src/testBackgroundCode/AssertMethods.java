@@ -10,6 +10,9 @@
  */
 package testBackgroundCode;
 
+import static org.junit.Assert.assertEquals;
+
+import files.ScriptEditor;
 
 public class AssertMethods {
 
@@ -59,6 +62,22 @@ public class AssertMethods {
 		}else{
 			return getErrorCompare(a,diffIndex);
 		}
+	}
+	
+	/**
+	 * Helper method to assert that a string matches the contents of a file
+	 * @param fileName the name of the file containing the correct example
+	 * @param generatedString the string to compare the file to
+	 */
+	public static void compareFiletoString(String fileName,String generatedString) {
+		//load the Example Sketch from file
+		ScriptEditor helper = new ScriptEditor(fileName);
+		String correctString = helper.toString();
+		//replace special characters necessary for file comparisons
+		correctString=correctString.replaceAll("\r", "");
+		generatedString=generatedString.replaceAll("\r", "\n");
+		//assert the the correct fields equal the generated fields
+		assertEquals(correctString,generatedString);
 	}
 	
 	/**
