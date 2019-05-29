@@ -194,18 +194,18 @@ public class SketchParser {
 		System.out.println("and parse the sketch into relevant fields for a library");
 
 		System.out.println("Reading the file");
-		ScriptEditor helper = new ScriptEditor("Morse.ino");
+		ScriptEditor helper = new ScriptEditor("ESPServer.ino");
+		
 		
 		System.out.println("Getting Contents");
 		String contents = helper.toString();
-	
+		System.out.println(contents);
+		
 		SketchParser parser=new SketchParser(contents);
 		System.out.println(parser);
 		//temp
 		ArduinoClassContainer cont=parser.getContainer("ESPServer",false);
-		System.out.println("BODY FILE\n"+cont.getBody());
-		System.out.println("HEADER FILE\n"+cont.getHeader());
-		System.out.println("KEYWORDS FILE\n"+cont.getKeywords());
+		System.out.println(cont);
 	}
 	
 	/**

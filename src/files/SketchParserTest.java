@@ -73,12 +73,15 @@ public class SketchParserTest {
 		String correctHeader=helper3.toString().replaceAll("\r", "");
 		ScriptEditor helper4 = new ScriptEditor(className+"Keywords.txt");//was WifiExample.txt
 		String correctKeywords=helper4.toString().replaceAll("\r", "");
+		ScriptEditor helper5 = new ScriptEditor(className+"ExampleFile.ino");//was WifiExample.txt
+		String correctExample=helper5.toString().replaceAll("\r", "");
 		
 		//assert the the correct fields equal the generated fields
 		//duck tape, I don't know why I have to trim header and body
 		assertEquals(correctHeader.trim(),cont.getHeader());
 		assertEquals(correctBody.trim(),cont.getBody());
 		assertEquals(correctKeywords,cont.getKeywords());
+		assertEquals(correctExample,cont.getExample());
 	}
 	
 	/**
