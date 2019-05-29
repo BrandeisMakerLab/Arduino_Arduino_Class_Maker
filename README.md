@@ -1,6 +1,6 @@
 # ArduinoClassMaker
 
-
+# Rationale
 
 **BACKGROUND:** I have been researching this question, and I haven't found any tool that generates Arduino Libraries. [Sloeber](http://eclipse.baeyens.it/installAdvice.shtml)  is a great IDE, providing autocomplete, automatic library includes, and other professional features.
 
@@ -17,3 +17,6 @@ Then, my Java program generates a cpp (Morse.cpp), .h (Morse.h), keywords (Morse
 **DISADVANTAGE:** One drawback to including this tool in the Arduino IDE would be that it could confuse [new users](https://www.arduino.cc/en/Main/AboutUs). As it stands, the Arduino IDE is a reasonable tool for new users to write and upload a sketch, and more advanced authors could go to other IDES anyway. My response would be that the Arduino IDE already [allows library files to be viewed](.%20https:/github.com/arduino/Arduino/issues/3736), so creating them is not much of a leap. In addition, this tool could be a beginner’s first step into what a library looks like. 
 
 **FUTURE WORK:** If continuing with the project, I would create new files in the correct file structure and format to be shared on [the Arduino class manager](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ). This would allow the user to share their code even more easily.
+
+# Instructions For Use
+
