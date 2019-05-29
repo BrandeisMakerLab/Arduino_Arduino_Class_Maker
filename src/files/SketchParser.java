@@ -8,6 +8,7 @@
   */
 package files;
 
+import client.ArduinoClassContainer;
 import parsing.ArduinoParser;
 import parsing.MiniScanner;
 import parsing.ParsedMethod;
@@ -195,10 +196,13 @@ public class SketchParser {
 		String contents = helper.toString();
 	
 		SketchParser parser=new SketchParser(contents);
-		System.out.println(parser);
+		//System.out.println(parser);
 		
-		ScriptEditor helper2=new ScriptEditor("SketchParserExample.txt");
-		helper2.writeFile(parser.toString());
+		//temp
+		ArduinoClassContainer cont=parser.getContainer();
+		System.out.println("BODY\n"+cont.getBody());
+		System.out.println("HEADER\n"+cont.getHeader());
+		System.out.println("KEYWORDS\n"+cont.getKeywords());
 		
 	}
 	
@@ -213,5 +217,11 @@ public class SketchParser {
 				+"\nPUBLICMETHODS: "+publicMethods
 				+"\nPRIVATEMETHODS: "+privateMethods
 				+"\nVARIABLES: "+variables;
+	}
+	
+	public ArduinoClassContainer getContainer() {
+		return new ArduinoClassContainer("ESPServer", null, null,true,
+				headerComment, "ALL", variables,
+				privateMethods, publicMethods);
 	}
 }
