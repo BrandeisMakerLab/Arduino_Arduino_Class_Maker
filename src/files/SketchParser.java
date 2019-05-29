@@ -67,13 +67,13 @@ public class SketchParser {
 				libraries+=comment.trim()+"|"+temp.trim();
 			//check for setup method 
 			}else if (temp.contains("void setup()")) {
-				setupMethod=consumeAndFormatMethod(comment+temp,scanner);
+				setupMethod=consumeAndFormatMethod(comment+"\n"+temp,scanner);
 			//check for loop method
 			}else if (temp.contains("void loop()")) {
-				loopMethod=consumeAndFormatMethod(comment+temp,scanner);
+				loopMethod=consumeAndFormatMethod(comment+"\n"+temp,scanner);
 			//look for method, second clause is to rule out array declaration
 			}else if (temp.contains("{") && !temp.contains(";")) {
-				methods+=consumeAndFormatMethod(comment+temp,scanner);
+				methods+=consumeAndFormatMethod(comment+"\n"+temp,scanner);
 			//do nothing if character is a newline
 			}else if (temp.equals("\r")|temp.equals("")) {
 			//assume whatever is left is a variable because there are hard to stop
@@ -125,7 +125,7 @@ public class SketchParser {
 		temp=ArduinoParser.removeSpecialChars(temp);
 		//keep adding the comment until the temp file is contained
 		while(!temp.contains("*/")) {
-			headerComment+=temp;
+			headerComment+=temp+"\n";
 			temp=scanner.next().replaceAll("\n", "");
 		}
 		//add the last comment
@@ -163,7 +163,7 @@ public class SketchParser {
 			//get a new string to search
 			temp=scanner.next();
 			//add the temp string to the method string
-			method+=temp;
+			method+="\n"+temp;
 		}
 		//add last line
 		temp=temp.replaceAll("\r","");

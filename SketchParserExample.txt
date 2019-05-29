@@ -1,5 +1,5 @@
 
-HEADER: Rui Santos  Complete project details at https://randomnerdtutorials.com  https://randomnerdtutorials.com/esp8266-web-server/  Moified by Dies Robotics Club to be simpler
+HEADER: Rui SantosComplete project details at https://randomnerdtutorials.comhttps://randomnerdtutorials.com/esp8266-web-server/Moified by Dies Robotics Club to be simpler
 LIBRARIES: Load Wi-Fi library|#include <ESP8266WiFi.h>
 SETUPMETHOD: void|setup||runs once|
 Serial.begin(115200);
