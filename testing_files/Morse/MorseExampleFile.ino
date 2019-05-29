@@ -14,9 +14,9 @@ void setup() {
 
 //TODO: EXPLAIN WHAT METHOD DOES
 void loop() {
-    dot(); dot(); dot();
-    dash(); dash(); dash();
-    dot(); dot(); dot();
+    morse.dot(); morse.dot(); morse.dot();
+    morse.dash(); morse.dash(); morse.dash();
+    morse.dot(); morse.dot(); morse.dot();
     delay(3000);
 
 }

@@ -13,14 +13,14 @@ ESPServer espserver();
 void setup() {
     Serial.begin(115200);
     // Initialize the output variables as outputs
-    wifiConnect();
+    espserver.wifiConnect();
 
 }
 
 //runs many times
 void loop() {
     //this can't be a method becuase it would always print something
-    int indexUsed = runServer();
+    int indexUsed = espserver.runServer();
     //if the website has been told to do something, return the string command
     if (indexUsed != -1) {
       Serial.println("I have been told to " + possibleCodes[indexUsed]);

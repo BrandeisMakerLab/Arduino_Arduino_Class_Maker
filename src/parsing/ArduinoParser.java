@@ -129,6 +129,7 @@ public class ArduinoParser {
 	 * @param toReplace the unwanted sequence
 	 * @param replaceWith the wanted sequence
 	 * @return the base string with the unwanted pattern replaced with the wanted pattern
+	 * @throws InterruptedException 
 	 */
 	public static String replaceAllSimple(String base,String toReplace,String replaceWith) {
 		String temp;
@@ -139,6 +140,8 @@ public class ArduinoParser {
 			//if there is match, replace toreplace with replace with
 			if(temp.equals(toReplace)) {
 				base=base.substring(0,i)+replaceWith+base.substring(i+toReplace.length(),base.length());
+				//advance index 
+				i+=toReplace.length();
 			}
 		}
 		//return the edited base string
