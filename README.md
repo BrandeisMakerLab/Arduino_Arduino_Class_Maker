@@ -8,11 +8,11 @@ A set of java programs to automatically generate arduino library header, body, k
 
 Click on Runme.jar, which will allow the user to enter the name of the class to generate and the file path it is in.
 
-![RunMe dialogue](C:\Users\jsmit\Documents\ArduinoClassMaker\documentation\RunMeDialogue.PNG | width=100)
+![RunMe dialogue](RunMeDialogue.PNG | width=100)
 
 When you click on the body, these editable files are displayed:
 
-​	![Generated Classes](C:\Users\jsmit\Documents\ArduinoClassMaker\documentation\GeneratedClasses.PNG | width=100)
+![Generated Classes](GeneratedClasses.PNG | width=100)
 
 ## Rationale
 
