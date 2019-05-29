@@ -5,8 +5,12 @@
   *This would support recommended workflow
   *Bugs:
   *Sources:https://stackoverflow.com/questions/15633228/how-to-remove-all-white-spaces-in-java/36444332
+  * https://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html#quote(java.lang.String)
+  * https://stackoverflow.com/questions/17462146/java-patternsyntaxexception-illegal-repetition-on-string-substitution
   */
 package files;
+
+import java.util.regex.Pattern;
 
 import client.ArduinoClassContainer;
 import parsing.ArduinoParser;
@@ -28,7 +32,11 @@ public class SketchParser {
 	 * @param contents a string representing the sketch file to convert
 	 */
 	public SketchParser(String contents) {
-		
+		//replace rs with newlines
+		contents=contents.replaceAll("\r\n", "\n");
+		//replace the newLine bracket style with inline
+		//can't be done later because the scanner would read the bracket and header as different lines
+		contents=SketchParser.replaceAllSimple(contents,")\n{","){");
 		MiniScanner scanner=new MiniScanner();
 		scanner.prime(contents,"\n");
 		libraries="";
@@ -59,15 +67,15 @@ public class SketchParser {
 				libraries+=comment.trim()+"|"+temp.trim();
 			//check for setup method 
 			}else if (temp.contains("void setup()")) {
-				setupMethod=consumeAndFormatMethod(comment+temp,scanner);
+				setupMethod=consumeAndFormatMethod(comment+"\n"+temp,scanner);
 			//check for loop method
 			}else if (temp.contains("void loop()")) {
-				loopMethod=consumeAndFormatMethod(comment+temp,scanner);
+				loopMethod=consumeAndFormatMethod(comment+"\n"+temp,scanner);
 			//look for method, second clause is to rule out array declaration
 			}else if (temp.contains("{") && !temp.contains(";")) {
-				methods+=consumeAndFormatMethod(comment+temp,scanner);
+				methods+=consumeAndFormatMethod(comment+"\n"+temp,scanner);
 			//do nothing if character is a newline
-			}else if (temp.equals("\r")) {
+			}else if (temp.equals("\r")|temp.equals("")) {
 			//assume whatever is left is a variable because there are hard to stop
 			}else {
 				//use variableParser class to reformat the variable
@@ -117,7 +125,7 @@ public class SketchParser {
 		temp=ArduinoParser.removeSpecialChars(temp);
 		//keep adding the comment until the temp file is contained
 		while(!temp.contains("*/")) {
-			headerComment+=temp;
+			headerComment+=temp+"\n";
 			temp=scanner.next().replaceAll("\n", "");
 		}
 		//add the last comment
@@ -155,7 +163,7 @@ public class SketchParser {
 			//get a new string to search
 			temp=scanner.next();
 			//add the temp string to the method string
-			method+=temp;
+			method+="\n"+temp;
 		}
 		//add last line
 		temp=temp.replaceAll("\r","");
@@ -190,7 +198,7 @@ public class SketchParser {
 		System.out.println("and parse the sketch into relevant fields for a library");
 
 		System.out.println("Reading the file");
-		ScriptEditor helper = new ScriptEditor("WifiExample.txt");
+		ScriptEditor helper = new ScriptEditor("Morse.txt");//was WifiExample.txt
 		
 		System.out.println("Getting Contents");
 		String contents = helper.toString();
@@ -200,9 +208,9 @@ public class SketchParser {
 		
 		//temp
 		ArduinoClassContainer cont=parser.getContainer();
-		System.out.println("BODY\n"+cont.getBody());
-		System.out.println("HEADER\n"+cont.getHeader());
-		System.out.println("KEYWORDS\n"+cont.getKeywords());
+		System.out.println("BODY FILE\n"+cont.getBody());
+		System.out.println("HEADER FILE\n"+cont.getHeader());
+		System.out.println("KEYWORDS FILE\n"+cont.getKeywords());
 		
 	}
 	
@@ -219,9 +227,31 @@ public class SketchParser {
 				+"\nVARIABLES: "+variables;
 	}
 	
+	/**
+	 * used to generate arduino files
+	 * @return an ArduinoClassCounter capable of generating resulting methods
+	 */
 	public ArduinoClassContainer getContainer() {
 		return new ArduinoClassContainer("ESPServer", null, null,true,
 				headerComment, "ALL", variables,
 				privateMethods, publicMethods);
+	}
+	
+	/**
+	 * Helper parsing method, replaces literal sequences instead of regular expressions
+	 * @param base the string to itrate over
+	 * @param toReplace the unwanted sequence
+	 * @param replaceWith the wanted sequence
+	 * @return the base string with the unwanted pattern replaced with the wanted pattern
+	 */
+	private static String replaceAllSimple(String base,String toReplace,String replaceWith) {
+		String temp;
+		for(int i=0;i<base.length()-toReplace.length();i++) {
+			temp=base.substring(i, i+toReplace.length());
+			if(temp.equals(toReplace)) {
+				base=base.substring(0,i)+replaceWith+base.substring(i+toReplace.length(),base.length());
+			}
+		}
+		return base;
 	}
 }

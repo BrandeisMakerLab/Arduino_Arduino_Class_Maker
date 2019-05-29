@@ -17,7 +17,11 @@ import java.time.LocalDateTime;
 import parsing.MiniScanner;
 
 public abstract class ArduinoClassMaster{
-	
+	// list of supported types, a library needs to be included for any other
+	// type
+	protected String[] supportedTypes = { "char", "byte", "int", "unsigned int",
+			"long", "unsigned long", "float", "double", "String","const char*","String []"};
+		
 	protected MiniScanner reader;
 	protected String arduinoClass;
 	//determines whether the date will be hard coded, necessary for testing the class
@@ -98,7 +102,7 @@ public abstract class ArduinoClassMaster{
 			return generateBoardDef(supportedBoards);
 		}
 	}
-	
+		
 	/** Generates the string that will only compile the class if the board is correct*/
 	protected String generateBoardDef(String supportedBoards){
 		//input comment
@@ -154,7 +158,14 @@ public abstract class ArduinoClassMaster{
 		methodParts[1]=methodReader.next("name");//name
 		methodParts[2]=methodReader.next("parameters");//parameters
 		methodParts[3]=methodReader.next("comment");//comment
-		methodParts[4]=methodReader.next("body");//body
+		String methodBody;
+		//allow method body to be blank
+		if(methodReader.hasNext()) {
+			methodBody=methodReader.next();
+		}else {
+			methodBody="";
+		}
+		methodParts[4]=methodBody;
 		return methodParts;
 	}
 	
