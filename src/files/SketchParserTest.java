@@ -24,7 +24,7 @@ public class SketchParserTest {
 	 * @param args not used
 	 */
 	public void testSketchConversionWifi() {
-		compareSketch("WifiExample.txt","SketchParserExample.txt");
+		compareSketch("ESPServer.ino","ESPParsed.txt");
 	}
 	
 	@Test
@@ -34,31 +34,45 @@ public class SketchParserTest {
 	 * @param args not used
 	 */
 	public void testSketchConversionMorse() {
-		compareSketch("Morse.txt","MorseParsedExample.txt");
+		compareSketch("ESPServer.ino","ESPParsed.txt");
 	}
-	
 	@Test
 	/**
 	 *  checks that the automatically generated class from the morse code example file
 	 *  matches the correct strings
 	 */
 	public void compareGeneratedClassMorse() {
+		compareGeneratedClass("Morse");
+	}
+	
+	@Test
+	/**
+	 *  checks that the automatically generated class from the ESPServer code example file
+	 *  matches the correct strings
+	 */
+	public void compareGeneratedClassESPServer() {
+		compareGeneratedClass("ESPServer");
+	}
+	
+	/**
+	 *  checks that the automatically generated class from example file
+	 *  matches the correct input in body, header, and keyword files
+	 */
+	private void compareGeneratedClass(String className) {
 		//load the Example Sketch from file
-		ScriptEditor helper = new ScriptEditor("Morse.txt");
+		ScriptEditor helper = new ScriptEditor(className+".ino");
 		String contents = helper.toString();
 		//create SketchParser object to get fields from sketch
 		SketchParser parser=new SketchParser(contents);
-		ArduinoClassContainer cont=parser.getContainer("Morse", true);
+		ArduinoClassContainer cont=parser.getContainer(className, true);
 		
 		//load correct fields from memory and replace special characters necessary for file comparisons
-		ScriptEditor helper2 = new ScriptEditor("Morse.cpp");//was WifiExample.txt
+		ScriptEditor helper2 = new ScriptEditor(className+".cpp");//was WifiExample.txt
 		String correctBody=helper2.toString().replaceAll("\r", "");
-		ScriptEditor helper3 = new ScriptEditor("Morse.h");//was WifiExample.txt
+		ScriptEditor helper3 = new ScriptEditor(className+".h");//was WifiExample.txt
 		String correctHeader=helper3.toString().replaceAll("\r", "");
-		ScriptEditor helper4 = new ScriptEditor("MorseKeywords.txt");//was WifiExample.txt
+		ScriptEditor helper4 = new ScriptEditor(className+"Keywords.txt");//was WifiExample.txt
 		String correctKeywords=helper4.toString().replaceAll("\r", "");
-		
-		//generatedFields=generatedFields.replaceAll("\r", "\n");
 		
 		//assert the the correct fields equal the generated fields
 		//duck tape, I don't know why I have to trim header and body

@@ -1,0 +1,4 @@
+//Generates ARDUINO KEYWORDS for ESPServer class
+ESPServer	KEYWORD1
+runServer	KEYWORD2
+wifiConnect	KEYWORD2

@@ -197,7 +197,7 @@ public class SketchParser {
 		System.out.println("and parse the sketch into relevant fields for a library");
 
 		System.out.println("Reading the file");
-		ScriptEditor helper = new ScriptEditor("Morse.txt");//was WifiExample.txt
+		ScriptEditor helper = new ScriptEditor("ESPServer.ino");//was WifiExample.txt
 		//ScriptEditor helper = new ScriptEditor("WifiExample.txt"); 
 		
 		System.out.println("Getting Contents");
@@ -205,16 +205,16 @@ public class SketchParser {
 	
 		SketchParser parser=new SketchParser(contents);
 		//temp
-		ArduinoClassContainer cont=parser.getContainer("Morse",false);
+		ArduinoClassContainer cont=parser.getContainer("ESPServer",false);
 		System.out.println("BODY FILE\n"+cont.getBody());
 		System.out.println("HEADER FILE\n"+cont.getHeader());
 		System.out.println("KEYWORDS FILE\n"+cont.getKeywords());
-		ScriptEditor helper2 = new ScriptEditor("Morse.cpp");//was WifiExample.txt
+		/*ScriptEditor helper2 = new ScriptEditor("Morse.cpp");//was WifiExample.txt
 		helper2.writeFile(cont.getBody());
 		ScriptEditor helper3 = new ScriptEditor("Morse.h");//was WifiExample.txt
 		helper3.writeFile(cont.getHeader());
 		ScriptEditor helper4 = new ScriptEditor("MorseKeywords.txt");//was WifiExample.txt
-		helper4.writeFile(cont.getKeywords());
+		helper4.writeFile(cont.getKeywords());*/
 	}
 	
 	/**
