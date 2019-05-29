@@ -12,8 +12,9 @@ public enum TODOs {
 	/**
 	 * hardcoded message fields
 	 */
-	HeaderComment("TODO: explain what program is for and give your name and who can use this program"),
-	Method("TODO: explain what method does"),Variable("TODO: explain what variable is for");
+	HeaderComment("TODO: EXPLAIN WHAT PROGRAM IS FOR AND GIVE YOUR NAME AND WHO CAN USE THIS PROGRAM"),
+	Method("TODO: EXPLAIN WHAT METHOD DOES"),Variable("TODO: EXPLAIN WHAT VARIABLE IS FOR"),
+	VariableValue("TODO: SET INITIAL VARIABLE VALUE");;
 	/**
 	 * the message to be displayed
 	 */

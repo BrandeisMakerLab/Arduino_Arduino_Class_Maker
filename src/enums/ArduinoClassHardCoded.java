@@ -26,6 +26,10 @@ public enum ArduinoClassHardCoded {
 
     		"//Creates a new Timer object\n"+
     		"Timer::Timer() {\n"    +
+    	    "    //the beginning time of the interval\n"+
+    	    "    initTime = TODO: SET INITIAL VARIABLE VALUE;\n"+
+    	    "    //a test variable for the parser\n"+
+    	    "    test = TODO: SET INITIAL VARIABLE VALUE;\n"+
     		"    initTime=millis();\n\n"+
 
     		"}\n\n"+
@@ -64,6 +68,10 @@ public enum ArduinoClassHardCoded {
 
     	    "//Creates a new Timer object\n"+
     	    "Timer::Timer() {\n"    +
+    	    "    //the beginning time of the interval\n"+
+    	    "    initTime = TODO: SET INITIAL VARIABLE VALUE;\n"+
+    	    "    //a test variable for the parser\n"+
+    	    "    test = TODO: SET INITIAL VARIABLE VALUE;\n"+
     	    "    initTime=millis();\n\n"+
 
     	    "}\n\n"+

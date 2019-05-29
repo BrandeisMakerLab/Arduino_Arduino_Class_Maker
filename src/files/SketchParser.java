@@ -207,10 +207,10 @@ public class SketchParser {
 	
 		SketchParser parser=new SketchParser(contents);
 		//System.out.println(parser);
-		ScriptEditor writer=new ScriptEditor("MorseParsedExample.txt");
-		writer.writeFile(parser.toString());
+		//ScriptEditor writer=new ScriptEditor("MorseParsedExample.txt");
+		//writer.writeFile(parser.toString());
 		//temp
-		ArduinoClassContainer cont=parser.getContainer(false);
+		ArduinoClassContainer cont=parser.getContainer("Morse",false);
 		System.out.println("BODY FILE\n"+cont.getBody());
 		System.out.println("HEADER FILE\n"+cont.getHeader());
 		System.out.println("KEYWORDS FILE\n"+cont.getKeywords());
@@ -234,8 +234,8 @@ public class SketchParser {
 	 * used to generate arduino files
 	 * @return an ArduinoClassCounter capable of generating resulting methods
 	 */
-	public ArduinoClassContainer getContainer(boolean hardCodeDate) {
-		return new ArduinoClassContainer("ESPServer", null, null,hardCodeDate,
+	public ArduinoClassContainer getContainer(String className,boolean hardCodeDate) {
+		return new ArduinoClassContainer(className, null, null,hardCodeDate,
 				headerComment, "ALL", variables,
 				privateMethods, publicMethods);
 	}

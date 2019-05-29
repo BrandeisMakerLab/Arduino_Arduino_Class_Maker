@@ -1,5 +1,6 @@
 package classGenerators;
 import enums.ArduinoClassExample;
+import enums.TODOs;
 import parsing.ArduinoParser;
 import parsing.MiniScanner;
 
@@ -51,7 +52,7 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 	private String generateConstructor(String className,String variables) {
 		//add an automatic comment for the constructor
 		String constructor="|"+className+"||Creates a new "+className+" object|\n";
-		/*MiniScanner varReader=new MiniScanner();
+		MiniScanner varReader=new MiniScanner();
 		MiniScanner valReader=new MiniScanner();
 		varReader.prime(variables, "\n");
 		String varLine;
@@ -65,14 +66,23 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 			type=valReader.next("type");
 			name=valReader.next("name");
 			comment=valReader.next("comment");
-			val=valReader.next("val");
-			if(val=="") {
+			//if there is no variable value, use enum to generate to do message
+			if(valReader.hasNext()) {
+				val=valReader.next();
+			}else {
+				val=TODOs.VariableValue.toString();
+			}
+			
+			if(val.equals("")) {
 				val="0";
 			}
-			//TODO add blank string or something
+			//if there is no comment, generate the todo comment from enum
+			if(comment.equals("")) {
+				comment=TODOs.Variable.toString();
+			}
 			constructor+="//"+comment+"\n"+name+" = "+val+";\n";
 			
-		}*/
+		}
 		return constructor;
 		
 	}

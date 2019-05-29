@@ -15,7 +15,7 @@ public enum ExampleLineByLine implements PromptResponces{
 	    HEADERCOMMENTS 	("Please enter a description of the class\n\t\t\t",null,"A timer class to allow the user to create loops and maintain program control\ndone\n"),
 	    SUPPORTEDBOARDS	("Please enter supported boards\n\t\t",null,"ARDUINO_AVR_UNO\nESP8266_WEMOSD1R1\ndone\n"),
 	    VARIABLES  		("type:-name:-description:","Does your class have a variable to enter? Y/N:",
-	    		"y\nlong\ninitTime\nThe beginning of the time interval\n"+
+	    		"y\nlong\ninitTime\nthe beginning time of the interval\n"+
 	    		"y\nApple\ntest\na test variable for the parser\nn\n"),
 	    PRIVATEMETHODS  ("return type-name-parameters/null-description-body","do you have a private method to enter? Y/N","n\n"),
 	    PUBLICMETHODS 	("return type-name-parameters/null-description-body","do you have a public method to enter? Y/N",

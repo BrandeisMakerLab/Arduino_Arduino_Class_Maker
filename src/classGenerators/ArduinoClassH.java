@@ -1,6 +1,7 @@
 package classGenerators;
 
 import enums.ArduinoClassExample;
+import enums.TODOs;
 import parsing.MiniScanner;
 
 /* Name: Jacob Smith
@@ -142,7 +143,12 @@ public class ArduinoClassH extends ArduinoClassMaster {
 		readerB.prime(line, "|");
 		varLine += "    " + readerB.next("data type") + " ";// data type
 		varLine += readerB.next("var name") + ";\n";// var Name
-		varLine = "    //" + readerB.next("comment") + "\n" + varLine;// comment
+		String comment=readerB.next("comment");
+		//generate to do message if there is no variable comment
+		if(comment.equals("")) {
+			comment=TODOs.Variable.toString();
+		}
+		varLine = "    //" + comment + "\n" + varLine;// comment
 		return varLine;
 
 	}

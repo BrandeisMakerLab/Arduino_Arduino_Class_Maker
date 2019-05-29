@@ -166,7 +166,7 @@ public abstract class ArduinoClassMaster{
 		methodParts[2]=methodReader.next("parameters");//parameters
 		methodParts[3]=methodReader.next("comment");//comment
 		//prepare for if method comment isn't there
-		if(methodParts[3]=="") {
+		if(methodParts[3].equals("")) {
 			methodParts[3]=TODOs.Method.toString();
 		}
 		String methodBody;
