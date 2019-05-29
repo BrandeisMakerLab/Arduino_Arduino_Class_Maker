@@ -30,7 +30,7 @@ public class ArduinoClassExampleSketchTest {
 			ExampleSketch.SKETCHMETHODS.toString());
 		//print the generated example sketch
 		String generatedExample=template.toString();
-		AssertMethods.compareFiletoString("TimerExample.ino", generatedExample);
+		AssertMethods.compareFiletoString("testing_files\\TimerExample.ino", generatedExample);
 	}
 
 }

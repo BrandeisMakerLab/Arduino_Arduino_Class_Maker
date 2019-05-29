@@ -24,7 +24,7 @@ public class SketchParserTest {
 	 * @param args not used
 	 */
 	public void testSketchConversionWifi() {
-		compareSketch("ESPServer.ino","ESPParsed.txt");
+		compareSketch("testing_files\\ESPServer\\ESPServer.ino","testing_files\\ESPServer\\ESPParsed.txt");
 	}
 	
 	@Test
@@ -34,7 +34,7 @@ public class SketchParserTest {
 	 * @param args not used
 	 */
 	public void testSketchConversionMorse() {
-		compareSketch("ESPServer.ino","ESPParsed.txt");
+		compareSketch("testing_files\\ESPServer\\ESPServer.ino","testing_files\\ESPServer\\ESPParsed.txt");
 	}
 	@Test
 	/**
@@ -59,21 +59,24 @@ public class SketchParserTest {
 	 *  matches the correct input in body, header, and keyword files
 	 */
 	private void compareGeneratedClass(String className) {
+		//the file structure
+		String folder="testing_files\\"+className+"\\";
+		
 		//load the Example Sketch from file
-		ScriptEditor helper = new ScriptEditor(className+".ino");
+		ScriptEditor helper = new ScriptEditor(folder+className+".ino");
 		String contents = helper.toString();
 		//create SketchParser object to get fields from sketch
 		SketchParser parser=new SketchParser(contents);
 		ArduinoClassContainer cont=parser.getContainer(className, true);
 		
 		//load correct fields from memory and replace special characters necessary for file comparisons
-		ScriptEditor helper2 = new ScriptEditor(className+".cpp");//was WifiExample.txt
+		ScriptEditor helper2 = new ScriptEditor(folder+className+".cpp");//was WifiExample.txt
 		String correctBody=helper2.toString().replaceAll("\r", "");
-		ScriptEditor helper3 = new ScriptEditor(className+".h");//was WifiExample.txt
+		ScriptEditor helper3 = new ScriptEditor(folder+className+".h");//was WifiExample.txt
 		String correctHeader=helper3.toString().replaceAll("\r", "");
-		ScriptEditor helper4 = new ScriptEditor(className+"Keywords.txt");//was WifiExample.txt
+		ScriptEditor helper4 = new ScriptEditor(folder+className+"Keywords.txt");//was WifiExample.txt
 		String correctKeywords=helper4.toString().replaceAll("\r", "");
-		ScriptEditor helper5 = new ScriptEditor(className+"ExampleFile.ino");//was WifiExample.txt
+		ScriptEditor helper5 = new ScriptEditor(folder+className+"ExampleFile.ino");//was WifiExample.txt
 		String correctExample=helper5.toString().replaceAll("\r", "");
 		
 		//assert the the correct fields equal the generated fields
