@@ -1,6 +1,7 @@
 package classGenerators;
 import enums.ArduinoClassExample;
 import parsing.ArduinoParser;
+import parsing.MiniScanner;
 
  /* Name: Jacob Smith
 Date: May 12 2019
@@ -37,13 +38,51 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 	private void init(String className,String supportedBoards,String variables,String publicMethods, String privateMethods){
 		arduinoClass+=super.generateBoardDefInitial(supportedBoards);
 		arduinoClass+=super.startLibraryIncludes(variables, className)+"\n";
-		//add an automatic comment for the constructor
-		publicMethods="|"+className+"||Creates a new "+className+" object|\n"+publicMethods;
+		publicMethods=generateConstructor(className,variables)+publicMethods;
 		arduinoClass+=generateMethods(className,publicMethods,true);
 		arduinoClass+=generateMethods(className,privateMethods,false);	
 		arduinoClass+=generateBoardDefFinal();
 	}
 		
+	/**
+	 * Generates the body of the class constructor
+	 * @return the formatted method of a constructor
+	 */
+	private String generateConstructor(String className,String variables) {
+		//add an automatic comment for the constructor
+		String constructor="|"+className+"||Creates a new "+className+" object|\n";
+		MiniScanner varReader=new MiniScanner();
+		MiniScanner valReader=new MiniScanner();
+		varReader.prime(variables, "\n");
+		String varLine;
+		String name;
+		String comment;
+		String val;
+		String type;
+		while(varReader.hasNext()) {
+			varLine=varReader.next();
+			valReader.prime(varLine,"|");
+			type=valReader.next("type");
+			name=valReader.next("name");
+			/*if(type.contains("[]")) {
+				MiniScanner arrReader=new MiniScanner();
+				arrReader.prime(type, " ");
+				type=arrReader.getUntil("[]");
+				name=name+" []";
+			}*/
+			comment=valReader.next("comment");
+			val=valReader.next("val");
+			if(val=="") {
+				val="0";
+			}
+			//TODO add blank string or something
+			constructor+="//"+comment+"\n"+name+" = "+val+";\n";
+			
+		}
+		return constructor;
+		
+	}
+	
 
 	/*Generates a method given the dataType, methodName, parameters (which can be blank) comment, and body*/
 	protected String genMethod(String className,String []methodParts,boolean isPublic){

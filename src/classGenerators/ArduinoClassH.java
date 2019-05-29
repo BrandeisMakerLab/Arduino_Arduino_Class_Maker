@@ -12,10 +12,6 @@ import parsing.MiniScanner;
 
 public class ArduinoClassH extends ArduinoClassMaster {
 
-	// list of supported types, a library needs to be included for any other
-	// type
-	private String[] supportedTypes = { "char", "byte", "int", "unsigned int",
-			"long", "unsigned long", "float", "double", "String" };
 	// a String representation of the keywords .txt file
 	private String keywords;
 
