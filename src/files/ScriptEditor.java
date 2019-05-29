@@ -49,11 +49,10 @@ public class ScriptEditor{
 		ScriptEditor helper=new ScriptEditor("test.txt");
 		
 		System.out.println("Getting Contents");
-		String contents=helper.getContents();
-		System.out.print(contents);
+		System.out.print(helper);
 		
 		System.out.println("Now writing to file");
-		helper.writeFile(contents+"This was added to the file\r\n");
+		helper.writeFile(helper.toString()+"This was added to the file\r\n");
 	}
 	
 	/**
@@ -82,11 +81,11 @@ public class ScriptEditor{
 		
 	}
 	
-	/*
-	*  gets the File's contents
+	/**
+	*  return a String representation of the file
 	*/
-	public String getContents(){
-		//I can return this safely because Stringa re immutable in Java
+	public String toString(){
+		//I can return this safely because Strings are immutable in Java
 		return contents;
 		
 	}

@@ -212,7 +212,7 @@ public class MiniScanner {
 			//get the next word
 			temp=this.next();
 			//update whether the end token was found if there is an end token
-			if(hasEndToken && temp.equals(endToken)) {
+			if(hasEndToken && temp.contains(endToken)) {
 				foundEndToken=true;
 			}else {
 				//if end token not found, add the next word to the main string with a connecter

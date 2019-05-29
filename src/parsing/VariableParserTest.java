@@ -24,7 +24,7 @@ public class VariableParserTest {
 	 */
 	public void testVarParsing() {
 		String c1="//the password of the wifi network";
-		String v1="const char* password = \"\"";
+		String v1="const char* password = \"\";\r";
 		VariableParser p1=new VariableParser(c1,v1);
 		assertEquals(correctString1,p1.toString());
 		

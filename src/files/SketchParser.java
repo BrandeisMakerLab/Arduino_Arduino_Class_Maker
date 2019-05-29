@@ -184,33 +184,34 @@ public class SketchParser {
 	 */
 	public static void main(String[] args) {
 	
-		System.out.println("Example of ScriptEditor Class");
-		System.out.println("This program will load a file from memory, add a line, and save the file");
+		System.out.println("Example of SketchParser Class");
+		System.out.println("This program will load an Arduino Sketch from memory");
+		System.out.println("and parse the sketch into relevant fields for a library");
 
-		System.out.println("Reading to file");
+		System.out.println("Reading the file");
 		ScriptEditor helper = new ScriptEditor("WifiExample.txt");
 		
 		System.out.println("Getting Contents");
-		String contents = helper.getContents();
-		//System.out.print(contents);
-
+		String contents = helper.toString();
+	
 		SketchParser parser=new SketchParser(contents);
 		System.out.println(parser);
 		
-		System.out.println("Now writing to file");
-		//helper.writeFile(contents + "This was added to the file\r\n");
+		ScriptEditor helper2=new ScriptEditor("SketchParserExample.txt");
+		helper2.writeFile(parser.toString());
+		
 	}
 	
 	/**
 	 * @return a string representation of the class
 	 */
 	public String toString() {
-		return "HEADER<"+headerComment+">\n"
-				+"LIBRARIES<"+libraries+">\n"
-				+"SETUPMETHOD<"+setupMethod+">\n"
-				+"LOOPMETHOD<"+loopMethod+">\n"
-				+"PUBLICMETHODS <"+publicMethods+">\n"
-				+"PRIVATEMETHODS<"+privateMethods+">\n"
-				+"Variables<"+variables+">\n";
+		return "\nHEADER: "+headerComment
+				+"\nLIBRARIES: "+libraries
+				+"\nSETUPMETHOD: "+setupMethod
+				+"\nLOOPMETHOD: "+loopMethod
+				+"\nPUBLICMETHODS: "+publicMethods
+				+"\nPRIVATEMETHODS: "+privateMethods
+				+"\nVARIABLES: "+variables;
 	}
 }
