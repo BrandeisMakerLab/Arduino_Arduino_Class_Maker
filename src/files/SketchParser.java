@@ -33,7 +33,7 @@ public class SketchParser {
 		contents=contents.replaceAll("\r\n", "\n");
 		//replace the newLine bracket style with inline
 		//can't be done later because the scanner would read the bracket and header as different lines
-		contents=SketchParser.replaceAllSimple(contents,")\n{","){");
+		contents=ArduinoParser.replaceAllSimple(contents,")\n{","){");
 		MiniScanner scanner=new MiniScanner();
 		scanner.prime(contents,"\n");
 		libraries="";
@@ -194,7 +194,7 @@ public class SketchParser {
 		System.out.println("and parse the sketch into relevant fields for a library");
 
 		System.out.println("Reading the file");
-		ScriptEditor helper = new ScriptEditor("ESPServer.ino");
+		ScriptEditor helper = new ScriptEditor("testing_files\\ESPServer\\ESPServer.ino");
 		
 		
 		System.out.println("Getting Contents");
@@ -229,22 +229,5 @@ public class SketchParser {
 				headerComment, "ALL", variables,
 				privateMethods, publicMethods,sketchMethods);
 	}
-	
-	/**
-	 * Helper parsing method, replaces literal sequences instead of regular expressions
-	 * @param base the string to itrate over
-	 * @param toReplace the unwanted sequence
-	 * @param replaceWith the wanted sequence
-	 * @return the base string with the unwanted pattern replaced with the wanted pattern
-	 */
-	private static String replaceAllSimple(String base,String toReplace,String replaceWith) {
-		String temp;
-		for(int i=0;i<base.length()-toReplace.length();i++) {
-			temp=base.substring(i, i+toReplace.length());
-			if(temp.equals(toReplace)) {
-				base=base.substring(0,i)+replaceWith+base.substring(i+toReplace.length(),base.length());
-			}
-		}
-		return base;
-	}
+
 }

@@ -122,4 +122,26 @@ public class ArduinoParser {
 		base=base.trim();
 		return base;
 	}
+	
+	/**
+	 * Helper parsing method, replaces literal sequences instead of regular expressions
+	 * @param base the string to itrate over
+	 * @param toReplace the unwanted sequence
+	 * @param replaceWith the wanted sequence
+	 * @return the base string with the unwanted pattern replaced with the wanted pattern
+	 */
+	public static String replaceAllSimple(String base,String toReplace,String replaceWith) {
+		String temp;
+		//iterate along base string
+		for(int i=0;i<base.length()-toReplace.length();i++) {
+			//get string of same length as toReplace
+			temp=base.substring(i, i+toReplace.length());
+			//if there is match, replace toreplace with replace with
+			if(temp.equals(toReplace)) {
+				base=base.substring(0,i)+replaceWith+base.substring(i+toReplace.length(),base.length());
+			}
+		}
+		//return the edited base string
+		return base;
+	}
 }

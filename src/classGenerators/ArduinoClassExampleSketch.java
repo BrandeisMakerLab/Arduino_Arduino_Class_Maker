@@ -2,6 +2,7 @@ package classGenerators;
 import enums.ArduinoClassExample;
 import enums.ExampleSketch;
 import parsing.ArduinoParser;
+import parsing.MiniScanner;
 
  /* Name: Jacob Smith
 Date: May 12 2019
@@ -11,25 +12,18 @@ Email: jsmith2021@brandeis.edu
 
 public class ArduinoClassExampleSketch extends ArduinoClassMaster{
 	
+	String [] publicMethodNames;
 	/**
 	* Loads an example class into memory with hardcoded date
 	* and parses it into header comment, methods, header file
 	*/
-	public ArduinoClassExampleSketch(String className,String author,String organization,boolean hardCodeDate,String headerComments,String supportedBoards,String sketchMethods){
+	public ArduinoClassExampleSketch(String className,String author,String organization,boolean hardCodeDate,String headerComments,String supportedBoards,String sketchMethods,String publicMethods){
 		super(className,author,organization,hardCodeDate,headerComments,supportedBoards);
+		publicMethodNames=getPublicMethodNames(className,publicMethods);
 		init(className,sketchMethods);
 		
 	}
 	
-	/**
-	* Loads an example class into memory with automatic date
-	* and parses it into header comment, methods, header file
-	*/
-	public ArduinoClassExampleSketch(String className,String author,String organization,String headerComments,String supportedBoards,String sketchMethods){
-		super(className,author,organization,headerComments,supportedBoards);
-		init(className,sketchMethods);
-		
-	}
 	
 	/**
 	 * Helper method to intialize class specific methods and allow date to be hardcoded
@@ -38,6 +32,27 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster{
 		arduinoClass+=super.startLibraryIncludes(null, className)+"\n";
 		arduinoClass+=genVariable(className);
 		arduinoClass+=generateMethods(className,sketchMethods,true);	
+	}
+	
+	/**
+	 * 
+	 * @param publicMethods a formatted string of all the public methods
+	 * @return a list of the names of all the public methods for cross checking
+	 */
+	private String [] getPublicMethodNames(String className,String publicMethods){
+		String methodNames="";
+		MiniScanner methodReader=new MiniScanner();
+		MiniScanner nameReader=new MiniScanner();
+		methodReader.prime(publicMethods, "\n\n");
+		methodReader.next("constructor");
+		String method;
+		while(methodReader.hasNext()) {
+			method=methodReader.next();
+			nameReader.prime(method, "|");
+			nameReader.next("type");
+			methodNames+=nameReader.next("name")+" ";
+		}
+		return methodNames.split(" ");
 	}
 		
 	/**
@@ -57,11 +72,33 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster{
 		methodString+="//"+methodParts[3]+"\n";//comment
 		methodString+=methodParts[0];//data type
 		methodString+=" "+methodParts[1]+"("+methodParts[2]+") {";//name and parameters
-		methodString+=ArduinoParser.insertTabs(methodParts[4],1,false);//body
+		//insert the object name to public method invocations
+		String methodBody=insertObject(className,methodParts[4]);
+		methodString+=ArduinoParser.insertTabs(methodBody,1,false);//body
 		methodString+="\n}\n\n";
 		return methodString;
 		
 	}
+	
+	/**
+	 * Converts global methods into class invocations
+	 * @param methodBody the body of the sketch methods
+	 * @return the body of the method with the object inserted
+	 */
+	protected String insertObject(String className,String methodBody) {
+		String methodName;
+		//iterate along public method names array
+		for (int i=0;i<publicMethodNames.length;i++) {
+			//store the method name
+			methodName=publicMethodNames[i];
+			System.out.println(methodName);
+			//replace occurences of that method name with the method name and object
+			methodBody=ArduinoParser.replaceAllSimple(methodBody,methodName, className.toLowerCase()+"."+methodName);
+		}
+		
+		return methodBody;
+	}
+
 	
 	/**
 	* Shows an example file with this class
@@ -74,7 +111,7 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster{
 			true,
 			ArduinoClassExample.HEADERCOMMENTS.toString(), 
 			ArduinoClassExample.SUPPORTEDBOARDS.toString(),
-			ExampleSketch.SKETCHMETHODS.toString());
+			ExampleSketch.SKETCHMETHODS.toString().trim()+"\nresetTime();",ArduinoClassExample.PUBLICMETHODS.toString());
 		//print the generated example sketch
 		System.out.println(template);
 		

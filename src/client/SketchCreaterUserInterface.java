@@ -63,7 +63,7 @@ public class SketchCreaterUserInterface extends GUI {
 		resetPanel2(jp, "apple");
 		//close window automatically after button press
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

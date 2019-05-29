@@ -52,7 +52,7 @@ public class ArduinoClassContainer {
 		keywords=headerMaker.getKeywords();
 		
 		//generate and store examples file
-		ArduinoClassExampleSketch exampleMaker=new ArduinoClassExampleSketch(className,author,organization,true,headerComments,supportedBoards,exampleMethods);
+		ArduinoClassExampleSketch exampleMaker=new ArduinoClassExampleSketch(className,author,organization,true,headerComments,supportedBoards,exampleMethods,publicMethods);
 		example=exampleMaker.toString();
 	}
 	

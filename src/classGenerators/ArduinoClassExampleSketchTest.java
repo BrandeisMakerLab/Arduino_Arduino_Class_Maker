@@ -27,7 +27,7 @@ public class ArduinoClassExampleSketchTest {
 			true,
 			ArduinoClassExample.HEADERCOMMENTS.toString(), 
 			ArduinoClassExample.SUPPORTEDBOARDS.toString(),
-			ExampleSketch.SKETCHMETHODS.toString());
+			ExampleSketch.SKETCHMETHODS.toString(),ArduinoClassExample.PUBLICMETHODS.toString());
 		//print the generated example sketch
 		String generatedExample=template.toString();
 		AssertMethods.compareFiletoString("testing_files\\TimerExample.ino", generatedExample);
