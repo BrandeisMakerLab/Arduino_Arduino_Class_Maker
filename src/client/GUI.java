@@ -16,29 +16,33 @@ abstract class GUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private boolean ready;
 	protected JTextArea[] textBoxes;
-
-	public GUI(String title, String generalPrompt, String[] fields, String[] examples, String buttonName) {
+	
+	public GUI(String title, String generalPrompt, String[] fields, String[] examples, String buttonName, int x, int y,Font font) {
 		ready = false;
 		// loadFile();
-		setLocation(400, 300);
+		setLocation(x, y);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-		JPanel jp = new JPanel(new GridLayout(20, 2));// was 4 1
+		JPanel jp = new JPanel(new GridLayout(20,2));// was 4 1
 		// header label
 		JLabel lb0 = new JLabel(title);
+		lb0.setFont(font);
 		jp.add(lb0);
-		jp.add(new JLabel(generalPrompt));
+		
+		JLabel genPrompt=new JLabel(generalPrompt);
+		genPrompt.setFont(font);
+		jp.add(genPrompt);
 		// body labels
 		textBoxes = new JTextArea[fields.length + 1];
 		for (int i = 0; i < fields.length; i++) {
-			createField(fields, examples, i, jp);
+			createField(fields, examples, i, jp,font);
 		}
 
 		// output text field
 		JButton btn = new JButton(buttonName);
+		btn.setFont(font);
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				updateClass(jp);
+				updateClass(jp,font);
 			}
 		});
 		;
@@ -50,11 +54,13 @@ abstract class GUI extends JFrame {
 	}
 
 	/* Creates a label and text box for a given field */
-	private void createField(String[] fields, String[] examples, int index, JPanel jp) {
+	private void createField(String[] fields, String[] examples, int index, JPanel jp,Font font) {
 		JLabel lbl = new JLabel("Please enter " + fields[index] + " here");
 		final JTextArea tf = new JTextArea(examples[index]);
 		textBoxes[index] = tf;
 		tf.setText(examples[index]);
+		tf.setFont(font);
+		lbl.setFont(font);
 		jp.add(lbl);
 		jp.add(tf);
 		if (ready) {
@@ -63,13 +69,26 @@ abstract class GUI extends JFrame {
 		}
 	}
 	
-	public void resetPanel(JPanel jp,String toDisplay) {
-		jp.removeAll();
-		final JTextArea tf3 = new JTextArea(20,20);
-	    tf3.setEditable(false);
+	public void newPanel(String windowName,String toDisplay,int x,int y,int windowWidth, int windowLength,Font font) {
+		this.setVisible(false);
+		
+		JFrame newFrame = new JFrame(windowName);
+	    newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    newFrame.setLocation(x, y);
+	    
+	    JPanel jp=new JPanel();
+	    jp.setOpaque(true); //content panes must be opaque
+	    final JTextArea tf3 = new JTextArea(windowLength/10,windowWidth/11);
+		tf3.setText(toDisplay);
+		tf3.setFont(font);
+		
 	    jp.add(tf3);
-	    tf3.setText(toDisplay);
+        newFrame.setContentPane(jp);
+        
+        //Display the window.
+        newFrame.pack();
+        newFrame.setVisible(true);	  
 	}
 	
-	public abstract void updateClass(JPanel jp);
+	public abstract void updateClass(JPanel jp,Font font);
 }
