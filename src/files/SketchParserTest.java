@@ -12,6 +12,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import client.ArduinoClassContainer;
+
 
 public class SketchParserTest {
 
@@ -33,6 +35,36 @@ public class SketchParserTest {
 	 */
 	public void testSketchConversionMorse() {
 		compareSketch("Morse.txt","MorseParsedExample.txt");
+	}
+	
+	@Test
+	/**
+	 *  checks that the automatically generated class from the morse code example file
+	 *  matches the correct strings
+	 */
+	public void compareGeneratedClassMorse() {
+		//load the Example Sketch from file
+		ScriptEditor helper = new ScriptEditor("Morse.txt");
+		String contents = helper.toString();
+		//create SketchParser object to get fields from sketch
+		SketchParser parser=new SketchParser(contents);
+		ArduinoClassContainer cont=parser.getContainer("Morse", true);
+		
+		//load correct fields from memory and replace special characters necessary for file comparisons
+		ScriptEditor helper2 = new ScriptEditor("Morse.cpp");//was WifiExample.txt
+		String correctBody=helper2.toString().replaceAll("\r", "");
+		ScriptEditor helper3 = new ScriptEditor("Morse.h");//was WifiExample.txt
+		String correctHeader=helper3.toString().replaceAll("\r", "");
+		ScriptEditor helper4 = new ScriptEditor("MorseKeywords.txt");//was WifiExample.txt
+		String correctKeywords=helper4.toString().replaceAll("\r", "");
+		
+		//generatedFields=generatedFields.replaceAll("\r", "\n");
+		
+		//assert the the correct fields equal the generated fields
+		//duck tape, I don't know why I have to trim header and body
+		assertEquals(correctHeader.trim(),cont.getHeader());
+		assertEquals(correctBody.trim(),cont.getBody());
+		assertEquals(correctKeywords,cont.getKeywords());
 	}
 	
 	/**

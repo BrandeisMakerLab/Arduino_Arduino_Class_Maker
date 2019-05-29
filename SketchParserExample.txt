@@ -16,7 +16,8 @@ if (indexUsed != -1) {
 }
 
 
-PUBLICMETHODS: int|runServer||runs all the logic for the server|
+PUBLICMETHODS: 
+int|runServer||runs all the logic for the server|
 WiFiClient client = server.available();   // Listen for incoming clients
 int indexUsed = -1;
 if (client) {                             // If a new client connects,

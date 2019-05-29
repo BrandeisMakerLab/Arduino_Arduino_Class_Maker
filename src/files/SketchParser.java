@@ -109,8 +109,8 @@ public class SketchParser {
 			}
 			
 		}
-		//create a constructor body for the constructor
-		//publicMethods="\n\n"+publicMethods;
+		//add newline for constructor later, duck tape
+		publicMethods="\n"+publicMethods;
 		
 	}
 	
@@ -209,7 +209,12 @@ public class SketchParser {
 		System.out.println("BODY FILE\n"+cont.getBody());
 		System.out.println("HEADER FILE\n"+cont.getHeader());
 		System.out.println("KEYWORDS FILE\n"+cont.getKeywords());
-		
+		ScriptEditor helper2 = new ScriptEditor("Morse.cpp");//was WifiExample.txt
+		helper2.writeFile(cont.getBody());
+		ScriptEditor helper3 = new ScriptEditor("Morse.h");//was WifiExample.txt
+		helper3.writeFile(cont.getHeader());
+		ScriptEditor helper4 = new ScriptEditor("MorseKeywords.txt");//was WifiExample.txt
+		helper4.writeFile(cont.getKeywords());
 	}
 	
 	/**

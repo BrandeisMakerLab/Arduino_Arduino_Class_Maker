@@ -1,0 +1,4 @@
+//Generates ARDUINO KEYWORDS for Morse class
+Morse	KEYWORD1
+dot	KEYWORD2
+dash	KEYWORD2
