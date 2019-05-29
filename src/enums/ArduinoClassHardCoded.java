@@ -168,7 +168,7 @@ public enum ArduinoClassHardCoded {
     		"getTime	KEYWORD2\n"+
     		"getAndResetTime	KEYWORD2\n"),
     	HEADER_FILE_FEWERKEYWORDS(
-    			"/*A timer class to allow the user to create loops and maintain program control*/\n\n"
+    			"/*A timer class to allow the user to create loops and maintain program control 2019/05/15*/\n\n"
     			
     			+"//sets up the Timer Header file\n"
     			+"#ifndef Timer_h\n"

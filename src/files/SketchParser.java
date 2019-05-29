@@ -113,6 +113,11 @@ public class SketchParser {
 		}
 		//create a constructor body for the constructor
 		publicMethods="\n\n"+publicMethods;
+		
+		//if there is no header comment, add command to generate one
+		if(headerComment==null) {
+			headerComment="TO DO: write class description with name, organization";
+		}
 	}
 	
 	/**
@@ -198,7 +203,8 @@ public class SketchParser {
 		System.out.println("and parse the sketch into relevant fields for a library");
 
 		System.out.println("Reading the file");
-		ScriptEditor helper = new ScriptEditor("Morse.txt");//was WifiExample.txt
+		//ScriptEditor helper = new ScriptEditor("Morse.txt");//was WifiExample.txt
+		ScriptEditor helper = new ScriptEditor("WifiExample.txt"); 
 		
 		System.out.println("Getting Contents");
 		String contents = helper.toString();
@@ -207,7 +213,7 @@ public class SketchParser {
 		//System.out.println(parser);
 		
 		//temp
-		ArduinoClassContainer cont=parser.getContainer();
+		ArduinoClassContainer cont=parser.getContainer(false);
 		System.out.println("BODY FILE\n"+cont.getBody());
 		System.out.println("HEADER FILE\n"+cont.getHeader());
 		System.out.println("KEYWORDS FILE\n"+cont.getKeywords());
@@ -231,8 +237,8 @@ public class SketchParser {
 	 * used to generate arduino files
 	 * @return an ArduinoClassCounter capable of generating resulting methods
 	 */
-	public ArduinoClassContainer getContainer() {
-		return new ArduinoClassContainer("ESPServer", null, null,true,
+	public ArduinoClassContainer getContainer(boolean hardCodeDate) {
+		return new ArduinoClassContainer("ESPServer", null, null,hardCodeDate,
 				headerComment, "ALL", variables,
 				privateMethods, publicMethods);
 	}

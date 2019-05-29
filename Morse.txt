@@ -1,6 +1,3 @@
-/* test file Used by Jacob Smith to show
-capabilities of Arduino Class Generator
-*/
 
 int pin = 13;
 

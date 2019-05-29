@@ -51,26 +51,20 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 	private String generateConstructor(String className,String variables) {
 		//add an automatic comment for the constructor
 		String constructor="|"+className+"||Creates a new "+className+" object|\n";
-		//MiniScanner varReader=new MiniScanner();
-		//MiniScanner valReader=new MiniScanner();
-		//varReader.prime(variables, "\n");
-		//String varLine;
-		//String name;
-		//String comment;
-		//String val;
-		//String type;
-		//while(varReader.hasNext()) {
-		//	varLine=varReader.next();
-		//	valReader.prime(varLine,"|");
-		//	type=valReader.next("type");
-		//	name=valReader.next("name");
-			/*if(type.contains("[]")) {
-				MiniScanner arrReader=new MiniScanner();
-				arrReader.prime(type, " ");
-				type=arrReader.getUntil("[]");
-				name=name+" []";
-			}*/
-		/*	comment=valReader.next("comment");
+		/*MiniScanner varReader=new MiniScanner();
+		MiniScanner valReader=new MiniScanner();
+		varReader.prime(variables, "\n");
+		String varLine;
+		String name;
+		String comment;
+		String val;
+		String type;
+		while(varReader.hasNext()) {
+			varLine=varReader.next();
+			valReader.prime(varLine,"|");
+			type=valReader.next("type");
+			name=valReader.next("name");
+			comment=valReader.next("comment");
 			val=valReader.next("val");
 			if(val=="") {
 				val="0";

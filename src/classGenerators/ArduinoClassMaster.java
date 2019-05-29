@@ -63,12 +63,12 @@ public abstract class ArduinoClassMaster{
 	necessary strings*/
 	protected String generateHeaderComment(String author,String organization, String headerComments,String supportedBoards){
 		String headerComment="";
+		String date=genDate();
 		//if author or organization is null, just add the header comment
 		//this ensures flexibility in creating libraries
 		if(author==null |organization==null) {
-			headerComment="/*"+headerComments+"*/\n\n";
+			headerComment="/*"+headerComments+" "+date+"*/\n\n";
 		}else {
-			String date=genDate();
 			headerComment="/* Written by "+author+" for "+organization+" "+date+"\n";
 			headerComment+=headerComments+"\n";
 			headerComment+="Boards supported: "+supportedBoards+"*/\n\n";
@@ -158,6 +158,10 @@ public abstract class ArduinoClassMaster{
 		methodParts[1]=methodReader.next("name");//name
 		methodParts[2]=methodReader.next("parameters");//parameters
 		methodParts[3]=methodReader.next("comment");//comment
+		//prepare for if method comment isn't there
+		if(methodParts[3]=="") {
+			methodParts[3]="TO DO:Explain what method is for";
+		}
 		String methodBody;
 		//allow method body to be blank
 		if(methodReader.hasNext()) {
