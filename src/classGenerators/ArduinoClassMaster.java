@@ -167,7 +167,7 @@ public abstract class ArduinoClassMaster{
 		methodParts[3]=methodReader.next("comment");//comment
 		//prepare for if method comment isn't there
 		if(methodParts[3]=="") {
-			methodParts[3]="TO DO:Explain what method is for";
+			methodParts[3]=TODOs.Method.toString();
 		}
 		String methodBody;
 		//allow method body to be blank
