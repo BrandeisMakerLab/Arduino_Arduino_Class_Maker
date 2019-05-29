@@ -11,7 +11,10 @@ I have to just write code, not worry about 18 steps ahead
 I'm usnig the ide, also appreciating how powerful a praser is
 */
 
-import java.time.format.DateTimeFormatter; 
+import java.time.format.DateTimeFormatter;
+
+import enums.TODOs;
+
 import java.time.LocalDateTime;
 
 import parsing.MiniScanner;
@@ -63,6 +66,10 @@ public abstract class ArduinoClassMaster{
 	necessary strings*/
 	protected String generateHeaderComment(String author,String organization, String headerComments,String supportedBoards){
 		String headerComment="";
+		//if header comment is null or blank, insert auto generated todo
+		if(headerComments==null|headerComments.equals("")) {
+			headerComments=TODOs.HeaderComment.toString();
+		}
 		String date=genDate();
 		//if author or organization is null, just add the header comment
 		//this ensures flexibility in creating libraries

@@ -114,10 +114,6 @@ public class SketchParser {
 		//create a constructor body for the constructor
 		publicMethods="\n\n"+publicMethods;
 		
-		//if there is no header comment, add command to generate one
-		if(headerComment==null) {
-			headerComment="TO DO: write class description with name, organization";
-		}
 	}
 	
 	/**
@@ -203,8 +199,8 @@ public class SketchParser {
 		System.out.println("and parse the sketch into relevant fields for a library");
 
 		System.out.println("Reading the file");
-		//ScriptEditor helper = new ScriptEditor("Morse.txt");//was WifiExample.txt
-		ScriptEditor helper = new ScriptEditor("WifiExample.txt"); 
+		ScriptEditor helper = new ScriptEditor("Morse.txt");//was WifiExample.txt
+		//ScriptEditor helper = new ScriptEditor("WifiExample.txt"); 
 		
 		System.out.println("Getting Contents");
 		String contents = helper.toString();
