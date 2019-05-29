@@ -12,9 +12,7 @@ dot(); dot(); dot();
 delay(3000);
 
 
-PUBLICMETHODS: 
-
-void|dot|||
+PUBLICMETHODS: void|dot|||
 digitalWrite(pin, HIGH);
 delay(250);
 digitalWrite(pin, LOW);

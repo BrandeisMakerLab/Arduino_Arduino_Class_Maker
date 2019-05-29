@@ -59,11 +59,11 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 		String name;
 		String comment;
 		String val;
-		String type;
 		while(varReader.hasNext()) {
 			varLine=varReader.next();
 			valReader.prime(varLine,"|");
-			type=valReader.next("type");
+			//consumer type
+			valReader.next("type");
 			name=valReader.next("name");
 			comment=valReader.next("comment");
 			//if there is no variable value, use enum to generate to do message

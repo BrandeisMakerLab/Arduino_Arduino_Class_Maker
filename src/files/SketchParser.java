@@ -10,8 +10,6 @@
   */
 package files;
 
-import java.util.regex.Pattern;
-
 import client.ArduinoClassContainer;
 import parsing.ArduinoParser;
 import parsing.MiniScanner;
@@ -112,7 +110,7 @@ public class SketchParser {
 			
 		}
 		//create a constructor body for the constructor
-		publicMethods="\n\n"+publicMethods;
+		//publicMethods="\n\n"+publicMethods;
 		
 	}
 	
@@ -206,9 +204,6 @@ public class SketchParser {
 		String contents = helper.toString();
 	
 		SketchParser parser=new SketchParser(contents);
-		//System.out.println(parser);
-		//ScriptEditor writer=new ScriptEditor("MorseParsedExample.txt");
-		//writer.writeFile(parser.toString());
 		//temp
 		ArduinoClassContainer cont=parser.getContainer("Morse",false);
 		System.out.println("BODY FILE\n"+cont.getBody());
