@@ -36,7 +36,7 @@ public class ArduinoClassClient implements Prompter {
 				ArduinoClassExample.SUPPORTEDBOARDS.toString(),
 				ArduinoClassExample.VARIABLES.toString(),
 				ArduinoClassExample.PRIVATEMETHODS.toString(),
-				ArduinoClassExample.PUBLICMETHODS.toString());
+				ArduinoClassExample.PUBLICMETHODS.toString(),null);
 		System.out.println(cont);
 	}
 	
@@ -111,7 +111,7 @@ public class ArduinoClassClient implements Prompter {
 		ArduinoClassContainer cont=null;
 		try{
 			//call helper method to display the generated files, array positions hardcoded
-			cont=new ArduinoClassContainer(userAnswers[0], userAnswers[1], userAnswers[2], true,userAnswers[3],userAnswers[4], userAnswers[5], userAnswers[6], userAnswers[7]);
+			cont=new ArduinoClassContainer(userAnswers[0], userAnswers[1], userAnswers[2], true,userAnswers[3],userAnswers[4], userAnswers[5], userAnswers[6], userAnswers[7],null);
 			System.out.println("loading...");
 			sleepNoError(1000);
 			System.out.println(cont.getHeader()+"\n");

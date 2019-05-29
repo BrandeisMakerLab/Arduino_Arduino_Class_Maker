@@ -15,9 +15,9 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster{
 	* Loads an example class into memory with hardcoded date
 	* and parses it into header comment, methods, header file
 	*/
-	public ArduinoClassExampleSketch(String className,String author,String organization,boolean hardCodeDate,String headerComments,String supportedBoards,String setupMethod,String loopMethod){
+	public ArduinoClassExampleSketch(String className,String author,String organization,boolean hardCodeDate,String headerComments,String supportedBoards,String sketchMethods){
 		super(className,author,organization,hardCodeDate,headerComments,supportedBoards);
-		init(className,setupMethod,loopMethod);
+		init(className,sketchMethods);
 		
 	}
 	
@@ -25,20 +25,19 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster{
 	* Loads an example class into memory with automatic date
 	* and parses it into header comment, methods, header file
 	*/
-	public ArduinoClassExampleSketch(String className,String author,String organization,String headerComments,String supportedBoards,String setupMethod,String loopMethod){
+	public ArduinoClassExampleSketch(String className,String author,String organization,String headerComments,String supportedBoards,String sketchMethods){
 		super(className,author,organization,headerComments,supportedBoards);
-		init(className,setupMethod,loopMethod);
+		init(className,sketchMethods);
 		
 	}
 	
 	/**
 	 * Helper method to intialize class specific methods and allow date to be hardcoded
 	 */
-	private void init(String className,String setupMethod, String loopMethod){
+	private void init(String className,String sketchMethods){
 		arduinoClass+=super.startLibraryIncludes(null, className)+"\n";
 		arduinoClass+=genVariable(className);
-		arduinoClass+=generateMethods(className,setupMethod,true);
-		arduinoClass+=generateMethods(className,loopMethod,true);	
+		arduinoClass+=generateMethods(className,sketchMethods,true);	
 	}
 		
 	/**
@@ -75,8 +74,7 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster{
 			true,
 			ArduinoClassExample.HEADERCOMMENTS.toString(), 
 			ArduinoClassExample.SUPPORTEDBOARDS.toString(),
-			ExampleSketch.SETUPMETHOD.toString(),
-			ExampleSketch.LOOPMETHOD.toString());
+			ExampleSketch.SKETCHMETHODS.toString());
 		//print the generated example sketch
 		System.out.println(template);
 		

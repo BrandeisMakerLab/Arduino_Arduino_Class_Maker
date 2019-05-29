@@ -13,11 +13,11 @@ public enum ExampleSketch {
 	/**
 	 * hardcoded methods
 	 */
-	SETUPMETHOD("void|setup||runs once|\n"
+	SKETCHMETHODS("void|setup||runs once|\n"
 			+"timer.resetTime()\n"
 			+"delay(3000);\n"
-			+"Serial.println(timer.getTime())"),
-	LOOPMETHOD("void|loop||runs many times|\n"
+			+"Serial.println(timer.getTime())\n\n"
+			+"void|loop||runs many times|\n"
 			+"Serial.println(timer.getAndResetTime());\n"
 			+"delay(3000);\n");
 	/**

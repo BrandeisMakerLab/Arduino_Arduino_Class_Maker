@@ -10,6 +10,7 @@
 package client;
 
 import classGenerators.ArduinoClassCpp;
+import classGenerators.ArduinoClassExampleSketch;
 import classGenerators.ArduinoClassH;
 
 public class ArduinoClassContainer {
@@ -25,13 +26,16 @@ public class ArduinoClassContainer {
 	 * the Arduino library keywords file
 	 */
 	private String keywords;
-	
+	/**
+	 * the Arduino library example file
+	 */
+	private String example;
 	/**
 	 * creates a new ArduinoClassContainer Object
 	 */
 	public ArduinoClassContainer(String className, String author, String organization,boolean hardCodeDate,
 			String headerComments, String supportedBoards, String variables,
-			String privateMethods, String publicMethods){
+			String privateMethods, String publicMethods,String exampleMethods){
 		
 		//generate and store body file
 		ArduinoClassCpp cppMaker=new ArduinoClassCpp(className, author, organization,hardCodeDate,
@@ -46,6 +50,10 @@ public class ArduinoClassContainer {
 		header=headerMaker.getHeader();
 		//store keywords file
 		keywords=headerMaker.getKeywords();
+		
+		//generate and store examples file
+		ArduinoClassExampleSketch exampleMaker=new ArduinoClassExampleSketch(className,author,organization,true,headerComments,supportedBoards,exampleMethods);
+		example=exampleMaker.toString();
 	}
 	
 	/**
@@ -70,9 +78,16 @@ public class ArduinoClassContainer {
 	}
 	
 	/**
+	 * returns the generated example file
+	 */
+	public String getExample(){
+		return example;
+	}
+	
+	/**
 	 * returns a string representaiton of the object
 	 */
 	public String toString(){
-		return header+"\n\n"+body+"\n\n"+keywords;
+		return header+"\n\n"+body+"\n\n"+keywords+"\n\n"+example;
 	}
 }

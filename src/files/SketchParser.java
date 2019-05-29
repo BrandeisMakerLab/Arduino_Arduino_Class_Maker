@@ -17,8 +17,7 @@ import parsing.ParsedMethod;
 import parsing.VariableParser;
 
 public class SketchParser {
-	private String setupMethod;
-	private String loopMethod;
+	private String sketchMethods;
 	private String headerComment;
 	private String libraries;
 	private String variables;
@@ -41,7 +40,8 @@ public class SketchParser {
 		variables="";
 		String temp;
 		String comment;
-		String methods="";
+		String unsortedMethods="";
+		sketchMethods="";
 		headerComment="";
 		while(scanner.hasNext()) {
 			//get next line, and make sure it doens't have a newline character
@@ -63,15 +63,12 @@ public class SketchParser {
 			//look for library	
 			} else if(temp.contains("#include")) {
 				libraries+=comment.trim()+"|"+temp.trim();
-			//check for setup method 
-			}else if (temp.contains("void setup()")) {
-				setupMethod=consumeAndFormatMethod(comment+"\n"+temp,scanner);
-			//check for loop method
-			}else if (temp.contains("void loop()")) {
-				loopMethod=consumeAndFormatMethod(comment+"\n"+temp,scanner);
+			//check for sketch methods
+			}else if (temp.contains("void setup()") |temp.contains("void loop()")) {
+				sketchMethods+=consumeAndFormatMethod(comment+"\n"+temp,scanner);
 			//look for method, second clause is to rule out array declaration
 			}else if (temp.contains("{") && !temp.contains(";")) {
-				methods+=consumeAndFormatMethod(comment+"\n"+temp,scanner);
+				unsortedMethods+=consumeAndFormatMethod(comment+"\n"+temp,scanner);
 			//do nothing if character is a newline
 			}else if (temp.equals("\r")|temp.equals("")) {
 			//assume whatever is left is a variable because there are hard to stop
@@ -95,14 +92,14 @@ public class SketchParser {
 		publicMethods="";
 		privateMethods="";
 		String name;
-		methodReader.prime(methods,"\n\n");
+		methodReader.prime(unsortedMethods,"\n\n");
 		while(methodReader.hasNext()) {
 			method=methodReader.next();
 			nameReader.prime(method,"|");
 			//ignore the data type
 			nameReader.next("Data Type");
 			name=nameReader.next("methodName");
-			if(setupMethod.contains(name)||loopMethod.contains(name)) {
+			if(sketchMethods.contains(name)) {
 				publicMethods+=method+"\n\n";
 			}else {
 				privateMethods+=method+"\n\n";
@@ -217,8 +214,7 @@ public class SketchParser {
 	public String toString() {
 		return "\nHEADER: "+headerComment
 				+"\nLIBRARIES: "+libraries
-				+"\nSETUPMETHOD: "+setupMethod
-				+"\nLOOPMETHOD: "+loopMethod
+				+"\nSKETCHMETHODS: "+sketchMethods
 				+"\nPUBLICMETHODS: "+publicMethods
 				+"\nPRIVATEMETHODS: "+privateMethods
 				+"\nVARIABLES: "+variables;
@@ -231,7 +227,7 @@ public class SketchParser {
 	public ArduinoClassContainer getContainer(String className,boolean hardCodeDate) {
 		return new ArduinoClassContainer(className, null, null,hardCodeDate,
 				headerComment, "ALL", variables,
-				privateMethods, publicMethods);
+				privateMethods, publicMethods,sketchMethods);
 	}
 	
 	/**
