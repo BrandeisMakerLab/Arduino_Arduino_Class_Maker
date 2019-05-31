@@ -143,7 +143,7 @@ public abstract class ArduinoClassMaster{
 	/** Generate method bodies based on input Strings*/
 	protected String generateMethods(String className,String methods,boolean isPublic){
 		//return a blank string if inputs are null,useful because a class could not have any private methods
-		if(methods==null){return "";}
+		if(methods==null | methods.equals("null")){return "";}
 		String methodString="";
 		String [] methodParts;
 		reader.prime(methods,"\n\n");
