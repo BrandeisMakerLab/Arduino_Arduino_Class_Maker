@@ -20,12 +20,16 @@
 		editor.status.edit(tr("Name for new file:"), "");creates new tab with dialogue for file name, HandleNewCode method of SketchController.java line 72
 		edit(String message, String dflt)
 		
+		 item = newJMenuItem(tr("Generate Arduino Class"),' ');
+   		item.addActionListener((ActionListener) event -> ClassGeneratorInterface.generateLibrary(sketchController,getCurrentTab(),getCurrentTab().getSketchFile(),tabs));
+		
  */
 package IDEInterface;
 import processing.app.SketchController;
 import processing.app.EditorTab;
 import processing.app.SketchFile;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ClassGeneratorInterface {
