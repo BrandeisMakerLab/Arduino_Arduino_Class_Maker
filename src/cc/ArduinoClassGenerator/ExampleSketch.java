@@ -19,7 +19,41 @@ public enum ExampleSketch {
 			+"Serial.println(timer.getTime())\n\n"
 			+"void|loop||runs many times|\n"
 			+"Serial.println(timer.getAndResetTime());\n"
-			+"delay(3000);\n");
+			+"delay(3000);\n"),
+	/**
+	 * hardcoded morse code sketch from 
+	 * https://www.arduino.cc/en/Hacking/LibraryTutorial
+	 */
+	MORSECODESKETCH("int pin = 13;\n\n"
+			+"void setup()\n"
+			+"{\n"
+			+"  pinMode(pin, OUTPUT);\n"
+			+"}\n"
+
+			+"void loop()\n"
+			+"{\n"
+			+"  dot(); dot(); dot();\n"
+			+"  dash(); dash(); dash();\n"
+			+"  dot(); dot(); dot();\n"
+			+"  delay(3000);\n"
+			+"}\n\n"
+
+			+"void dot()\n"
+			+"{\n"
+			+ "  digitalWrite(pin, HIGH);\n"
+			+ "  delay(250);\n"
+			+ "  digitalWrite(pin, LOW);\n"
+			+ "  delay(250);\n"
+			+"}\n\n"
+
+			+"void dash()\n"
+			+"{\n"
+			+ "  digitalWrite(pin, HIGH);\n"
+			+ "  delay(1000);\n"
+			+ "  digitalWrite(pin, LOW);\n"
+			+ "  delay(250);\n"
+			+"}");
+	
 	/**
 	 * field for method
 	 */
@@ -44,8 +78,10 @@ public enum ExampleSketch {
 	 * 	 */
 	public static void main (String[]args) {
 		ExampleSketch[]fields=ExampleSketch.values();
+		ExampleSketch example;
 		for(int i=0;i<fields.length;i++) {
-			System.out.println(fields[i]+"\n");
+			example=fields[i];
+			System.out.println(example.name()+":\n"+example.toString());
 		}
 	}
 }

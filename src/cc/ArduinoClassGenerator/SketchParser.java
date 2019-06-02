@@ -186,21 +186,15 @@ public class SketchParser {
 	public static void main(String[] args) {
 	
 		System.out.println("Example of SketchParser Class");
-		System.out.println("This program will load an Arduino Sketch from memory");
-		System.out.println("and parse the sketch into relevant fields for a library");
-
-		System.out.println("Reading the file");
-		ScriptEditor helper = new ScriptEditor("testing_files\\ESPServer\\ESPServer.ino");
-		
-		
-		System.out.println("Getting Contents");
-		String contents = helper.toString();
+		System.out.println("Getting Contents of example sketch\n__________________");
+		String contents = ExampleSketch.MORSECODESKETCH.toString();
 		System.out.println(contents);
 		
+		System.out.println("Parse the Sketch into relevant fields for a library\n__________________");
 		SketchParser parser=new SketchParser(contents);
 		System.out.println(parser);
-		//temp
-		ArduinoClassContainer cont=parser.getContainer("ESPServer",false);
+		System.out.println("Generate body,header,class,and example sketch files from parsed input\n__________________");
+		ArduinoClassContainer cont=parser.getContainer("Morse",false);
 		System.out.println(cont);
 	}
 	
