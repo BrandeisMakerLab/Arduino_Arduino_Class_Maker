@@ -1,6 +1,6 @@
-package parsing;
+package cc.ArduinoClassGenerator;
 
-import parsing.MiniScanner;
+import cc.ArduinoClassGenerator.MiniScanner;
 
 /** Name: Jacob Smith
  *  Email:jsmith2021@brandeis.edu

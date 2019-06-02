@@ -11,6 +11,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import cc.ArduinoClassGenerator.ArduinoParser;
+
 public class ArduinoParserTest {	
 	@Test
 	/**

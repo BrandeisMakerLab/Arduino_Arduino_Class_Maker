@@ -7,11 +7,7 @@
  *  Sources: 
  *  Bugs:
  */
-package client;
-
-import classGenerators.ArduinoClassCpp;
-import classGenerators.ArduinoClassExampleSketch;
-import classGenerators.ArduinoClassH;
+package cc.ArduinoClassGenerator;
 
 public class ArduinoClassContainer {
 	/**

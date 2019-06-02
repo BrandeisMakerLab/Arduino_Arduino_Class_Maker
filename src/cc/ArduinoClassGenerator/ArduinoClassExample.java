@@ -1,5 +1,4 @@
-package enums;
-import parsing.ArduinoParser;
+package cc.ArduinoClassGenerator;
 
 /** Name: Jacob Smith
  *  Email:jsmith2021@brandeis.edu

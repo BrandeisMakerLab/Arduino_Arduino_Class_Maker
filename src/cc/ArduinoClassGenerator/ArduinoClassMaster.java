@@ -1,4 +1,4 @@
-package classGenerators;
+package cc.ArduinoClassGenerator;
 /* Name: Jacob Smith
 Date: May 12 2019
 Assignment: Personal study, allows the user to edit an arduino library using a template, 
@@ -12,12 +12,7 @@ I'm usnig the ide, also appreciating how powerful a praser is
 */
 
 import java.time.format.DateTimeFormatter;
-
-import enums.TODOs;
-
 import java.time.LocalDateTime;
-
-import parsing.MiniScanner;
 
 public abstract class ArduinoClassMaster{
 	// list of supported types, a library needs to be included for any other

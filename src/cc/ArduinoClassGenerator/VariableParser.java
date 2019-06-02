@@ -6,10 +6,7 @@
   *Bugs:
   *Sources:
   */
-package parsing;
-
-import DataStructure.LinkedList;
-import DataStructure.LinkedListNode;
+package cc.ArduinoClassGenerator;
 
 public class VariableParser {
 	/*

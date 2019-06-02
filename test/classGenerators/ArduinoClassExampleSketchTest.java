@@ -9,8 +9,9 @@ package classGenerators;
 
 import org.junit.Test;
 
-import enums.ArduinoClassExample;
-import enums.ExampleSketch;
+import cc.ArduinoClassGenerator.ArduinoClassExample;
+import cc.ArduinoClassGenerator.ArduinoClassExampleSketch;
+import cc.ArduinoClassGenerator.ExampleSketch;
 import testBackgroundCode.AssertMethods;
 
 public class ArduinoClassExampleSketchTest {

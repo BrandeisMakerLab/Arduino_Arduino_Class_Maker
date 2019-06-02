@@ -1,4 +1,4 @@
-package parsing;
+package cc.ArduinoClassGenerator;
 
 /* Name: Jacob Smith
  Date: May 13 2019

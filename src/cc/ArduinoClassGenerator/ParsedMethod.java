@@ -6,7 +6,7 @@
   *Bugs:
   *Sources:https://stackoverflow.com/questions/9260126/what-are-the-differences-between-char-literals-n-and-r-in-java
   */
-package parsing;
+package cc.ArduinoClassGenerator;
 
 public class ParsedMethod {
 

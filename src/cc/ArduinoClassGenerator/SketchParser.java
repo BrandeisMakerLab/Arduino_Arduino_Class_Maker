@@ -8,13 +8,9 @@
   * https://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html#quote(java.lang.String)
   * https://stackoverflow.com/questions/17462146/java-patternsyntaxexception-illegal-repetition-on-string-substitution
   */
-package files;
+package cc.ArduinoClassGenerator;
 
-import client.ArduinoClassContainer;
-import parsing.ArduinoParser;
-import parsing.MiniScanner;
-import parsing.ParsedMethod;
-import parsing.VariableParser;
+import files.ScriptEditor;
 
 public class SketchParser {
 	private String sketchMethods;

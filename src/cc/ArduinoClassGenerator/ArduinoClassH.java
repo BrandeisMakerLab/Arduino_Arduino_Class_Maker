@@ -1,8 +1,4 @@
-package classGenerators;
-
-import enums.ArduinoClassExample;
-import enums.TODOs;
-import parsing.MiniScanner;
+package cc.ArduinoClassGenerator;
 
 /* Name: Jacob Smith
  Date: May 13 2019

@@ -3,7 +3,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import enums.ArduinoClassExample;
+import cc.ArduinoClassGenerator.ArduinoClassExample;
+import cc.ArduinoClassGenerator.MiniScanner;
 import testBackgroundCode.AssertMethods;
 
 

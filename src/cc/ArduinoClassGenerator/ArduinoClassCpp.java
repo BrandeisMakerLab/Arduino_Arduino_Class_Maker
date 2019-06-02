@@ -1,10 +1,6 @@
-package classGenerators;
-import enums.ArduinoClassExample;
-import enums.TODOs;
-import parsing.ArduinoParser;
-import parsing.MiniScanner;
+package cc.ArduinoClassGenerator;
 
- /* Name: Jacob Smith
+/* Name: Jacob Smith
 Date: May 12 2019
 Assignment: Personal study, allows the user to ecreate the cpp file given necessary information
 using an inheritance schem to save code

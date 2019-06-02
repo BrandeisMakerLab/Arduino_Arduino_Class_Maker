@@ -13,6 +13,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import cc.ArduinoClassGenerator.VariableParser;
+
 public class VariableParserTest {
 
 	private String correctString1 = "const char*|password|the password of the wifi network|\"\"|\n";;

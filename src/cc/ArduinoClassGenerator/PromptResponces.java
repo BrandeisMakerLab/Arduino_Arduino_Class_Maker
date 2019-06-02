@@ -6,7 +6,7 @@
   *Bugs:
   *Sources:
   */
-package enums;
+package cc.ArduinoClassGenerator;
 
 public interface PromptResponces {
 

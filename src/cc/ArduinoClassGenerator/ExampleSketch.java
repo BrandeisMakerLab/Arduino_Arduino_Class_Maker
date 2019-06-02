@@ -7,7 +7,7 @@
   *Bugs:
   *Sources:
   */
-package enums;
+package cc.ArduinoClassGenerator;
 
 public enum ExampleSketch {
 	/**

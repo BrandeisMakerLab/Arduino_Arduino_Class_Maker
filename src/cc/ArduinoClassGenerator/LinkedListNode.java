@@ -6,7 +6,7 @@
   *Bugs:
   *Sources:
   */
-package DataStructure;
+package cc.ArduinoClassGenerator;
 
 public class LinkedListNode {
 	private LinkedListNode prev;
