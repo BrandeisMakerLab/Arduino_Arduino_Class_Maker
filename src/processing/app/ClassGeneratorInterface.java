@@ -19,9 +19,10 @@
 		sketchController.nameCode(fileNames[i]); creates new tab with given file name, initialize method of EditorStatus.java line 240
 		editor.status.edit(tr("Name for new file:"), "");creates new tab with dialogue for file name, HandleNewCode method of SketchController.java line 72
 		edit(String message, String dflt)
-		
-		 item = newJMenuItem(tr("Generate Arduino Class"),' ');
-   		item.addActionListener((ActionListener) event -> ClassGeneratorInterface.generateLibrary(sketchController,getCurrentTab(),getCurrentTab().getSketchFile(),tabs));
+		//code to add menu item to ide graphical interface
+		item = newJMenuItem(tr("Generate Arduino Class"),' ');
+   		item.addActionListener(event -> ClassGeneratorInterface.generateLibrary(sketchController,getCurrentTab(),getCurrentTab().getSketchFile(),tabs));
+   		sketchMenu.add(item);
 		
  */
 package processing.app;
