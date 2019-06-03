@@ -59,7 +59,7 @@ public class ClassGeneratorInterface {
 		SketchParser parser = new SketchParser(contents);
 		ArduinoClassContainer cont = parser.getContainer(className, false);
 		// create the files with strings
-		setLibraryTabs(className, cont.getBody(), cont.getKeywords(), cont.getHeader(), cont.getExample(), tabs,
+		setLibraryTabs(className, cont.getBody(),  cont.getExample(), cont.getHeader(),cont.getKeywords(), tabs,
 				controller);
 	}
 
@@ -128,27 +128,24 @@ public class ClassGeneratorInterface {
 		// get the tab from the tabs field because nameCode doesn't return the tab
 		// these indexes get complicated because of alphabetization
 		tabs.get(1).setText(body);
-		// create example tab
-		controller.nameCode(className + "Example.ino");
-		tabs.get(2).setText(example);
 		// create header tab
 		controller.nameCode(className + ".h");
-		// I don't know why this isn't a 3...
 		tabs.get(2).setText(header);
+		// create example tab
+		controller.nameCode(className + "Example.ino");
+		tabs.get(3).setText(example);
 		// create keywords tab
 		controller.nameCode(className + "keywords.txt");
 		tabs.get(4).setText(keywords);
 	}
 
+	/**
+	 * Builds and Runs the Arduino IDE by running batch Script RunArduino.bat
+	 * @param args not used
+	 */
 	public static void main(String[] args) {
 		try {
-			Runtime env = Runtime.getRuntime();// ,"RunArduino.bat"
-			String[] commands = { "cmd /c start", "cd C:\\Users\\jsmit\\Documents\\ArduinoClassMaker" };
-			env.exec("cmd /c start RunArduino.bat");
-
-			/*
-			 * Runtime. getRuntime(). exec("cmd /c  start \"\" RunArduino.bat");
-			 */
+			Runtime.getRuntime().exec("cmd /c start RunArduino.bat");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
