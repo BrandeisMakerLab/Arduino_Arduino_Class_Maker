@@ -10,8 +10,6 @@
   */
 package cc.ArduinoClassGenerator;
 
-import files.ScriptEditor;
-
 public class SketchParser {
 	private String sketchMethods;
 	private String headerComment;

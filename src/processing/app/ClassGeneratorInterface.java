@@ -24,10 +24,14 @@
    		item.addActionListener((ActionListener) event -> ClassGeneratorInterface.generateLibrary(sketchController,getCurrentTab(),getCurrentTab().getSketchFile(),tabs));
 		
  */
-package IDEInterface;
+package processing.app;
+//classes to do input/output with arduino IDE
 import processing.app.SketchController;
 import processing.app.EditorTab;
 import processing.app.SketchFile;
+//classes to create arduino library from sketch
+import cc.ArduinoClassGenerator.ArduinoClassContainer;;
+import cc.ArduinoClassGenerator.SketchParser;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
