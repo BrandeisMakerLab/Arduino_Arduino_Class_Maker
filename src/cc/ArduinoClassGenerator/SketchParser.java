@@ -23,63 +23,96 @@ public class SketchParser {
 	 * @param contents a string representing the sketch file to convert
 	 */
 	public SketchParser(String contents) {
+		contents=clean(contents);
+		String unsortedMethods=evaluate(contents);
+		variables=SketchMethods.cleanVariables(variables);
+		libraries=libraries.replaceAll("\r", "");
+		sortMethods(unsortedMethods);
+		//add newline for constructor later, duck tape
+		publicMethods="\n"+publicMethods;
+		
+	}
+	
+	/**
+	 * Replaces problem characters in string such as inline bracket style 
+	 * @param contents the sketch as inputted
+	 * @return the sketch removed of problem characters
+	 */
+	private String clean(String contents) {
 		//replace rs with newlines
 		contents=contents.replaceAll("\r\n", "\n");
+		//allow for one line header comment
+		//contents=ArduinoParser.replaceAllSimple(contents,"*/", "\n*/");
+		//contents=ArduinoParser.replaceAllSimple(contents,"\n\n*/", "\n*/");
 		//replace the newLine bracket style with inline
 		//can't be done later because the scanner would read the bracket and header as different lines
 		contents=ArduinoParser.replaceAllSimple(contents,")\n{","){");
+		return contents;
+	}
+	
+	/**
+	 * reads sketch line by line, searching for tokens to divide and parse elements like variables and methods
+	 * @param contents the sketch with problem characters removed
+	 * @return the unsorted methods for further processing
+	 */
+	private String evaluate(String contents) {
 		MiniScanner scanner=new MiniScanner();
 		scanner.prime(contents,"\n");
 		libraries="";
 		variables="";
 		String temp;
-		String comment;
 		String unsortedMethods="";
 		sketchMethods="";
 		headerComment="";
 		while(scanner.hasNext()) {
 			//get next line, and make sure it doens't have a newline character
 			temp=scanner.next().replaceAll("\n+", "");
-			//look for comment
-			if(temp.contains("//")) {
-				//remove comment characters and add to comment
-				comment=temp.substring(2, temp.length());
-				//update the temp with the next input
-				temp=scanner.next().replaceAll("\n", "");
-			//otherwise reset the comment string
-			}else {
-				comment="";
-			}
-			
-			//look for start of header comment
-			if(temp.contains("/*")) {
-				parseHeaderComment(temp,scanner);
-			//look for library	
-			} else if(temp.contains("#include")) {
-				libraries+=comment.trim()+"|"+temp.trim();
-			//check for sketch methods
-			}else if (temp.contains("void setup()") |temp.contains("void loop()")) {
-				sketchMethods+=consumeAndFormatMethod(comment+"\n"+temp,scanner);
-			//look for method, second clause is to rule out array declaration
-			}else if (temp.contains("{") && !temp.contains(";")) {
-				unsortedMethods+=consumeAndFormatMethod(comment+"\n"+temp,scanner);
-			//do nothing if character is a newline
-			}else if (temp.equals("\r")|temp.equals("")) {
-			//assume whatever is left is a variable because there are hard to stop
-			}else {
-				//use variableParser class to reformat the variable
-				VariableParser p=new VariableParser(comment,temp);
-				variables+=p.toString();
-			}	
+			//parse a one line comment
+			String[]commentTemp=SketchMethods.checkForComment(temp,scanner);
+			//add the code element to the correct field
+			unsortedMethods+=metaCircleEvaluate(commentTemp[0],commentTemp[1],scanner);
 		}
-		
-		variables=variables.replaceAll("\r","");
-		variables=variables.replaceAll(";", "");
-		variables=variables.replaceAll("\r\r\r", "");
-		libraries=libraries.replaceAll("\r", "");
-		
-		//divide methods into public and private based on whether reffered to in setup and loop
-		//this has to be done after circular evaluation because the setup and loop methods need to be parsed first
+		return unsortedMethods;
+	}
+	
+	/**
+	 * determines which kind of element the code is and adds to a field 
+	 * @param comment an explanation of the code
+	 * @param temp the first line of a code element
+	 * @param scanner the scanner which iterates over the sketch, for multiline code elements
+	 * @return a an unsortedMethod to be sorted
+	 */
+	private String metaCircleEvaluate(String comment,String temp,MiniScanner scanner) {
+		String unsortedMethods="";
+		//look for start of header comment
+		if(temp.contains("/*")) {
+			headerComment+=SketchMethods.parseHeaderComment(temp,scanner);
+		//look for library	
+		} else if(temp.contains("#include")) {
+			libraries+=comment.trim()+"|"+temp.trim();
+		//check for sketch methods
+		}else if (temp.contains("void setup()") |temp.contains("void loop()")) {
+			sketchMethods+=SketchMethods.consumeAndFormatMethod(comment+"\n"+temp,scanner);
+		//look for method, second clause is to rule out array declaration
+		}else if (temp.contains("{") && !temp.contains(";")) {
+			unsortedMethods+=SketchMethods.consumeAndFormatMethod(comment+"\n"+temp,scanner);
+		//do nothing if character is a newline
+		}else if (temp.equals("\r")|temp.equals("")) {
+		//assume whatever is left is a variable because there are hard to stop
+		}else {
+			//use variableParser class to reformat the variable
+			VariableParser p=new VariableParser(comment,temp);
+			variables+=p.toString();
+		}	
+		return unsortedMethods;
+	}
+	
+	/**Sorts all the methods into public and private based on whether they are referred to in
+	 * setup and loop methods
+	 * must be called after setup and loop methods are parsed
+	 * @param unsortedMethods a parsed format of all the methods in the sketch
+	 */
+	private void sortMethods(String unsortedMethods) {
 		MiniScanner methodReader=new MiniScanner();
 		MiniScanner nameReader=new MiniScanner();
 		String method;
@@ -97,84 +130,9 @@ public class SketchParser {
 				publicMethods+=method+"\n\n";
 			}else {
 				privateMethods+=method+"\n\n";
-			}
-			
+			}				
 		}
-		//add newline for constructor later, duck tape
-		publicMethods="\n"+publicMethods;
-		
 	}
-	
-	/**
-	 * Parses the header comment
-	 * @param temp the string containing the first 
-	 * @param scanner the Scanner object that iterates over the class
-	 */
-	private void parseHeaderComment(String temp,MiniScanner scanner) {
-		headerComment="";
-		temp=ArduinoParser.removeSpecialChars(temp);
-		//keep adding the comment until the temp file is contained
-		while(!temp.contains("*/")) {
-			headerComment+=temp+"\n";
-			temp=scanner.next().replaceAll("\n", "");
-		}
-		//add the last comment
-		temp=ArduinoParser.removeSpecialChars(temp);
-		headerComment+=temp;
-		//remove formatting characters from header comment
-		headerComment=ArduinoParser.removeWhiteSpace(headerComment);
-	}
-	
-	/**
-	 * Parses a method from sketch String and returns formatted method string
-	 * @param temp the first line of the method
-	 * @param scanner the MiniScanner object that iterates over the sketch
-	 * @return a String representation of the method formatted for Arduino Class
-	 * Generator
-	 */
-	private static String consumeAndFormatMethod(String temp, MiniScanner scanner) {
-		//get the method into a string
-		String methodBody=consumeMethod(temp,scanner);
-		//format the method to be easily parsable
-		return formatMethod(methodBody);
-	}
-	
-	/**
-	 * Returns the method iterated over
-	 * @param temp the string containing the line
-	 * @param scanner the scanner which iterates over the sketch
-	 * @return the method represented as a string
-	 */
-	private static String consumeMethod(String temp,MiniScanner scanner) {
-		//a string of methods, used here as return and also to search for brackets
-		String method=temp;
-		//loop as long as the closing index isn't found yet
-		while(ArduinoParser.getClosingIndex(method, 0)==-1) {
-			//get a new string to search
-			temp=scanner.next();
-			//add the temp string to the method string
-			method+="\n"+temp;
-		}
-		//add last line
-		temp=temp.replaceAll("\r","");
-		//duck tape fix for extra bracket
-		temp=temp.replaceAll("}", "");
-		method+=temp;
-		return method;
-	}
-	
-	/**
-	 * 
-	 * @param methodString a string representation of the method
-	 * @return a formatted version of the method suitable for Arduino class generator
-	 */
-	private static String formatMethod(String methodString) {
-		//create a parsed method object to format the method string
-		ParsedMethod p=new ParsedMethod(methodString);
-		//retunr the tostring of parsedMethod object
-		return p.toString();
-	}
-	
 	
 	/**
 	 * Reads a sketch from computer memory, and parses it into
@@ -217,5 +175,4 @@ public class SketchParser {
 				headerComment, "ALL", variables,
 				privateMethods, publicMethods,sketchMethods);
 	}
-
 }
