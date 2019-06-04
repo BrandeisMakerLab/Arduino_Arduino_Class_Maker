@@ -19,7 +19,7 @@ call all
 rem **delete file that results in compilation error ref 3
 cd C:\Users\jsmit\Pictures\Arduino\app\lib
 taskkill /F /IM "javaw.exe" /T
-rem delte the file, see ref 2
+rem delete the file, see ref 2
 del jnidispatch-4.2.2-win32-x86.dll
 rem  go to directory, compile run the arduino package
 cd C:\Users\jsmit\Pictures\Arduino\build
@@ -30,9 +30,6 @@ call :holdError
 call ant run
 call :holdError
 exit
-
-
-
 :holdError
  if %errorlevel% neq 0 (
 	start wmplayer "C:\Windows\Media\Alarm10.wav" && timeout 5 && taskkill /im wmplayer.exe
@@ -40,4 +37,3 @@ exit
 	exit
 )
  EXIT /B 0
- 
