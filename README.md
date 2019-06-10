@@ -6,13 +6,18 @@ A set of java programs to automatically generate arduino library header, body, k
 
 ## Instructions For Use
 
-Click on Runme.jar, which will allow the user to enter the name of the class to generate and the file path it is in.
+### In Arduino IDE:
 
-![RunMe dialogue](RunMeDialogue.PNG)
+​		![Arduino Class Generator in Arduino IDE](ArduinoClassGen.gif)
 
-When you click on the body, these editable files are displayed:
+### As a standalone file editor
 
-![Generated Classes](GeneratedClasses.PNG)
+​		Click on Runme.jar, which will allow the user to enter the name of the class to generate and the file 		path it is in.
+​		![RunMe dialogue](RunMeDialogue.PNG)
+​		When you click on the body, these editable files are displayed:
+​	​		![Generated Classes](GeneratedClasses.PNG)
+
+
 
 ## Rationale
 
