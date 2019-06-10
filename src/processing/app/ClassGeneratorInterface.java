@@ -35,6 +35,9 @@ import processing.app.SketchFile;
 import cc.ArduinoClassGenerator.ArduinoClassContainer;
 import cc.ArduinoClassGenerator.SketchParser;
 
+import static processing.app.I18n.tr;
+
+//import static processing.app.I18n.tr;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,21 +49,42 @@ public class ClassGeneratorInterface {
 	 * file, header file, keywords, and example file
 	 */
 	public static void generateLibrary(SketchController controller, EditorTab tab, SketchFile sketchFile,
-			ArrayList<EditorTab> tabs) {
-		if (failedToCompile(controller)) {
-			return;
+			ArrayList<EditorTab> tabs, EditorStatus status) {
+		// create private LibHandler Class so graphics will be updated
+		class LibHandler implements Runnable {
+			@Override
+			/**
+			 * generates library files and display status messages
+			 */
+			public void run() {
+				//compile sketch to check for errors
+				status.progressNotice(tr("Compiling sketch..."));
+				if (failedToCompile(controller)) {
+					return;
+				}
+				// get the file name and contents of the sketch
+				String[] sketchInfo = getNameContentsPath(tab, sketchFile);
+				String className = sketchInfo[0];
+				String contents = sketchInfo[1];
+				String filepath = sketchInfo[2];
+				// parse the sketch into format used to generate arduino classes
+				status.progressNotice(tr("Creating Library Files..."));
+				status.progressUpdate(50);
+				status.clearState();
+				SketchParser parser = new SketchParser(contents);
+				ArduinoClassContainer cont = parser.getContainer(className, false);
+				// create the files with strings
+				status.progressNotice(tr("Creating Tabs..."));
+				setLibraryTabs(className, cont.getBody(), cont.getExample(), cont.getHeader(), cont.getKeywords(), tabs,
+						controller);
+				status.progressUpdate(100);
+				status.unprogress();
+				status.progressNotice(tr(""));
+			}
 		}
-		// get the file name and contents of the sketch
-		String[] sketchInfo = getNameContentsPath(tab, sketchFile);
-		String className=sketchInfo[0];
-		String contents=sketchInfo[1];
-		String filepath=sketchInfo[2];
-		//parse the sketch into format used to generate arduino classes
-		SketchParser parser = new SketchParser(contents);
-		ArduinoClassContainer cont = parser.getContainer(className, false);
-		// create the files with strings
-		setLibraryTabs(className, cont.getBody(),  cont.getExample(), cont.getHeader(),cont.getKeywords(), tabs,
-				controller);
+		// see private handleRun method of Editor class, try line 1632
+		new Thread(new LibHandler()).start();
+
 	}
 
 	/**
@@ -141,7 +165,9 @@ public class ClassGeneratorInterface {
 
 	/**
 	 * Builds and Runs the Arduino IDE by running batch Script RunArduino.bat
-	 * @param args not used
+	 * 
+	 * @param args
+	 *            not used
 	 */
 	public static void main(String[] args) {
 		try {

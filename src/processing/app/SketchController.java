@@ -14,4 +14,18 @@ public class SketchController {
 	public void nameCode(String dummy) {
 		
 	}
+	/**
+	 * 
+	 */
+	public void handleNewcode() {
+		// TODO Auto-generated method stub
+		
+	}
+	/**
+	 * 
+	 */
+	public void handleNewCode() {
+		// TODO Auto-generated method stub
+		
+	}
 }
