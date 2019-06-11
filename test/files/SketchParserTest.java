@@ -5,6 +5,8 @@
   *example files
   *Bugs:
   *Sources:
+  *Rights: Copyright (C) 2019 Jacob Smith
+  *  	   License is GPL-3.0, included in License.txt of this github project
   */
 package files;
 

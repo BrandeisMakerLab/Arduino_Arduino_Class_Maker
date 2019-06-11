@@ -4,26 +4,8 @@
   *Assignment:	Personal Study, integrates the Arduino Class Generator project into the Arduino IDE
   *Bugs: This hasn't been tested on other computers, mine is windows 10
   *Sources: https://stackoverflow.com/questions/615948/how-do-i-run-a-batch-file-from-my-java-application
-  *Notes 
-  *https://www.java-forums.org/new-java/51756-actionlistener-calling-methods-different-class.html
-		//save code
-		try {
-			sketchController.save();
-		}catch(IOException e) {
-			System.out.println("error with saving");
-		}
-		SketchFile current = getCurrentTab().getSketchFile();
-		System.out.println("MARK" + current.getFile().getPath());
-		String sketchString = getCurrentTab().getText();
-		this.addTab(current, sketchString);
-		sketchController.nameCode(fileNames[i]); creates new tab with given file name, initialize method of EditorStatus.java line 240
-		editor.status.edit(tr("Name for new file:"), "");creates new tab with dialogue for file name, HandleNewCode method of SketchController.java line 72
-		edit(String message, String dflt)
-		//code to add menu item to ide graphical interface
-		item = newJMenuItem(tr("Generate Arduino Class"),' ');
-   		item.addActionListener(event -> ClassGeneratorInterface.generateLibrary(sketchController,getCurrentTab(),getCurrentTab().getSketchFile(),tabs));
-   		sketchMenu.add(item);
-		
+  *Rights: Copyright (C) 2019 Jacob Smith
+  *  	   License is GPL-3.0, included in License.txt of this github project	
  */
 package processing.app;
 
@@ -84,7 +66,6 @@ public class ClassGeneratorInterface {
 		}
 		// see private handleRun method of Editor class, try line 1632
 		new Thread(new LibHandler()).start();
-
 	}
 
 	/**

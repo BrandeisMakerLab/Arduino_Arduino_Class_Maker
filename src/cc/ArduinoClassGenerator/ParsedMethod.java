@@ -5,6 +5,8 @@
   *of a method into fields like name, body, and location [private,public,example]
   *Bugs:
   *Sources:https://stackoverflow.com/questions/9260126/what-are-the-differences-between-char-literals-n-and-r-in-java
+  *Rights: Copyright (C) 2019 Jacob Smith
+  *  	   License is GPL-3.0, included in License.txt of this github project
   */
 package cc.ArduinoClassGenerator;
 

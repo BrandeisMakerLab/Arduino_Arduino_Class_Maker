@@ -11,6 +11,8 @@ package cc.ArduinoClassGenerator;
  *  Need to have variable enforceMent for if supportedBoards is all, 
  *  and if a field is null,and ask for variables,privateMethods,and public methods one
  *  at a time
+ *  Rights: Copyright (C) 2019 Jacob Smith
+ *  	License is GPL-3.0, included in License.txt of this github project
  */
 
 public enum ArduinoClassExample {

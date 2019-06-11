@@ -1,18 +1,20 @@
 package cc.ArduinoClassGenerator;
 
-/* Name: Jacob Smith
+/** Name: Jacob Smith
  Date: May 13 2019
  Assignment: Personal Study, allows the user to create a scanner object which iterates
- over a base string and returns one token at a time
+ 	over a base string and returns one token at a time
  Email: jsmith2021@brandeis.edu
- Throw error if hasNext was called twice in a row at end of input
- The expected behavior of the class is that a new instance will be created, then
- the prime method will be called whenever a string needs to be iterated over.
- If the user calls hasNext or next before the scanner is primed, an exception is thrown
- If there is more string to process, hasNext returns true
- Next returns the next String to process, null if there is no next string
- With this scheme, hasNext and next can be called forever with no exception as long as scanner is primed
-
+ Notes:
+ 	Throw error if hasNext was called twice in a row at end of input
+ 	The expected behavior of the class is that a new instance will be created, then
+ 	the prime method will be called whenever a string needs to be iterated over.
+ 	If the user calls hasNext or next before the scanner is primed, an exception is thrown
+ 	If there is more string to process, hasNext returns true
+ 	Next returns the next String to process, null if there is no next string
+ 	With this scheme, hasNext and next can be called forever with no exception as long as scanner is primed
+ Rights: Copyright (C) 2019 Jacob Smith
+    	 License is GPL-3.0, included in License.txt of this github project
  */
 
 public class MiniScanner {

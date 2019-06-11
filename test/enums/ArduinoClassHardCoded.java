@@ -8,6 +8,8 @@ package enums;
  *  special characters to be explicit and for them to be tested easily with string compare assertions
  *  Date: May 16, 2019
  *  Sources: 
+ *  Rights: Copyright (C) 2019 Jacob Smith
+ *  	    License is GPL-3.0, included in License.txt of this github project
  */
 
 

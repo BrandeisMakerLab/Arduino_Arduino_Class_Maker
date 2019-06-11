@@ -1,14 +1,17 @@
 package files;
-/* Name: Jacob Smith
+/** Name: Jacob Smith
 Date: May 12 2019
 Assignment: Personal study, allows the user to load and write a file, for Arduno editing
 Email: jsmith2021@brandeis.edu
-Building Java programs 4th Ed page 424 for reading files, 412 for writing to them
-https://stackoverflow.com/questions/7709041/javac-is-not-recognized-as-an-internal-or-external-command-operable-program-or
-cd C:\Users\RTI\Documents\Arduino\libraries\ZumoAutomation\extras
-https://stackoverflow.com/questions/15512190/how-to-insert-a-new-line-character-in-a-string-to-printstream-then-use-a-scanner
-javac ScriptEditor.java
-java ScriptEditor
+Sources and notes:
+	Building Java programs 4th Ed page 424 for reading files, 412 for writing to them
+	https://stackoverflow.com/questions/7709041/javac-is-not-recognized-as-an-internal-or-external-command-operable-program-or
+	cd C:\Users\RTI\Documents\Arduino\libraries\ZumoAutomation\extras
+	https://stackoverflow.com/questions/15512190/how-to-insert-a-new-line-character-in-a-string-to-printstream-then-use-a-scanner
+	javac ScriptEditor.java
+	java ScriptEditor
+Rights: Copyright (C) 2019 Jacob Smith
+  	    License is GPL-3.0, included in License.txt of this github project
 */
 import java.io.PrintStream;
 import java.io.File;

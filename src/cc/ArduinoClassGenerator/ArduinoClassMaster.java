@@ -1,14 +1,16 @@
 package cc.ArduinoClassGenerator;
-/* Name: Jacob Smith
+/** Name: Jacob Smith
 Date: May 12 2019
 Assignment: Personal study, allows the user to edit an arduino library using a template, 
 	and lets me practice my JavaCodebaseComponent
 Email: jsmith2021@brandeis.edu
 Notes: needed eclipse debugger to find template
-I am separating the scanner ineraec from the class
-https://compiler.javatpoint.com/opr/test.jsp?filename=CurrentDateTimeExample1
-I have to just write code, not worry about 18 steps ahead
-I'm usnig the ide, also appreciating how powerful a praser is
+	I am separating the scanner ineraec from the class
+	https://compiler.javatpoint.com/opr/test.jsp?filename=CurrentDateTimeExample1
+	I have to just write code, not worry about 18 steps ahead
+	I'm using the ide, also appreciating how powerful a parser is
+Rights: Copyright (C) 2019 Jacob Smith
+  		License is GPL-3.0, included in License.txt of this github project
 */
 
 import java.time.format.DateTimeFormatter;

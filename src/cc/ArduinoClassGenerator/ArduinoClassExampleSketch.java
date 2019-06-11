@@ -1,9 +1,11 @@
 package cc.ArduinoClassGenerator;
 
-/* Name: Jacob Smith
+/** Name: Jacob Smith
 Date: May 12 2019
 Assignment: Personal study, allows the user to create an Arduino Class sketch given necesary information
 Email: jsmith2021@brandeis.edu
+Rights: Copyright (C) 2019 Jacob Smith
+  		License is GPL-3.0, included in License.txt of this github project
 */
 
 public class ArduinoClassExampleSketch extends ArduinoClassMaster {

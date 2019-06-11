@@ -12,6 +12,8 @@ import testBackgroundCode.AssertMethods;
  * Name: Jacob Smith Email:jsmith2021@brandeis.edu Assignment: Tests the correct
  * function of the MiniScanner class, especially important because it is the
  * basis of all parsing in the Arduino Project Date: May 15, 2019 Sources: Bugs:
+ * Rights: Copyright (C) 2019 Jacob Smith
+ *  	   License is GPL-3.0, included in License.txt of this github project
  */
 
 public class MiniScannerTest {

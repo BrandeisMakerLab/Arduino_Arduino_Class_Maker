@@ -1,10 +1,12 @@
 package cc.ArduinoClassGenerator;
 
-/* Name: Jacob Smith
+/** Name: Jacob Smith
 Date: May 12 2019
 Assignment: Personal study, allows the user to ecreate the cpp file given necessary information
 using an inheritance schem to save code
 Email: jsmith2021@brandeis.edu
+Rights: Copyright (C) 2019 Jacob Smith
+  		License is GPL-3.0, included in License.txt of this github project
 */
 
 public class ArduinoClassCpp extends ArduinoClassMaster{

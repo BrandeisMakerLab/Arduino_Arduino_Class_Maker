@@ -6,7 +6,9 @@
  *  Sources: 
  *  Bugs:
  *  Notes: I used to have custom methods to compare special characters abd line numbers of strings,
- *  but I decided to use a hardcoded string comparison which is moer explicit and doesn''t need those tools
+ *  	but I decided to use a hardcoded string comparison which is moer explicit and doesn't need those tools
+ *  Rights: Copyright (C) 2019 Jacob Smith
+ *     	    License is GPL-3.0, included in License.txt of this github project
  */
 package testBackgroundCode;
 

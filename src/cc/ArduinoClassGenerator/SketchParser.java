@@ -7,6 +7,8 @@
   *Sources:https://stackoverflow.com/questions/15633228/how-to-remove-all-white-spaces-in-java/36444332
   * https://docs.oracle.com/javase/6/docs/api/java/util/regex/Pattern.html#quote(java.lang.String)
   * https://stackoverflow.com/questions/17462146/java-patternsyntaxexception-illegal-repetition-on-string-substitution
+  *Rights: Copyright (C) 2019 Jacob Smith
+  *  	   License is GPL-3.0, included in License.txt of this github project
   */
 package cc.ArduinoClassGenerator;
 
