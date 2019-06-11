@@ -4,9 +4,9 @@
 
 ##### A set of java programs to automatically generate arduino library header (.h), body (.cpp), keywords (.txt), and example sketch (.ino) from a working Arduino (.ino) sketch.
 
-![Code Coverage](C:\Users\jsmit\Documents\ArduinoClassMaker\codeCoverage.PNG)
+![Code Coverage](codeCoverage.PNG)
 	
-![Unit Tests](C:\Users\jsmit\Documents\ArduinoClassMaker\UnitTests.PNG)
+![Unit Tests](UnitTests.PNG)
 
 ## Instructions For Use
 
