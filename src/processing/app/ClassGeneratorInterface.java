@@ -39,16 +39,19 @@ public class ClassGeneratorInterface {
 			 * generates library files and display status messages
 			 */
 			public void run() {
-				//compile sketch to check for errors
-				status.progressNotice(tr("Compiling sketch..."));
-				if (failedToCompile(controller)) {
-					return;
-				}
 				// get the file name and contents of the sketch
 				String[] sketchInfo = getNameContentsPath(tab, sketchFile);
 				String className = sketchInfo[0];
 				String contents = sketchInfo[1];
 				String filepath = sketchInfo[2];
+				//give user the chance to provide a new className
+				//status.edit("Please enter name of class", sketchInfo[0]);
+				//try{Thread.sleep(5000);}catch(Exception e){}
+				//compile sketch to check for errors
+				status.progressNotice(tr("Compiling sketch..."));
+				if (failedToCompile(controller)) {
+					return;
+				}
 				// parse the sketch into format used to generate arduino classes
 				status.progressNotice(tr("Creating Library Files..."));
 				status.progressUpdate(50);
