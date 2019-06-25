@@ -9,20 +9,34 @@ rem reference 7 https://superuser.com/questions/101974/play-a-sound-maybe-wav-fr
 rem reference 8 https://stackoverflow.com/questions/4983508/can-i-have-an-if-block-in-dos-batch-file
 rem reference 9 https://stackoverflow.com/questions/40610241/automatically-answer-to-input-prompt-in-windows-batch
 
+rem sets the file paths to copy to and from
+SET startLoc=C:\Users\jsmit\Documents\
+SET destLoc=C:\Users\jsmit\Pictures\
+
+rem do not change these, they are true for any installation
+SET folderStart=%startLoc% and ArduinoClassMaker\src\cc\ArduinoClassGenerator
+SET folderDest=%destLoc% and Arduino\app\src\cc\ArduinoClassGenerator
+SET fileStart=%startLoc% and ArduinoClassMaker\src\processing\app\ClassGeneratorInterface.java
+SET fileDest=%destLoc% and Arduino\app\src\processing\app\ClassGeneratorInterface.java
+SET problemFile=%destLoc% and Arduino\app\lib
+SET build=%destLoc% and Arduino\build
+
 rem temp, sets computer to shutdown so I have to take a break
 shutdown /s /t 1600
+
+pause
 rem copy files from eclipse workspace to arduino ide and allow all files to be copied, see ref 9 for auto respond
-call echo all|xcopy /E /I C:\Users\jsmit\Documents\ArduinoClassMaker\src\cc\ArduinoClassGenerator C:\Users\jsmit\Pictures\Arduino\app\src\cc\ArduinoClassGenerator
+call echo all|xcopy /E /I  %folderStart% %folderDest% 
 call all
-call echo all|xcopy /E /I C:\Users\jsmit\Documents\ArduinoClassMaker\src\processing\app\ClassGeneratorInterface.java C:\Users\jsmit\Pictures\Arduino\app\src\processing\app\ClassGeneratorInterface.java
+call echo all|xcopy /E /I  %fileStart% %fileDest%
 call all
 rem **delete file that results in compilation error ref 3
-cd C:\Users\jsmit\Pictures\Arduino\app\lib
+cd %problemFile%
 taskkill /F /IM "javaw.exe" /T
 rem delete the file, see ref 2
 del jnidispatch-4.2.2-win32-x86.dll
 rem  go to directory, compile run the arduino package
-cd C:\Users\jsmit\Pictures\Arduino\build
+cd %build%
 rem see 4 for call, which forces commands to be sequential
 call ant build
 rem these two lines stop the script and play a sound, see reference 1,4,5,6,7,8
