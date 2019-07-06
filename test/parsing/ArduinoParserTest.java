@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cc.ArduinoClassGenerator.ArduinoParser;
+import cc.arduinoclassgenerator.ArduinoParser;
 
 public class ArduinoParserTest {	
 	@Test

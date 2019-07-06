@@ -3,8 +3,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cc.ArduinoClassGenerator.ArduinoClassExample;
-import cc.ArduinoClassGenerator.ArduinoClassH;
+import cc.arduinoclassgenerator.ArduinoClassExample;
+import cc.arduinoclassgenerator.ArduinoClassH;
+import cc.arduinoclassgenerator.libraryOptionalFields;
 import testBackgroundCode.AssertMethods;
 import enums.ArduinoClassHardCoded;
 
@@ -29,12 +30,13 @@ public class ArduinoClassHTest {
 		// The user can decide how these string will be inputted
 		// These fields are the minimum required to generate an arudino class
 
-		ArduinoClassH template = new ArduinoClassH(ArduinoClassExample.CLASSNAME.toString(),
-				ArduinoClassExample.AUTHOR.toString(),
+		//create libraryOptionalFields object to hold fields
+		libraryOptionalFields fields=new libraryOptionalFields(ArduinoClassExample.AUTHOR.toString(),
 				ArduinoClassExample.ORGANIZATION.toString(), 
-				true,
+				true,ArduinoClassExample.SUPPORTEDBOARDS.toString());
+		
+		ArduinoClassH template = new ArduinoClassH(ArduinoClassExample.CLASSNAME.toString(),fields,
 				ArduinoClassExample.HEADERCOMMENTS.toString(), 
-				ArduinoClassExample.SUPPORTEDBOARDS.toString(),
 				ArduinoClassExample.VARIABLES.toString(),
 				ArduinoClassExample.PRIVATEMETHODS.toString(),
 				ArduinoClassExample.PUBLICMETHODS.toString());
@@ -59,12 +61,14 @@ public class ArduinoClassHTest {
 		// The user can decide how these string will be inputted
 		// These fields are the minimum required to generate an arudino class
 
-		ArduinoClassH template = new ArduinoClassH(ArduinoClassExample.CLASSNAME.toString(),
-				ArduinoClassExample.AUTHOR.toString(),
+		//create libraryOptionalFields object to hold fields
+		libraryOptionalFields fields=new libraryOptionalFields(ArduinoClassExample.AUTHOR.toString(),
 				ArduinoClassExample.ORGANIZATION.toString(), 
-				true,
+				true,"ALL");
+		
+		ArduinoClassH template = new ArduinoClassH(ArduinoClassExample.CLASSNAME.toString(),
+				fields,
 				ArduinoClassExample.HEADERCOMMENTS.toString(), 
-				"ALL",
 				ArduinoClassExample.VARIABLES.toString(),
 				ArduinoClassExample.PRIVATEMETHODS.toString(),
 				ArduinoClassExample.PUBLICMETHODS.toString());
@@ -88,13 +92,14 @@ public class ArduinoClassHTest {
 		// The user can decide how these string will be inputted
 		// These fields are the minimum required to generate an arudino class
 
+		//create libraryOptionalFields object to hold fields
+		libraryOptionalFields fields=new libraryOptionalFields(ArduinoClassExample.AUTHOR.toString(),
+			ArduinoClassExample.ORGANIZATION.toString(), 
+			true,ArduinoClassExample.SUPPORTEDBOARDS.toString());
+				
 		ArduinoClassH template = new ArduinoClassH(ArduinoClassExample.CLASSNAME.toString(),
-				ArduinoClassExample.AUTHOR.toString(),
-				ArduinoClassExample.ORGANIZATION.toString(), 
-				true,
-				ArduinoClassExample.HEADERCOMMENTS.toString(), 
-				ArduinoClassExample.SUPPORTEDBOARDS.toString(),
-				ArduinoClassExample.VARIABLES.toString(),
+				fields,
+				ArduinoClassExample.HEADERCOMMENTS.toString(), ArduinoClassExample.VARIABLES.toString(),
 				ArduinoClassExample.PRIVATEMETHODS.toString(),
 				ArduinoClassExample.PUBLICMETHODS.toString());
 		//get the String representation of the keywords file
@@ -117,13 +122,14 @@ public class ArduinoClassHTest {
 		// This example generates a class represented as a string
 		// The user can decide how these string will be inputted
 		// These fields are the minimum required to generate an arudino class
-
-		ArduinoClassH template = new ArduinoClassH(ArduinoClassExample.CLASSNAME.toString(),
-				null,
-				null, 
-				true,
+		
+		//create libraryOptionalFields object to hold fields
+		libraryOptionalFields fields=new libraryOptionalFields(null,
+			null, 
+			true,"ALL");
+		
+		ArduinoClassH template = new ArduinoClassH(ArduinoClassExample.CLASSNAME.toString(),fields,
 				ArduinoClassExample.HEADERCOMMENTS.toString(), 
-				"ALL",
 				ArduinoClassExample.VARIABLES.toString(),
 				ArduinoClassExample.PRIVATEMETHODS.toString(),
 				ArduinoClassExample.PUBLICMETHODS.toString());

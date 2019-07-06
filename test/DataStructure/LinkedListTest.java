@@ -14,8 +14,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import cc.ArduinoClassGenerator.LinkedList;
-import cc.ArduinoClassGenerator.LinkedListNode;
+import cc.arduinoclassgenerator.LinkedList;
+import cc.arduinoclassgenerator.LinkedListNode;
 
 public class LinkedListTest {
 	/**

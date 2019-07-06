@@ -11,9 +11,10 @@ package classGenerators;
 
 import org.junit.Test;
 
-import cc.ArduinoClassGenerator.ArduinoClassExample;
-import cc.ArduinoClassGenerator.ArduinoClassExampleSketch;
-import cc.ArduinoClassGenerator.ExampleSketch;
+import cc.arduinoclassgenerator.ArduinoClassExample;
+import cc.arduinoclassgenerator.ArduinoClassExampleSketch;
+import cc.arduinoclassgenerator.ExampleSketch;
+import cc.arduinoclassgenerator.libraryOptionalFields;
 import testBackgroundCode.AssertMethods;
 
 public class ArduinoClassExampleSketchTest {
@@ -23,13 +24,15 @@ public class ArduinoClassExampleSketchTest {
 	 * asserts that the class can generate an example file for the Timer class
 	 */
 	public void testExampleFile() {
+		
+		//create fields object to hold optional fields
+		libraryOptionalFields fields=new libraryOptionalFields(ArduinoClassExample.AUTHOR.toString(),
+				ArduinoClassExample.ORGANIZATION.toString(), true,ArduinoClassExample.SUPPORTEDBOARDS.toString());
+		
 		//create an ArduinoClassExampleSketch object using hardcoded example fields
 		ArduinoClassExampleSketch template = new ArduinoClassExampleSketch(ArduinoClassExample.CLASSNAME.toString(),
-			ArduinoClassExample.AUTHOR.toString(),
-			ArduinoClassExample.ORGANIZATION.toString(), 
-			true,
+			fields,
 			ArduinoClassExample.HEADERCOMMENTS.toString(), 
-			ArduinoClassExample.SUPPORTEDBOARDS.toString(),
 			ExampleSketch.SKETCHMETHODS.toString(),ArduinoClassExample.PUBLICMETHODS.toString());
 		//print the generated example sketch
 		String generatedExample=template.toString();

@@ -14,22 +14,19 @@ SET startLoc=C:\Users\jsmit\Documents\
 SET destLoc=C:\Users\jsmit\Pictures\
 
 rem do not change these, they are true for any installation
-SET folderStart=%startLoc% and ArduinoClassMaker\src\cc\ArduinoClassGenerator
-SET folderDest=%destLoc% and Arduino\app\src\cc\ArduinoClassGenerator
-SET fileStart=%startLoc% and ArduinoClassMaker\src\processing\app\ClassGeneratorInterface.java
-SET fileDest=%destLoc% and Arduino\app\src\processing\app\ClassGeneratorInterface.java
-SET problemFile=%destLoc% and Arduino\app\lib
-SET build=%destLoc% and Arduino\build
+SET folderStart=%startLoc%ArduinoClassMaker\src\cc\arduinoclassgenerator
+SET folderDest=%destLoc%Arduino\app\src\cc\arduinoclassgenerator
+SET fileStart=%startLoc%ArduinoClassMaker\src\processing\app\ClassGeneratorInterface.java
+SET fileDest=%destLoc%Arduino\app\src\processing\app\ClassGeneratorInterface.java
+SET problemFile=%destLoc%Arduino\app\lib
+SET build=%destLoc%Arduino\build
 
 rem temp, sets computer to shutdown so I have to take a break
 shutdown /s /t 1600
 
-pause
 rem copy files from eclipse workspace to arduino ide and allow all files to be copied, see ref 9 for auto respond
 call echo all|xcopy /E /I  %folderStart% %folderDest% 
-call all
-call echo all|xcopy /E /I  %fileStart% %fileDest%
-call all
+call echo f|xcopy /E /I  %fileStart% %fileDest%
 rem **delete file that results in compilation error ref 3
 cd %problemFile%
 taskkill /F /IM "javaw.exe" /T

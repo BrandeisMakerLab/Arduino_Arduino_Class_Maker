@@ -5,7 +5,7 @@
   *Bugs: This hasn't been tested on other computers, mine is windows 10
   *Sources: https://stackoverflow.com/questions/615948/how-do-i-run-a-batch-file-from-my-java-application
   *Rights: Copyright (C) 2019 Jacob Smith
-  *  	   License is GPL-3.0, included in License.txt of this github project	
+  *  	   License is GPL-3.0, included in License.txt of this github project
  */
 package processing.app;
 
@@ -13,9 +13,6 @@ package processing.app;
 import processing.app.SketchController;
 import processing.app.EditorTab;
 import processing.app.SketchFile;
-//classes to create arduino library from sketch
-import cc.ArduinoClassGenerator.ArduinoClassContainer;
-import cc.ArduinoClassGenerator.SketchParser;
 
 import static processing.app.I18n.tr;
 
@@ -23,6 +20,9 @@ import static processing.app.I18n.tr;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import cc.arduinoclassgenerator.ArduinoClassContainer;
+import cc.arduinoclassgenerator.SketchParser;
 
 public class ClassGeneratorInterface {
 

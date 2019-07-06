@@ -14,8 +14,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cc.ArduinoClassGenerator.ArduinoClassContainer;
-import cc.ArduinoClassGenerator.SketchParser;
+import cc.arduinoclassgenerator.ArduinoClassContainer;
+import cc.arduinoclassgenerator.SketchParser;
 
 
 public class SketchParserTest {

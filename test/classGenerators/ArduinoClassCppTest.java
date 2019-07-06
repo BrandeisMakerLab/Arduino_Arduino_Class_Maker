@@ -3,8 +3,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cc.ArduinoClassGenerator.ArduinoClassCpp;
-import cc.ArduinoClassGenerator.ArduinoClassExample;
+import cc.arduinoclassgenerator.ArduinoClassCpp;
+import cc.arduinoclassgenerator.ArduinoClassExample;
+import cc.arduinoclassgenerator.libraryOptionalFields;
 import testBackgroundCode.AssertMethods;
 import enums.ArduinoClassHardCoded;
 
@@ -29,12 +30,14 @@ public class ArduinoClassCppTest {
 		// The user can decide how these string will be inputted
 		// These fields are the minimum required to generate an arudino class
 
-		ArduinoClassCpp template = new ArduinoClassCpp(ArduinoClassExample.CLASSNAME.toString(),
-				ArduinoClassExample.AUTHOR.toString(),
+		//create libraryOptionalFields object for fewer parameters
+		libraryOptionalFields fields=new libraryOptionalFields(ArduinoClassExample.AUTHOR.toString(),
 				ArduinoClassExample.ORGANIZATION.toString(), 
-				true,
-				ArduinoClassExample.HEADERCOMMENTS.toString(), 
-				ArduinoClassExample.SUPPORTEDBOARDS.toString(),
+				true,ArduinoClassExample.SUPPORTEDBOARDS.toString());
+		
+		ArduinoClassCpp template = new ArduinoClassCpp(ArduinoClassExample.CLASSNAME.toString(),
+				fields,
+				ArduinoClassExample.HEADERCOMMENTS.toString(),
 				ArduinoClassExample.VARIABLES.toString(),
 				ArduinoClassExample.PRIVATEMETHODS.toString(),
 				ArduinoClassExample.PUBLICMETHODS.toString());
@@ -58,13 +61,14 @@ public class ArduinoClassCppTest {
 		// This example generates a class represented as a string
 		// The user can decide how these string will be inputted
 		// These fields are the minimum required to generate an arudino class
-
-		ArduinoClassCpp template = new ArduinoClassCpp(ArduinoClassExample.CLASSNAME.toString(),
-				ArduinoClassExample.AUTHOR.toString(),
+		
+		//create libraryOptional fields object o hold fields
+		libraryOptionalFields fields=new libraryOptionalFields(ArduinoClassExample.AUTHOR.toString(),
 				ArduinoClassExample.ORGANIZATION.toString(), 
-				true,
+				true,"ALL");
+		
+		ArduinoClassCpp template = new ArduinoClassCpp(ArduinoClassExample.CLASSNAME.toString(),fields,		
 				ArduinoClassExample.HEADERCOMMENTS.toString(), 
-				"ALL",
 				ArduinoClassExample.VARIABLES.toString(),
 				ArduinoClassExample.PRIVATEMETHODS.toString(),
 				ArduinoClassExample.PUBLICMETHODS.toString());
@@ -76,10 +80,5 @@ public class ArduinoClassCppTest {
 		System.out.println(AssertMethods.assertEqualsFeedback(correctClass, generatedClass));
 		assertEquals(correctClass,generatedClass);
 
-
 	}
-
-
-
-
 }

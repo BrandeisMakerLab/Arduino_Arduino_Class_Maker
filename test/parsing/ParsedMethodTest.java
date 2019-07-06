@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cc.ArduinoClassGenerator.ParsedMethod;
+import cc.arduinoclassgenerator.ParsedMethod;
 import testBackgroundCode.AssertMethods;
 
 public class ParsedMethodTest {
