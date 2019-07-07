@@ -46,6 +46,8 @@ class ESPServer{
   public:
     //Creates a new ESPServer object
     ESPServer();
+    //Initializes the class, can't always be done at same time as constructor
+    void begin();
     //runs all the logic for the server
     int runServer();
     //connects to the internet and displays releve=ant information

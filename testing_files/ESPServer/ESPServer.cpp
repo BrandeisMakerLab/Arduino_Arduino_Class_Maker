@@ -10,6 +10,10 @@ Moified by Dies Robotics Club to be simpler 2019/05/15*/
 
 //Creates a new ESPServer object
 ESPServer::ESPServer() {
+}
+
+//Initializes the class, can't always be done at same time as constructor
+void ESPServer::begin() {
     //Replace with your network credentials, ssid is for wifi network
     ssid = "brandeis_open";
     //the password of the wifi network

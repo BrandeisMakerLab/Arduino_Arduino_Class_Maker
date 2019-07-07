@@ -46,9 +46,8 @@ public class ArduinoClassH extends ArduinoClassMaster {
 		arduinoClass += "  private:\n";
 		arduinoClass += generateVariables(variables);
 		arduinoClass += generateMethods(className, privateMethods, false);
-		// add an automatic comment for the constructor
-		publicMethods = "|" + className + "||Creates a new " + className
-				+ " object|\n" + publicMethods;
+		//get the standard begin and constructor methods
+		publicMethods=super.getConstructorAndBegin(className)+publicMethods;
 		arduinoClass += "  public:\n";
 		arduinoClass += generateMethods(className, publicMethods, true);
 		arduinoClass += "};\n";

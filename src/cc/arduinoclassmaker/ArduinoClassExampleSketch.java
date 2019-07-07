@@ -11,6 +11,7 @@ Rights: Copyright (C) 2019 Jacob Smith
 public class ArduinoClassExampleSketch extends ArduinoClassMaster {
 
 	String[] publicMethodNames;
+	String var;
 
 	/**
 	 * Loads an example class into memory with hardcoded date and parses it into
@@ -75,8 +76,17 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster {
 	 */
 	protected String genVariable(String className) {
 		String var = "//The object used to interfact with the class\n";
-		var += className + " " + className.toLowerCase() + "();\n\n";
+		var += className + " " + this.genObjectName(className) + "();\n\n";
 		return var;
+	}
+	
+	/**
+	 * a method to standardize name of class to avoid redundnacy
+	 * @param className the name of this Arduino class
+	 * @return the object name of class
+	 */
+	protected String genObjectName(String className) {
+		return className.toLowerCase();
 	}
 
 	/**
@@ -88,6 +98,10 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster {
 		methodString += "//" + methodParts[3] + "\n";// comment
 		methodString += methodParts[0];// data type
 		methodString += " " + methodParts[1] + "(" + methodParts[2] + ") {";// name and parameters
+		//check if method is setup, and if so add begin method
+		if("setup".equals(methodParts[1])) {
+			methodString+="\n    //sets up the class\n    "+this.genObjectName(className)+".begin();";
+		}
 		// insert the object name to public method invocations
 		String methodBody = insertObject(className, methodParts[4]);
 		methodString += ArduinoParser.insertTabs(methodBody, 1, false);// body
@@ -110,12 +124,12 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster {
 			// store the method name
 			methodName = publicMethodNames[i];
 			// replace occurences of that method name with the method name and object
-			methodBody = methodBody.replaceAll(methodName, className.toLowerCase() + "." + methodName);
+			methodBody = methodBody.replaceAll(methodName, this.genObjectName(className) + "." + methodName);
 		}
 		// remove duplicate ibject method calls, in case user entered correct method
 		// call initially
-		methodBody = methodBody.replaceAll(className.toLowerCase() + "." + className.toLowerCase() + ".",
-				className.toLowerCase() + ".");
+		methodBody = methodBody.replaceAll(this.genObjectName(className) + "." + this.genObjectName(className) + ".",
+				this.genObjectName(className)+ ".");
 		return methodBody;
 	}
 

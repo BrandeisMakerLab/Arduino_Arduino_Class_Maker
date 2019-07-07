@@ -28,6 +28,10 @@ public enum ArduinoClassHardCoded {
 
     		"//Creates a new Timer object\n"+
     		"Timer::Timer() {\n"    +
+			"}\n\n"+
+
+			"//Initializes the class, can't always be done at same time as constructor\n"+
+			"void Timer::begin() {\n"+
     	    "    //the beginning time of the interval\n"+
     	    "    initTime = TODO: SET INITIAL VARIABLE VALUE;\n"+
     	    "    //a test variable for the parser\n"+
@@ -70,6 +74,10 @@ public enum ArduinoClassHardCoded {
 
     	    "//Creates a new Timer object\n"+
     	    "Timer::Timer() {\n"    +
+    	    "}\n\n"+
+
+			"//Initializes the class, can't always be done at same time as constructor\n"+
+			"void Timer::begin() {\n"+
     	    "    //the beginning time of the interval\n"+
     	    "    initTime = TODO: SET INITIAL VARIABLE VALUE;\n"+
     	    "    //a test variable for the parser\n"+
@@ -125,6 +133,8 @@ public enum ArduinoClassHardCoded {
     		"  public:\n"+
     		"    //Creates a new Timer object\n"+
     		"    Timer();\n"+
+    		"    //Initializes the class, can't always be done at same time as constructor\n"+
+    	    "    void begin();\n"+
     		"    //resets the Initial Time\n"+
     		"    long resetTime();\n"+
     		"    //returns the current time\n"+
@@ -163,6 +173,8 @@ public enum ArduinoClassHardCoded {
      		"  public:\n"+
      		"    //Creates a new Timer object\n"+
      		"    Timer();\n"+
+     		"    //Initializes the class, can't always be done at same time as constructor\n"+
+			"    void begin();\n"+
      		"    //resets the Initial Time\n"+
      		"    long resetTime();\n"+
      		"    //returns the current time\n"+
@@ -173,10 +185,11 @@ public enum ArduinoClassHardCoded {
      		"#endif"),
     	KEYWORDS_FILE(
     		"//Generates ARDUINO KEYWORDS for Timer class\n"+
-    		"Timer	KEYWORD1\n"+
-    		"resetTime	KEYWORD2\n"+
-    		"getTime	KEYWORD2\n"+
-    		"getAndResetTime	KEYWORD2\n"),
+    		"Timer\tKEYWORD1\n"+
+    		"begin\tKEYWORD2\n"+		
+    		"resetTime\tKEYWORD2\n"+
+    		"getTime\tKEYWORD2\n"+
+    		"getAndResetTime\tKEYWORD2\n"),
     	HEADER_FILE_FEWERKEYWORDS(
     			"/*A timer class to allow the user to create loops and maintain program control 2019/05/15*/\n\n"
     			
@@ -199,6 +212,8 @@ public enum ArduinoClassHardCoded {
 				+"  public:\n"
 				+"    //Creates a new Timer object\n"
 				+"    Timer();\n"
+				+"    //Initializes the class, can't always be done at same time as constructor\n"
+				+"    void begin();\n"
 				+"    //resets the Initial Time\n"
 				+"    long resetTime();\n"
 				+"    //returns the current time\n"

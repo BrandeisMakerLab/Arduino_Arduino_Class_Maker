@@ -145,6 +145,15 @@ public abstract class ArduinoClassMaster{
 		return methodString;
 	}
 	
+	/** returns the formatted strings for the class constructor and begin method
+	* @param className the name of the class
+	*/
+	protected String getConstructorAndBegin(String className) {
+		String constructorAndBegin="|"+className+"||Creates a new "+className+" object|\n\n";
+		constructorAndBegin+="void|"+"begin"+"||Initializes the class, can't always be done at same time as constructor|\n";
+		return constructorAndBegin;
+	}
+	
 	/** parses a method into a body, dataType, comment*/
 	protected String [] parseMethod(String methodInfo){
 		MiniScanner methodReader=new MiniScanner();

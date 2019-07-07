@@ -11,6 +11,8 @@ ESPServer espserver();
 
 //runs once
 void setup() {
+    //sets up the class
+    espserver.begin();
     Serial.begin(115200);
     // Initialize the output variables as outputs
     espserver.wifiConnect();

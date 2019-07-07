@@ -10,6 +10,8 @@ Timer timer();
 
 //runs once
 void setup() {
+    //sets up the class
+    timer.begin();
     timer.resetTime()
     delay(3000);
     Serial.println(timer.getTime())

@@ -37,7 +37,7 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 	private void init(String className,String supportedBoards,String variables,String publicMethods, String privateMethods){
 		arduinoClass+=super.generateBoardDefInitial(supportedBoards);
 		arduinoClass+=super.startLibraryIncludes(variables, className)+"\n";
-		publicMethods=generateConstructor(className,variables)+publicMethods;
+		publicMethods=generateConstructorandBegin(className,variables)+publicMethods;
 		arduinoClass+=generateMethods(className,publicMethods,true);
 		arduinoClass+=generateMethods(className,privateMethods,false);	
 		arduinoClass+=generateBoardDefFinal();
@@ -47,9 +47,9 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 	 * Generates the body of the class constructor
 	 * @return the formatted method of a constructor
 	 */
-	private String generateConstructor(String className,String variables) {
+	private String generateConstructorandBegin(String className,String variables) {
 		//add an automatic comment for the constructor
-		String constructor="|"+className+"||Creates a new "+className+" object|\n";
+		String constructorAndBegin=super.getConstructorAndBegin(className);
 		MiniScanner varReader=new MiniScanner();
 		MiniScanner valReader=new MiniScanner();
 		varReader.prime(variables, "\n");
@@ -78,10 +78,10 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 			if(comment.equals("")) {
 				comment=TODOs.Variable.toString();
 			}
-			constructor+="//"+comment+"\n"+name+" = "+val+";\n";
+			constructorAndBegin+="//"+comment+"\n"+name+" = "+val+";\n";
 			
 		}
-		return constructor;
+		return constructorAndBegin;
 		
 	}
 	

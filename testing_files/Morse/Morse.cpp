@@ -7,6 +7,10 @@
 
 //Creates a new Morse object
 Morse::Morse() {
+}
+
+//Initializes the class, can't always be done at same time as constructor
+void Morse::begin() {
     //TODO: EXPLAIN WHAT VARIABLE IS FOR
     pin = 13;
 

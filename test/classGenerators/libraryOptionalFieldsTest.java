@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import cc.arduinoclassgenerator.libraryOptionalFields;
+import cc.arduinoclassmaker.libraryOptionalFields;
 import testBackgroundCode.AssertMethods;
 
 

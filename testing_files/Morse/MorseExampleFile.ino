@@ -8,6 +8,8 @@ Morse morse();
 
 //TODO: EXPLAIN WHAT METHOD DOES
 void setup() {
+    //sets up the class
+    morse.begin();
     pinMode(pin, OUTPUT);
 
 }

@@ -16,6 +16,8 @@ class Morse{
   public:
     //Creates a new Morse object
     Morse();
+    //Initializes the class, can't always be done at same time as constructor
+    void begin();
     //TODO: EXPLAIN WHAT METHOD DOES
     void dot();
     //TODO: EXPLAIN WHAT METHOD DOES
