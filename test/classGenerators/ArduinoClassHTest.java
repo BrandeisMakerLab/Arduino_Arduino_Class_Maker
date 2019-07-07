@@ -3,9 +3,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cc.arduinoclassgenerator.ArduinoClassExample;
-import cc.arduinoclassgenerator.ArduinoClassH;
-import cc.arduinoclassgenerator.libraryOptionalFields;
+import cc.arduinoclassmaker.ArduinoClassExample;
+import cc.arduinoclassmaker.ArduinoClassH;
+import cc.arduinoclassmaker.libraryOptionalFields;
 import testBackgroundCode.AssertMethods;
 import enums.ArduinoClassHardCoded;
 

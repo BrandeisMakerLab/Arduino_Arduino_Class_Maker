@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cc.arduinoclassgenerator.VariableParser;
+import cc.arduinoclassmaker.VariableParser;
 
 public class VariableParserTest {
 

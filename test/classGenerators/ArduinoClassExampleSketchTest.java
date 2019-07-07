@@ -11,10 +11,10 @@ package classGenerators;
 
 import org.junit.Test;
 
-import cc.arduinoclassgenerator.ArduinoClassExample;
-import cc.arduinoclassgenerator.ArduinoClassExampleSketch;
-import cc.arduinoclassgenerator.ExampleSketch;
-import cc.arduinoclassgenerator.libraryOptionalFields;
+import cc.arduinoclassmaker.ArduinoClassExample;
+import cc.arduinoclassmaker.ArduinoClassExampleSketch;
+import cc.arduinoclassmaker.ExampleSketch;
+import cc.arduinoclassmaker.libraryOptionalFields;
 import testBackgroundCode.AssertMethods;
 
 public class ArduinoClassExampleSketchTest {

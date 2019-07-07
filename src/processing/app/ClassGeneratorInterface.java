@@ -21,8 +21,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import cc.arduinoclassgenerator.ArduinoClassContainer;
-import cc.arduinoclassgenerator.SketchParser;
+import cc.arduinoclassmaker.ArduinoClassContainer;
+import cc.arduinoclassmaker.SketchParser;
 
 public class ClassGeneratorInterface {
 
