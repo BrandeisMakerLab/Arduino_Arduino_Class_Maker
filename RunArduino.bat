@@ -16,8 +16,8 @@ SET destLoc=C:\Users\jsmit\Pictures\
 rem do not change these, they are true for any installation
 SET folderStart=%startLoc%ArduinoClassMaker\src\cc\arduinoclassmaker
 SET folderDest=%destLoc%Arduino\app\src\cc\arduinoclassmaker
-SET fileStart=%startLoc%ArduinoClassMaker\src\processing\app\ClassGeneratorInterface.java
-SET fileDest=%destLoc%Arduino\app\src\processing\app\ClassGeneratorInterface.java
+SET fileStart=%startLoc%ArduinoClassMaker\src\processing\app\ClassMakerInterface.java
+SET fileDest=%destLoc%Arduino\app\src\processing\app\ClassMakerInterface.java
 SET problemFile=%destLoc%Arduino\app\lib
 SET build=%destLoc%Arduino\build
 
@@ -26,6 +26,9 @@ shutdown /s /t 1600
 
 rem copy files from eclipse workspace to arduino ide and allow all files to be copied, see ref 9 for auto respond
 call echo all|xcopy /E /I  %folderStart% %folderDest% 
+rem add interface file if isn't in dest
+call echo f|xcopy /E /I  %fileStart% %fileDest%
+rem overwrite interface file if it is in dest
 call echo y|xcopy /E /I  %fileStart% %fileDest%
 rem **delete file that results in compilation error ref 3
 cd %problemFile%
@@ -43,7 +46,7 @@ call :holdError
 exit
 :holdError
  if %errorlevel% neq 0 (
-	start wmplayer "C:\Windows\Media\Alarm10.wav" && timeout 5 && taskkill /im wmplayer.exe
+	start wmplayer "C:\Windows\Media\Alarm10.wav" && timeout 4 && taskkill /im wmplayer.exe
 	pause
 	exit
 )

@@ -36,7 +36,6 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster {
 	}
 
 	/**
-	 * 
 	 * @param publicMethods
 	 *            a formatted string of all the public methods
 	 * @return a list of the names of all the public methods for cross checking
@@ -126,7 +125,7 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster {
 			// replace occurences of that method name with the method name and object
 			methodBody = methodBody.replaceAll(methodName, this.genObjectName(className) + "." + methodName);
 		}
-		// remove duplicate ibject method calls, in case user entered correct method
+		// remove duplicate object method calls, in case user entered correct method
 		// call initially
 		methodBody = methodBody.replaceAll(this.genObjectName(className) + "." + this.genObjectName(className) + ".",
 				this.genObjectName(className)+ ".");
@@ -148,7 +147,5 @@ public class ArduinoClassExampleSketch extends ArduinoClassMaster {
 				ArduinoClassExample.PUBLICMETHODS.toString());
 		// print the generated example sketch
 		System.out.println(template);
-
 	}
-
 }
