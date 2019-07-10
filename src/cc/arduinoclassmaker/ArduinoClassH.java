@@ -125,7 +125,7 @@ public class ArduinoClassH extends ArduinoClassMaster {
 		varLine += readerB.next("var name") + ";\n";// var Name
 		String comment=readerB.next("comment");
 		//generate to do message if there is no variable comment
-		if(comment.equals("")) {
+		if("".equals(comment)) {
 			comment=TODOs.Variable.toString();
 		}
 		varLine = "    //" + comment + "\n" + varLine;// comment
@@ -139,7 +139,7 @@ public class ArduinoClassH extends ArduinoClassMaster {
 		String methodString = "";
 		//add comment
 		methodString += "    //" + methodParts[3] + "\n";// comment
-		if (!methodParts[0].equals("")) {
+		if (!"".equals(methodParts[0])) {
 			methodString += " ";
 		}
 		// use this spot in parsing to generate keywords list of public methods
@@ -162,7 +162,7 @@ public class ArduinoClassH extends ArduinoClassMaster {
 	 */
 	private String generateBoardDefFinal(String className,String supportedBoards) {
 		// if className is all, just close the normal class end if and return
-		if (supportedBoards.equals("ALL")) {
+		if ("ALL".equals(supportedBoards)) {
 			return "#endif";
 		}
 		// otherwise, return the moer complicated error handling definitions

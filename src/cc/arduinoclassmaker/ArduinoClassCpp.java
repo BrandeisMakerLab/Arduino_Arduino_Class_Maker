@@ -37,8 +37,8 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 	private void init(String className,String supportedBoards,String variables,String publicMethods, String privateMethods){
 		arduinoClass+=super.generateBoardDefInitial(supportedBoards);
 		arduinoClass+=super.startLibraryIncludes(variables, className)+"\n";
-		publicMethods=generateConstructorandBegin(className,variables)+publicMethods;
-		arduinoClass+=generateMethods(className,publicMethods,true);
+		String publicMethodsWithHeader=generateConstructorandBegin(className,variables)+publicMethods;
+		arduinoClass+=generateMethods(className,publicMethodsWithHeader,true);
 		arduinoClass+=generateMethods(className,privateMethods,false);	
 		arduinoClass+=generateBoardDefFinal();
 	}
@@ -71,11 +71,11 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 				val=TODOs.VariableValue.toString();
 			}
 			
-			if(val.equals("")) {
+			if("".equals(val)) {
 				val="0";
 			}
 			//if there is no comment, generate the todo comment from enum
-			if(comment.equals("")) {
+			if("".equals(comment)) {
 				comment=TODOs.Variable.toString();
 			}
 			constructorAndBegin+="//"+comment+"\n"+name+" = "+val+";\n";
@@ -92,7 +92,7 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 		methodString+="//"+methodParts[3]+"\n";//comment
 		methodString+=methodParts[0];//data type
 		//remove extra space for constructor
-		if(!methodParts[0].equals("")) {
+		if(!"".equals(methodParts[0])) {
 			methodString+=" ";
 		}
 		methodString+=className+"::"+methodParts[1]+"("+methodParts[2]+") {";//name

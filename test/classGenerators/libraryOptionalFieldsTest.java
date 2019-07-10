@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cc.arduinoclassmaker.libraryOptionalFields;
-import testBackgroundCode.AssertMethods;
 
 
 /**Name: Jacob Smith

@@ -37,7 +37,7 @@ public class SketchParserTest {
 	 * @param args not used
 	 */
 	public void testSketchConversionMorse() {
-		compareSketch("testing_files\\ESPServer\\ESPServer.ino","testing_files\\ESPServer\\ESPParsed.txt");
+		compareSketch("testing_files\\Morse\\Morse.ino","testing_files\\Morse\\MorseParsed.txt");
 	}
 	@Test
 	/**
@@ -56,7 +56,28 @@ public class SketchParserTest {
 	public void compareGeneratedClassESPServer() {
 		compareGeneratedClass("ESPServer");
 	}
+	//
+	@Test
+	/**
+	 * asserts behavior for Blank example sketch
+	 * which can be used to generate a class template and represents minimum edge case
+	 * @param args not used
+	 */
+	public void testSketchConversionBlank() {
+		compareSketch("testing_files\\Blank\\Blank.ino","testing_files\\Blank\\BlankParsed.txt");
+	}
 	
+	@Test
+	/**
+	 *  checks that the automatically generated class from the blank code example file
+	 *  matches the correct strings
+	 */
+	public void compareGeneratedClassBlank() {
+		compareGeneratedClass("Blank");
+	}
+	
+
+	//
 	/**
 	 *  checks that the automatically generated class from example file
 	 *  matches the correct input in body, header, and keyword files
@@ -79,7 +100,7 @@ public class SketchParserTest {
 		String correctHeader=helper3.toString().replaceAll("\r", "");
 		ScriptEditor helper4 = new ScriptEditor(folder+className+"Keywords.txt");//was WifiExample.txt
 		String correctKeywords=helper4.toString().replaceAll("\r", "");
-		ScriptEditor helper5 = new ScriptEditor(folder+className+"ExampleFile.ino");//was WifiExample.txt
+		ScriptEditor helper5 = new ScriptEditor(folder+"examples\\"+className+"ExampleFile.ino");//was WifiExample.txt
 		String correctExample=helper5.toString().replaceAll("\r", "");
 		
 		//assert the the correct fields equal the generated fields
@@ -91,7 +112,7 @@ public class SketchParserTest {
 	}
 	
 	/**
-	 * Helper test method to sue a file to check sketch parsing
+	 * Helper test method to use a file to check sketch parsing
 	 * @param exampleSketch the file containing the sketch to be parsed
 	 * @param parsedExampleSketch the file containing the correctly parsed fields
 	 */
@@ -111,5 +132,4 @@ public class SketchParserTest {
 		//assert the the correct fields equal the generated fields
 		assertEquals(correctFields,generatedFields);
 	}
-
 }

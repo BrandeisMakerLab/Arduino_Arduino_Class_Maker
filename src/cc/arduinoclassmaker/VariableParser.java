@@ -78,8 +78,8 @@ public class VariableParser {
 		String token="";
 		LinkedList l=new LinkedList();
 		//iterate through the temp string until you see equal, semicolon and paren are also possible stop markers
-		while(varReader.hasNext() && !token.equals("=") && !token.equals(";")&&!(token.equals("("))) {
-			if(!token.equals("")) {
+		while(varReader.hasNext() && !"=".equals(token) && !";".equals(token)&&!"(".equals(token)) {
+			if(!"".equals(token)) {
 				l.add(token);
 			}
 			token=varReader.next();
@@ -87,7 +87,7 @@ public class VariableParser {
 		//store the tail in the linked list
 		LinkedListNode tail=l.getTail();
 		//if variable is array, swap bracket and name 
-		if(tail.getVal().equals("[]")) {
+		if("[]".equals(tail.getVal())) {
 			LinkedListNode name=tail.getPrev();
 			l.switchNodes(name,tail);
 		}

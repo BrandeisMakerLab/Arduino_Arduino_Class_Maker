@@ -26,7 +26,7 @@ public abstract class ArduinoClassMaster{
 	protected String arduinoClass;
 	//determines whether the date will be hard coded, necessary for testing the class
 	//with example file made on may 15 2019
-	boolean hardCodeDate;
+	private boolean hardCodeDate;
 	
 	/**
 	* Loads an example class into memory given date for testing purposes
@@ -56,7 +56,7 @@ public abstract class ArduinoClassMaster{
 	protected String generateHeaderComment(libraryOptionalFields fields, String headerComments){
 		String headerComment="";
 		//if header comment is null or blank, insert auto generated todo
-		if(headerComments==null|headerComments.equals("")) {
+		if(headerComments==null|"".equals(headerComments)) {
 			headerComments=TODOs.HeaderComment.toString();
 		}
 		String date=genDate();
@@ -92,7 +92,7 @@ public abstract class ArduinoClassMaster{
 	/** Generates the board definition that allows a class to not cause compilation errors for the long board*/
 	protected String generateBoardDefInitial(String supportedBoards){
 		//check if all boards are allowed, if not go to more complicated helper method
-		if(supportedBoards.equals("ALL")){
+		if("ALL".equals(supportedBoards)){
 			return "//this should work on all boards, so there is no preprocessor directive here\n\n";
 		}else{
 			return generateBoardDef(supportedBoards);
@@ -132,7 +132,7 @@ public abstract class ArduinoClassMaster{
 	/** Generate method bodies based on input Strings*/
 	protected String generateMethods(String className,String methods,boolean isPublic){
 		//return a blank string if inputs are null,useful because a class could not have any private methods
-		if(methods==null | methods.equals("null")){return "";}
+		if(methods==null | "null".equals(methods)){return "";}
 		String methodString="";
 		String [] methodParts;
 		reader.prime(methods,"\n\n");
@@ -164,7 +164,7 @@ public abstract class ArduinoClassMaster{
 		methodParts[2]=methodReader.next("parameters");//parameters
 		methodParts[3]=methodReader.next("comment");//comment
 		//prepare for if method comment isn't there
-		if(methodParts[3].equals("")) {
+		if("".equals(methodParts[3])) {
 			methodParts[3]=TODOs.Method.toString();
 		}
 		String methodBody;

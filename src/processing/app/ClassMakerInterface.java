@@ -28,6 +28,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 import cc.arduinoclassmaker.ArduinoClassContainer;
+import cc.arduinoclassmaker.Files;
 import cc.arduinoclassmaker.SketchParser;
 
 public class ClassMakerInterface {
@@ -72,12 +73,11 @@ public class ClassMakerInterface {
 				ArduinoClassContainer cont = parser.getContainer(className, false);
 				// create the files with strings
 				status.progressNotice(tr("Creating Tabs..."));
-				setLibraryTabs(className, cont.getBody(), cont.getHeader(), cont.getKeywords(), tabs,
+				setLibraryTabs(className, cont.getBody(), cont.getHeader(), tabs,
 						controller);
 				
-				//create the example sketch in its own folder
-				String exampleText="this is an example sketch la de da";
-				createExampleSketch(className,parentPath,cont.getExample());
+				//create other class files that won't be opened in the IDE
+				createClassFiles(className,parentPath,cont);
 				
 				status.progressUpdate(100);
 				status.unprogress();
@@ -101,7 +101,7 @@ public class ClassMakerInterface {
 			output = controller.build(true, false);
 		} catch (Exception e) {
 		}
-		if (output.equals("failed")) {
+		if ("failed".equals(output)) {
 			System.out.println("Error, the sketch failed to compile, exiting sketch generator");
 			return true;
 		} else {
@@ -145,7 +145,7 @@ public class ClassMakerInterface {
 	 * @param keywords
 	 *            the keywords file of the class
 	 */
-	private static void setLibraryTabs(String className, String body, String header, String keywords,
+	private static void setLibraryTabs(String className, String body, String header,
 			ArrayList<EditorTab> tabs, SketchController controller) {
 
 		// create and set text of all tabs
@@ -158,9 +158,19 @@ public class ClassMakerInterface {
 		// create header tab
 		controller.nameCode(className + ".h");
 		tabs.get(2).setText(header);
-		// create keywords tab
-		controller.nameCode(className + "keywords.txt");
-		tabs.get(3).setText(keywords);
+	}
+	
+	/**
+	 * Creates files for the Arduino class not opened in IDE
+	 * @param className name of class
+	 * @param parentPath directory to make folders in
+	 * @param cont container holding text of files
+	 */
+	private static void createClassFiles(String className,String parentPath,ArduinoClassContainer cont){
+		//create example sketch in folder
+		createExampleSketch(className,parentPath,cont.getExample());
+		// create keywords file
+		Files.createFile(parentPath,"keywords.txt", cont.getKeywords());
 	}
 	
 	/**
@@ -171,23 +181,11 @@ public class ClassMakerInterface {
 	 */
 	private static void createExampleSketch(String className,String parentPath,String exampleText) {
 		//creates example folder
-		File exampleFolder = new File(parentPath+"\\examples");
-		exampleFolder.mkdir();
+		Files.createFolder(parentPath, "examples");
 		//creates folder for specific example sketch
-		File exampleSketchFolder=new File(exampleFolder.getPath()+"\\"+className+"Example");
-		if(!exampleSketchFolder.mkdir()) {
-			System.out.println("Error, example folder not created");
-		}else {
-			File exampleSketch=new File(exampleSketchFolder.getPath()+"\\"+className+"Example.ino");
-			try{
-				exampleSketch.createNewFile();
-				PrintStream output = new PrintStream(exampleSketch);
-				output.print(exampleText);
-				output.close();
-			}catch(Exception e){
-				System.out.println("Error, example folder not written to");
-			}	
-		}
+		Files.createFolder(parentPath+"\\examples",className+"Example");
+		//creates example sketch with text
+		Files.createFile(parentPath+"\\examples\\"+className+"Example",className+"Example.ino",exampleText);	
 	}
 
 	/**
