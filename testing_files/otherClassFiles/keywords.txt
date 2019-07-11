@@ -1,0 +1,2 @@
+test	KEYWORD1
+begin	KEYWORD2

@@ -77,7 +77,6 @@ public class SketchParserTest {
 	}
 	
 
-	//
 	/**
 	 *  checks that the automatically generated class from example file
 	 *  matches the correct input in body, header, and keyword files
@@ -111,6 +110,8 @@ public class SketchParserTest {
 		assertEquals(correctExample,cont.getExample());
 	}
 	
+	
+	
 	/**
 	 * Helper test method to use a file to check sketch parsing
 	 * @param exampleSketch the file containing the sketch to be parsed
@@ -132,4 +133,5 @@ public class SketchParserTest {
 		//assert the the correct fields equal the generated fields
 		assertEquals(correctFields,generatedFields);
 	}
+	
 }

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import cc.arduinoclassmaker.ArduinoClassContainer;
 import cc.arduinoclassmaker.Files;
 import cc.arduinoclassmaker.SketchParser;
+import cc.arduinoclassmaker.otherClassFileMaker;
 
 public class ClassMakerInterface {
 
@@ -38,7 +39,7 @@ public class ClassMakerInterface {
 	 * file, header file, keywords, and example file
 	 */
 	public static void generateLibrary(SketchController controller, EditorTab tab, SketchFile sketchFile,
-			ArrayList<EditorTab> tabs, EditorStatus status,Editor editor) {
+			ArrayList<EditorTab> tabs, EditorStatus status, Editor editor) {
 		// create private LibHandler Class so graphics will be updated
 		class LibHandler implements Runnable {
 			@Override
@@ -46,21 +47,22 @@ public class ClassMakerInterface {
 			 * generates library files and display status messages
 			 */
 			public void run() {
-		
-				//save the library to the correct location, also gives user chance to name class
+
+				// save the library to the correct location, also gives user chance to name
+				// class
 				editor.handleSaveAs();
-				
+
 				// get the file name and contents of the sketch
 				String[] sketchInfo = getNameContentsPath(tab, sketchFile);
 				String className = sketchInfo[0];
 				String contents = sketchInfo[1];
 				String filepath = sketchInfo[2];
-				String parentPath=sketchInfo[3];
-				
-				//give user the chance to provide a new className
-				//status.edit("Please enter name of class", sketchInfo[0]);
-				//try{Thread.sleep(5000);}catch(Exception e){}
-				//compile sketch to check for errors
+				String parentPath = sketchInfo[3];
+
+				// give user the chance to provide a new className
+				// status.edit("Please enter name of class", sketchInfo[0]);
+				// try{Thread.sleep(5000);}catch(Exception e){}
+				// compile sketch to check for errors
 				status.progressNotice(tr("Compiling sketch..."));
 				if (failedToCompile(controller)) {
 					return;
@@ -73,12 +75,11 @@ public class ClassMakerInterface {
 				ArduinoClassContainer cont = parser.getContainer(className, false);
 				// create the files with strings
 				status.progressNotice(tr("Creating Tabs..."));
-				setLibraryTabs(className, cont.getBody(), cont.getHeader(), tabs,
-						controller);
-				
-				//create other class files that won't be opened in the IDE
-				createClassFiles(className,parentPath,cont);
-				
+				setLibraryTabs(className, cont.getBody(), cont.getHeader(), tabs, controller);
+
+				// create other class files that won't be opened in the IDE
+				otherClassFileMaker.createClassFiles(className, parentPath, cont.getExample(),cont.getKeywords());
+
 				status.progressUpdate(100);
 				status.unprogress();
 				status.progressNotice(tr(""));
@@ -125,8 +126,8 @@ public class ClassMakerInterface {
 		sketchInfo[1] = currentTab.getText();
 		// load sketch path
 		sketchInfo[2] = sketchFile.getFile().getPath();
-		//load parent path
-		sketchInfo[3]=sketchFile.getFile().getParentFile().getPath();
+		// load parent path
+		sketchInfo[3] = sketchFile.getFile().getParentFile().getPath();
 		return sketchInfo;
 	}
 
@@ -145,8 +146,8 @@ public class ClassMakerInterface {
 	 * @param keywords
 	 *            the keywords file of the class
 	 */
-	private static void setLibraryTabs(String className, String body, String header,
-			ArrayList<EditorTab> tabs, SketchController controller) {
+	private static void setLibraryTabs(String className, String body, String header, ArrayList<EditorTab> tabs,
+			SketchController controller) {
 
 		// create and set text of all tabs
 		// the name of every tab starts with className, because tabs are alphabetized
@@ -159,34 +160,7 @@ public class ClassMakerInterface {
 		controller.nameCode(className + ".h");
 		tabs.get(2).setText(header);
 	}
-	
-	/**
-	 * Creates files for the Arduino class not opened in IDE
-	 * @param className name of class
-	 * @param parentPath directory to make folders in
-	 * @param cont container holding text of files
-	 */
-	private static void createClassFiles(String className,String parentPath,ArduinoClassContainer cont){
-		//create example sketch in folder
-		createExampleSketch(className,parentPath,cont.getExample());
-		// create keywords file
-		Files.createFile(parentPath,"keywords.txt", cont.getKeywords());
-	}
-	
-	/**
-	 * Creates example sketch file in examples folder
-	 * @param className the name of the arudino class
-	 * @param parentPath the path of the library
-	 * param exampleText the text of the example sketch
-	 */
-	private static void createExampleSketch(String className,String parentPath,String exampleText) {
-		//creates example folder
-		Files.createFolder(parentPath, "examples");
-		//creates folder for specific example sketch
-		Files.createFolder(parentPath+"\\examples",className+"Example");
-		//creates example sketch with text
-		Files.createFile(parentPath+"\\examples\\"+className+"Example",className+"Example.ino",exampleText);	
-	}
+
 
 	/**
 	 * Builds and Runs the Arduino IDE by running batch Script RunArduino.bat

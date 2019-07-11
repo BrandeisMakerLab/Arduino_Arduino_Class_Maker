@@ -14,36 +14,41 @@ public enum TODOs {
 	/**
 	 * hardcoded message fields
 	 */
-	HeaderComment("TODO: EXPLAIN WHAT PROGRAM IS FOR AND GIVE YOUR NAME AND WHO CAN USE THIS PROGRAM"),
-	Method("TODO: EXPLAIN WHAT METHOD DOES"),Variable("TODO: EXPLAIN WHAT VARIABLE IS FOR"),
-	VariableValue("TODO: SET INITIAL VARIABLE VALUE");;
+	HeaderComment("TODO: EXPLAIN WHAT PROGRAM IS FOR AND GIVE YOUR NAME AND WHO CAN USE THIS PROGRAM"), Method(
+			"TODO: EXPLAIN WHAT METHOD DOES"), PropertiesField("TODO: SET THIS LIBRARY PROPERTIES FIELD"), Variable(
+					"TODO: EXPLAIN WHAT VARIABLE IS FOR"), VariableValue("TODO: SET INITIAL VARIABLE VALUE");
 	/**
 	 * the message to be displayed
 	 */
 	private String message;
+
 	/**
 	 * creates a new TODO object
-	 * @param message the message to be displayed
+	 * 
+	 * @param message
+	 *            the message to be displayed
 	 */
-	private TODOs (String message) {
-		this.message=message;
+	private TODOs(String message) {
+		this.message = message;
 	}
-	
+
 	/**
 	 * demonstrates the enums available
-	 * @param args not used
+	 * 
+	 * @param args
+	 *            not used
 	 */
-	public static void main (String[]args) {
-		TODOs[] messages=TODOs.values();
-		for(int i=0;i<messages.length;i++) {
+	public static void main(String[] args) {
+		TODOs[] messages = TODOs.values();
+		for (int i = 0; i < messages.length; i++) {
 			System.out.println(messages[i]);
 		}
 	}
-	
+
 	/**
 	 * @return the message
 	 */
-	public String toString(){
+	public String toString() {
 		return message;
 	}
 }
