@@ -105,7 +105,7 @@ public class SketchParserTest {
 		//assert the the correct fields equal the generated fields
 		//duck tape, I don't know why I have to trim header and body
 		assertEquals(correctHeader.trim(),cont.getHeader());
-		assertEquals(correctBody.trim(),cont.getBody());
+		assertEquals(correctBody.trim(),cont.getBody().trim());
 		assertEquals(correctKeywords,cont.getKeywords());
 		assertEquals(correctExample,cont.getExample());
 	}

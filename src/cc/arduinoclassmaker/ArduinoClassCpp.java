@@ -40,7 +40,7 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 		String publicMethodsWithHeader=generateConstructorandBegin(className,variables)+publicMethods;
 		arduinoClass+=generateMethods(className,publicMethodsWithHeader,true);
 		arduinoClass+=generateMethods(className,privateMethods,false);	
-		arduinoClass+=generateBoardDefFinal();
+		arduinoClass+=generateBoardDefFinal(supportedBoards);
 	}
 		
 	/**
@@ -102,8 +102,12 @@ public class ArduinoClassCpp extends ArduinoClassMaster{
 		
 	}
 	
-	/** Generates the final board definition which generates errors if the wrong board is used*/
-	private String generateBoardDefFinal(){
+	/** Generates the final board definition which generates errors if the wrong board is used
+	 * param supportedBoards needed endif clause*/
+	private String generateBoardDefFinal(String supportedBoards){
+		if("ALL".equals(supportedBoards)|supportedBoards==null) {
+			return "";
+		}
 		return "#endif";
 	}
 	/**

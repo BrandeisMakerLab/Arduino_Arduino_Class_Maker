@@ -1,0 +1,39 @@
+/* Written by Jacob Smith for Brandeis Robotics Club 2019/05/15
+A timer class to allow the user to create loops and maintain program control
+Boards supported: ARDUINO_AVR_UNO ESP8266_WEMOSD1R1*/
+
+//sets up the Timer Header file
+#ifndef Timer_h
+#define Timer_h
+
+//only compile this class if the board is correct
+#if defined(ARDUINO_AVR_UNO) | defined (ESP8266_WEMOSD1R1)
+
+//includes the libraries of code necessary to make this one work
+#include <Timer.h>
+#include <Apple.h>
+
+class Timer{
+  private:
+    //the beginning time of the interval
+    long initTime;
+    //a test variable for the parser
+    Apple test;
+  public:
+    //Creates a new Timer object
+    Timer();
+    //Initializes the class, can't always be done at same time as constructor
+    void begin();
+    //resets the Initial Time
+    long resetTime();
+    //returns the current time
+    long getTime();
+    //returns the current time and the initial time
+    long getAndResetTime();
+};
+#elif defined (DONT_NEED_TIMER)
+  #warning : May lead to error: 'Timer' does not name a type ; Program to Board Incompatibility ; One of the libraries you are using will not work with your board ; For more information, go to cse230.artifice.cc/lecture/splitting-code.html
+#else
+  #error : Program to Board Incompatibility ; One of the libraries you are using will not work with your board ; Quick fix: add <#define DONT_NEED_TIMER> to top ; For more information, go to cse230.artifice.cc/lecture/splitting-code.html
+#endif
+#endif

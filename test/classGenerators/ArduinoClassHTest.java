@@ -42,12 +42,8 @@ public class ArduinoClassHTest {
 				ArduinoClassExample.PUBLICMETHODS.toString());
 		//get the String representation of the H file
 		String generatedClass = template.getHeader();
-		String correctClass=ArduinoClassHardCoded.H_FILE.toString();
-		//print out a comparison message useful in finding potential error
-		System.out.print("H File Test:");
-		System.out.println(AssertMethods.assertEqualsFeedback(correctClass, generatedClass));
 		//use an enum with the correct h file to test this output
-		assertEquals(correctClass,generatedClass);
+		AssertMethods.compareFiletoString("testing_files\\ArduinoClasses\\HFile.txt", generatedClass.trim());
 	}
 	
 	@Test
@@ -74,12 +70,8 @@ public class ArduinoClassHTest {
 				ArduinoClassExample.PUBLICMETHODS.toString());
 		//get the String representation of the H file
 		String generatedClass = template.getHeader();
-		String correctClass=ArduinoClassHardCoded.H_FILE_ALL_BOARDS.toString();
-		//print out a comparison message useful in finding potential error
-		System.out.print("H File Test All Boards:");
-		System.out.println(AssertMethods.assertEqualsFeedback(correctClass, generatedClass));
-		//use an enum with the correct h file to test this output
-		assertEquals(correctClass,generatedClass);
+		//compare generated class with known example
+		AssertMethods.compareFiletoString("testing_files\\ArduinoClasses\\HFileAllBoards.txt", generatedClass);
 	}
 	
 	@Test
@@ -104,11 +96,8 @@ public class ArduinoClassHTest {
 				ArduinoClassExample.PUBLICMETHODS.toString());
 		//get the String representation of the keywords file
 		String generatedClass = template.getKeywords();
-		String correctClass=ArduinoClassHardCoded.KEYWORDS_FILE.toString();
-		//use an enum with the correct keyword file to test this output
-		System.out.print("Keyword File Test:");
-		System.out.println(AssertMethods.assertEqualsFeedback(correctClass, generatedClass));
-		assertEquals(correctClass,generatedClass);
+		//compare generated keywords file with known example
+		AssertMethods.compareFiletoString("testing_files\\ArduinoClasses\\KeywordsFile.txt", generatedClass);
 	}
 
 	@Test
@@ -135,11 +124,7 @@ public class ArduinoClassHTest {
 				ArduinoClassExample.PUBLICMETHODS.toString());
 		//get the String representation of the H file
 		String generatedClass = template.getHeader();
-		String correctClass=ArduinoClassHardCoded.HEADER_FILE_FEWERKEYWORDS.toString();
-		//print out a comparison message useful in finding potential error
-		System.out.print("H File Test Fewer Fields:");
-		System.out.println(AssertMethods.assertEqualsFeedback(correctClass, generatedClass));
-		//use an enum with the correct h file to test this output
-		assertEquals(correctClass,generatedClass);
+		//compare generated class with correct example
+		AssertMethods.compareFiletoString("testing_files\\ArduinoClasses\\HeaderFileFewerKeywords.txt", generatedClass);
 	}
 }

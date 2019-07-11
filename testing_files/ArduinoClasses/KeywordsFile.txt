@@ -1,0 +1,6 @@
+//Generates ARDUINO KEYWORDS for Timer class
+Timer	KEYWORD1
+begin	KEYWORD2
+resetTime	KEYWORD2
+getTime	KEYWORD2
+getAndResetTime	KEYWORD2

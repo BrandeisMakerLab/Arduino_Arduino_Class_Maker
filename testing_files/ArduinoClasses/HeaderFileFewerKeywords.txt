@@ -1,0 +1,31 @@
+ /*A timer class to allow the user to create loops and maintain program control 2019/05/15*/
+
+//sets up the Timer Header file
+#ifndef Timer_h
+#define Timer_h
+
+//this should work on all boards, so there is no preprocessor directive here
+
+//includes the libraries of code necessary to make this one work
+#include <Timer.h>
+#include <Apple.h>
+
+class Timer{
+  private:
+    //the beginning time of the interval
+    long initTime;
+    //a test variable for the parser
+    Apple test;
+  public:
+    //Creates a new Timer object
+    Timer();
+    //Initializes the class, can't always be done at same time as constructor
+    void begin();
+    //resets the Initial Time
+    long resetTime();
+    //returns the current time
+    long getTime();
+    //returns the current time and the initial time
+    long getAndResetTime();
+};
+#endif

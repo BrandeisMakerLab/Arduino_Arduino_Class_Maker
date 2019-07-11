@@ -162,7 +162,7 @@ public class ArduinoClassH extends ArduinoClassMaster {
 	 */
 	private String generateBoardDefFinal(String className,String supportedBoards) {
 		// if className is all, just close the normal class end if and return
-		if ("ALL".equals(supportedBoards)) {
+		if ("ALL".equals(supportedBoards)|supportedBoards==null) {
 			return "#endif";
 		}
 		// otherwise, return the moer complicated error handling definitions

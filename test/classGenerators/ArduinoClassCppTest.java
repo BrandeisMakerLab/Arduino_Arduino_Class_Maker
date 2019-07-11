@@ -43,12 +43,8 @@ public class ArduinoClassCppTest {
 				ArduinoClassExample.PUBLICMETHODS.toString());
 		//get the String representation of the   cpp file
 		String generatedClass = template.toString();
-		String correctClass=ArduinoClassHardCoded.CPP_FILE.toString();
 		//use an enum with the correct class file to test this output
-		System.out.print("Cpp File Test:");
-		System.out.println(AssertMethods.assertEqualsFeedback(correctClass, generatedClass));
-		assertEquals(correctClass,generatedClass);
-
+		AssertMethods.compareFiletoString("testing_files\\ArduinoClasses\\CPPFile.txt", generatedClass);
 
 	}
 	
@@ -74,11 +70,7 @@ public class ArduinoClassCppTest {
 				ArduinoClassExample.PUBLICMETHODS.toString());
 		//get the String representation of the   cpp file
 		String generatedClass = template.toString();
-		String correctClass=ArduinoClassHardCoded.CPP_FILE_All_BOARDS.toString();
-		//use an enum with the correct class file to test this output
-		System.out.print("Cpp File Test All Boards:");
-		System.out.println(AssertMethods.assertEqualsFeedback(correctClass, generatedClass));
-		assertEquals(correctClass,generatedClass);
+		AssertMethods.compareFiletoString("testing_files\\ArduinoClasses\\CPPFileAllBoards.txt",generatedClass);
 
 	}
 }

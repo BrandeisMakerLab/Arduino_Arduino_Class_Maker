@@ -79,7 +79,7 @@ public class AssertMethods {
 		correctString=correctString.replaceAll("\r", "");
 		generatedString=generatedString.replaceAll("\r", "\n");
 		//assert the the correct fields equal the generated fields
-		assertEquals(correctString,generatedString);
+		assertEquals(correctString.trim(),generatedString.trim());
 	}
 	
 	/**
