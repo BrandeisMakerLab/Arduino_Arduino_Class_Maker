@@ -20,7 +20,7 @@ public abstract class ArduinoClassMaster{
 	// list of supported types, a library needs to be included for any other
 	// type
 	protected String[] supportedTypes = { "char", "byte", "int", "unsigned int",
-			"long", "unsigned long", "float", "double", "String","const char*","String []"};
+			"long", "unsigned long", "float", "double", "String","const int","const char*","String []"};
 		
 	protected MiniScanner reader;
 	protected String arduinoClass;
