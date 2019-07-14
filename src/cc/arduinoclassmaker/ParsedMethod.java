@@ -46,9 +46,9 @@ public class ParsedMethod {
 		MiniScanner lineReader=new MiniScanner();
 		//replace the r newlince character with the n newline character
 		//otherwise the line iterator and unit test won't pass
-		methodRep=methodRep.replaceAll("\r", "\n");
+		String cleanedMethod=methodRep.replaceAll("\r", "\n");
 		//prime the MiniScanner to iterate line by line
-		lineReader.prime(methodRep, "\n");
+		lineReader.prime(cleanedMethod, "\n");
 		//return the lineReader object to be used by helper methods
 		return lineReader;
 	}

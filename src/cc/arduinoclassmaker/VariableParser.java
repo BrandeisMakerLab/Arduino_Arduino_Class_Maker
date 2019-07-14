@@ -31,13 +31,13 @@ public class VariableParser {
 	 */
 	public VariableParser(String comment,String temp) {
 		loadComment(comment);
-		temp=clean(temp);
+		String cleanTemp=clean(temp);
 		//set up scanners to iterate through temp string
 		MiniScanner varReader=new MiniScanner();
-		varReader.prime(temp," ");
+		varReader.prime(cleanTemp," ");
 		//load fields into memory, note how type doesn't need scanner
 		//and value doesn't need linked list, shows how I'm saving work
-		LinkedList l=loadName(varReader,temp);
+		LinkedList l=loadName(varReader);
 		loadType(l);
 		loadVal(varReader);
 	}
@@ -47,10 +47,10 @@ public class VariableParser {
 	 * @param comment the unformatted comment
 	 */
 	private void loadComment(String comment) {
-		comment=ArduinoParser.removeWhiteSpace(comment);
-		comment=comment.replaceAll("/", "");
+		String cleanComment=ArduinoParser.removeWhiteSpace(comment);
+		cleanComment=cleanComment.replaceAll("/", "");
 		//remove vertical bars to get rid of parsing errors, they are parsing token
-		this.comment=comment.replace("|","");
+		this.comment=cleanComment.replace("|","");
 	}
 	/**
 	 * Removes edge cases from formatting like a missing space for parsing
@@ -73,7 +73,7 @@ public class VariableParser {
 	 * @param temp the string holding va`riable information
 	 * @return a LinkedList containing the data type of the string
 	 */
-	private LinkedList loadName(MiniScanner varReader,String temp) {
+	private LinkedList loadName(MiniScanner varReader) {
 		//create linked list to populate with data type and name
 		String token="";
 		LinkedList l=new LinkedList();
@@ -91,11 +91,7 @@ public class VariableParser {
 			LinkedListNode name=tail.getPrev();
 			l.switchNodes(name,tail);
 		}
-		//check for variable that is declared but not initialized
-		//which means it would contain a semicolon as int num;
-		if(token.contains(";")) {
-			
-		}
+	
 		//check for paren for an initialized reference variable
 		if(token.contains("(")) {
 			referenceVar=true;

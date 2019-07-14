@@ -21,7 +21,6 @@ import processing.app.Editor;
 import static processing.app.I18n.tr;
 
 //import static processing.app.I18n.tr;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -56,7 +55,6 @@ public class ClassMakerInterface {
 				String[] sketchInfo = getNameContentsPath(tab, sketchFile);
 				String className = sketchInfo[0];
 				String contents = sketchInfo[1];
-				String filepath = sketchInfo[2];
 				String parentPath = sketchInfo[3];
 
 				// give user the chance to provide a new className

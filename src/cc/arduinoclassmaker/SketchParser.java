@@ -25,8 +25,8 @@ public class SketchParser {
 	 * @param contents a string representing the sketch file to convert
 	 */
 	public SketchParser(String contents) {
-		contents=clean(contents);
-		String unsortedMethods=evaluate(contents);
+		String cleanedContents=clean(contents);
+		String unsortedMethods=evaluate(cleanedContents);
 		variables=SketchMethods.cleanVariables(variables);
 		libraries=libraries.replaceAll("\r", "");
 		sortMethods(unsortedMethods);
@@ -42,14 +42,14 @@ public class SketchParser {
 	 */
 	private String clean(String contents) {
 		//replace rs with newlines
-		contents=contents.replaceAll("\r\n", "\n");
+		String cleanedContents=contents.replaceAll("\r\n", "\n");
 		//allow for one line header comment
 		//contents=ArduinoParser.replaceAllSimple(contents,"*/", "\n*/");
 		//contents=ArduinoParser.replaceAllSimple(contents,"\n\n*/", "\n*/");
 		//replace the newLine bracket style with inline
 		//can't be done later because the scanner would read the bracket and header as different lines
-		contents=ArduinoParser.replaceAllSimple(contents,")\n{","){");
-		return contents;
+		cleanedContents=ArduinoParser.replaceAllSimple(cleanedContents,")\n{","){");
+		return cleanedContents;
 	}
 	
 	/**
@@ -115,9 +115,8 @@ public class SketchParser {
 		}else if (temp.contains("{") && !temp.contains(";")) {
 			unsortedMethods+=SketchMethods.consumeAndFormatMethod(comment+"\n"+temp,scanner);
 		//do nothing if character is a newline
-		}else if ("\r".equals(temp)|"".equals(temp)) {
 		//assume whatever is left is a variable because there are hard to stop
-		}else {
+		}else if(!("\r".equals(temp) && "".equals(temp))){
 			//use variableParser class to reformat the variable
 			VariableParser p=new VariableParser(comment,temp);
 			variables+=p.toString();
