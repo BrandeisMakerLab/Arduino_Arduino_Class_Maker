@@ -1,11 +1,10 @@
 #Jacob Smith script to automatically create Dozuki Guide 
 #Sources:
-	#https://stackoverflow.com/questions/4302027/how-to-open-a-url-in-python
 	#import python  lirbaries here C:\Users\RTI\AppData\Local\Programs\Python\Python37-32\Lib\site-packages
-	#https://stackoverflow.com/questions/4302027/how-to-open-a-url-in-python
+	#open link in python https://stackoverflow.com/questions/4302027/how-to-open-a-url-in-python
 	#Must be logged into https://brandeismakerlab.dozuki.com/
 	#Also my first attempt at reverse engineering a website
-	#view documetns from command line:https://askubuntu.com/questions/58416/how-can-i-preview-html-documents-from-the-command-line
+	#view documents from command line:https://askubuntu.com/questions/58416/how-can-i-preview-html-documents-from-the-command-line
 	#sleenium blog post https://towardsdatascience.com/controlling-the-web-with-python-6fceb22c5f08
 	#selenium:https://github.com/SeleniumHQ/selenium/tree/master/py#installing
 	#ChromeDriver:https://sites.google.com/a/chromium.org/chromedriver/downloads
@@ -16,52 +15,11 @@
 #Bugs:
 	#Saving Page results in authorization error
 	#extra imports because I don't know how to make them global
-#Extra Code
-    #Extra program to log in on low level
-    #Provided Code
-    #Fill in your details here to be posted to the login form.
-    #payload = {
-    #  'inUserName': 'jsmith2021@brandeis.edu',
-    #  'inUserPass': '5 Incorrect Zebras!'
-    #}
-    #url="https://help.dozuki.com/Login"
-    #with requests.Session() as s:
-    #  p = s.post(url, data=payload)
-    # print the html returned or something more intelligent to see if it's a successful login page.
-    #  displayBrowser(url)
-    # An authorised request.
-    #r = s.get('A protected web page url')
-    #print (r.text)
-        # etc...
-    #My code not being used
-    #Create guide with requests
-    #r=requests.get(newGuide)
-    #display broweser with webBrowser
-    #displayBrowser(newGuide)
-    #save guide with requests
-    #saveGuide=(url+"intro/save")
-    #r=requests.post(saveGuide)
-    #display text displayText(r)
-    #save the guide and dispay text in command prompt, won't work
-    #display("Save the Guide:",waitTime)
-    #driver.get(url+"intro/save")
-   
-    #displays text of a website using htmltext
-    #def displayText(website):
-	  #import html2text
-	  #h = html2text.HTML2Text()
-	  #h.ignore_links = True
-	  #print (h.handle(website.text))
-
-   #display a website in a browser
-    #def displayBrowser(url):
-	 #import webbrowser
-	 #webbrowser.open(url)
 
 #main method of script
 def main():
 	#create script with parameters
-	LogOnNewGuide("Arduino","Shows how to automatically create a Dozuki Guide","Look I can fill in the text here too")
+	LogOnNewGuide("Arduino","Test Look at This","Look at This Too Man")
   
 
 #Creates a new Dozuki Guide Given the existing category, title,
@@ -76,7 +34,7 @@ def LogOnNewGuide(topic,title,body):
   url="https://brandeismakerlab.dozuki.com/"
 
   display("Logging in to Dozuki takes 15 seconds:",waitTime)
-  driver=logIn("email","password","loginBtn","jsmith2021@brandeis.edu","5 Incorrect Zebras!",url+"Login")
+  driver=logIn("email","password","loginBtn","","",url+"Login")
 
   #Create new Guide
   makeNewGuide(url,driver,waitTime,topic)
@@ -114,7 +72,6 @@ def LogOnNewGuide(topic,title,body):
 def delete():
 	return '\b\b\b\b\b\b\b\b\b\b\b\b\b\b'
 	   
-
 #Create a guide using requests method
 def makeNewGuide(url,driver,waitTime,topic):
   display("Creating New Guide:",waitTime)
@@ -152,7 +109,7 @@ def display(message,displayTime):
 #Uses Selenium to fill a message into a text box of a given key
 def fillIn(driver,key,message):
  import selenium
- text_area = driver.find_element_by_id(key)#password
+ text_area = driver.find_element_by_id(key)
  text_area.send_keys(message)
 
 #run the main method
