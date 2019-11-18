@@ -1,5 +1,5 @@
 
-int pin = 13;
+int pin = 2;
 
 void setup()
 {
