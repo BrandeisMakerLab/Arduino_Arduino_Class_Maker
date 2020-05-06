@@ -20,10 +20,10 @@
 
 #### 	Instructions
 
- 	1. Install the tools to [compile the Arduino application](https://github.com/arduino/Arduino/wiki/Building-Arduino) yourself
-	2. Copy the ClassGeneratorInterface class from src/processing/app into Arduino/app/src/processing/app
-	3. Copy ArduinoClassGenerator Folder in src/cc to  Arduino/src/cc 
-	4. Note:My RunArduino.bat  file copies the folders from this github repo into the Arduino project and runs it for Windows
+ 1. Install the tools to [compile the Arduino application](https://github.com/arduino/Arduino/wiki/Building-Arduino) yourself
+ 2. Copy the ClassGeneratorInterface class from src/processing/app into Arduino/app/src/processing/app
+ 3. Copy ArduinoClassGenerator Folder in src/cc to  Arduino/src/cc 
+ 4. Note:My RunArduino.bat  file copies the folders from this github repo into the Arduino project and runs it for Windows
 
 ### As a standalone file editor
 
