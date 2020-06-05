@@ -18,7 +18,7 @@
 
 ​	![Arduino Class Generator in Arduino IDE](ArduinoClassGen.gif)
 
-	This is an automatic verion of the tutorial [here] (https://www.arduino.cc/en/Hacking/libraryTutorial)
+​	This is an automatic verion of the tutorial [here] (https://www.arduino.cc/en/Hacking/libraryTutorial)
 
 #### 	Instructions
 
